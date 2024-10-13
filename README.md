@@ -5,6 +5,7 @@ Flutter project for CMSC 128 - Software Engineering🚀.
 ## Technology Stack
 
 - Flutter
+  - _[Installation Guide](https://docs.flutter.dev/get-started/install/windows/mobile)_
 - Firebase
 
 ## Installing the Project
@@ -14,7 +15,6 @@ Flutter project for CMSC 128 - Software Engineering🚀.
 ```
 git clone https://github.com/jrolana/cmsc128_lab.git
 ```
-
 ###### Install dependencies
 
 ```dart
@@ -36,6 +36,15 @@ flutter run         // runs the application
    `git add .`
    `git commit -m "commit message"`
    `git push`
+
+## Testing Changes
+###### It is recommended to use virtual or physical devices to run the app, as browsers don't support the actual dimensions of a phone.
+### Running App on Physical Device
+#### Thru Wireless Debugging
+1. Enable [wireless debugging](https://developer.android.com/studio/run/device#wireless). 
+2. Open Android Studio to [connect your device](https://developer.android.com/studio/run/device#wireless).
+4. Type `flutter devices` in Visual Studio Code to check if the device is already connected.
+5. Type `flutter run` and select your device.
 
 ## Resources
 
