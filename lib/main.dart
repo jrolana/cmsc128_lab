@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:cmsc128_lab/pages/home.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: Statistics(),
+        home: BottomNavBar(),
       ),
     );
   }
