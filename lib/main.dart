@@ -5,7 +5,20 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+//Firebase packages
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+
+void main() async{
+ // Firebase 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+
+  );
+
+ 
   runApp(MyApp());
 }
 
@@ -36,3 +49,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {}
+
+
+// Firebase
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
