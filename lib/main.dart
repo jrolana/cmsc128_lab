@@ -19,7 +19,7 @@ void main() async{
   );
 
  
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -50,8 +50,3 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {}
 
-
-// Firebase
-await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
