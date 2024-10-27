@@ -1,4 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:cmsc128_lab/pages/statistics_day.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,7 +67,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
               // To be replaced with pages
               Expanded(
                 child: TabBarView(children: [
-                  Icon(Icons.directions_boat),
+                  new StatisticsDay(),
                   Icon(Icons.directions_boat),
                   Icon(Icons.directions_boat),
                 ]),
@@ -74,9 +75,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
             ],
           ),
         ),
-        
       ),
     );
   }
 }
-  

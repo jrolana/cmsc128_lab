@@ -1,8 +1,6 @@
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:cmsc128_lab/pages/home.dart';
-import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,16 +8,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
-void main() async{
- // Firebase 
+void main() async {
+  // Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-
   );
 
- 
   runApp(const MyApp());
 }
 
@@ -31,7 +26,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Prac Flutter',
+        title: 'Rabbit Hole',
         theme: ThemeData(
             useMaterial3: true,
             textTheme: GoogleFonts.lexendDecaTextTheme(),
@@ -50,4 +45,3 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {}
-
