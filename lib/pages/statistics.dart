@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
 class Statistics extends StatefulWidget {
-  Statistics({super.key});
+  const Statistics({super.key});
 
   @override
   State<Statistics> createState() => _StatisticsState();
@@ -64,7 +64,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
                 tabs: tabs,
               ),
               // To be replaced with pages
-              Expanded(
+              const Expanded(
                 child: TabBarView(children: [
                   Icon(Icons.directions_boat),
                   Icon(Icons.directions_boat),

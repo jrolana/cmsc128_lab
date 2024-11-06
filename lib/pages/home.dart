@@ -4,7 +4,7 @@ import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 tabs: tabs,
               ),
               // To be replaced with pages
-              Expanded(
+              const Expanded(
                 child: TabBarView(children: [
                   Icon(Icons.directions_boat),
                   Icon(Icons.directions_boat),

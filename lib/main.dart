@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:cmsc128_lab/pages/home.dart';
-import 'package:cmsc128_lab/pages/statistics.dart';
+// import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cmsc128_lab/pages/welcome_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Prac Flutter',
         theme: ThemeData(
             useMaterial3: true,
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: Statistics(),
+        home: const WelcomeScreen(),
       ),
     );
   }
