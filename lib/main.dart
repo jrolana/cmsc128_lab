@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:cmsc128_lab/pages/home.dart';
@@ -6,7 +7,20 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/pages/welcome_screen.dart';
 
-void main() {
+//Firebase packages
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+
+void main() async{
+ // Firebase 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+
+  );
+
+ 
   runApp(const MyApp());
 }
 
@@ -31,10 +45,11 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: const WelcomeScreen(),
+        home: BottomNavBar(),
       ),
     );
   }
 }
 
 class MyAppState extends ChangeNotifier {}
+

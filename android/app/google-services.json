@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "308136893321",
+    "project_id": "cmsc128-rabbithole",
+    "storage_bucket": "cmsc128-rabbithole.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308136893321:android:515f6b044917f3ba9ddf58",
+        "android_client_info": {
+          "package_name": "com.rabbithole.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP216IeuSqcOufXqDIn-pibmOo93MVr6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
