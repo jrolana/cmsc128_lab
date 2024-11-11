@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
 
 class SearchBox extends StatelessWidget {
@@ -22,16 +24,20 @@ class SearchBox extends StatelessWidget {
           ),
         ],
       ),
-      child: const TextField(
+      child: TextField(
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
+          prefixIcon: const Icon(
+            IconlyLight.search,
             color: StyleColor.primary,
           ),
           hintText: 'Search',
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: GoogleFonts.lexendDeca(
+            textStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+          ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(vertical: 12),
         ),
       ),
     );

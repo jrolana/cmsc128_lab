@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/utils/task_data.dart';
+import 'package:cmsc128_lab/data/task_data.dart';
 import 'package:intl/intl.dart';
 import 'package:cmsc128_lab/widgets/searchbox.dart';
 
@@ -37,7 +38,7 @@ class TaskScreenState extends State<TaskScreen>
                             fontSize: 16,
                             fontWeight: FontWeight.bold)),
                     IconButton(
-                        icon: const Icon(Icons.filter_list),
+                        icon: const Icon(IconlyBold.filter_2),
                         iconSize: 25,
                         color: StyleColor.primary,
                         onPressed: () {
@@ -58,7 +59,7 @@ class TaskScreenState extends State<TaskScreen>
                 final task = tasks[index];
                 return ListTile(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(20)),
                   leading: Checkbox(
                       value: task['isDone'],
                       onChanged: (bool? value) {
@@ -66,7 +67,7 @@ class TaskScreenState extends State<TaskScreen>
                           task['isDone'] = value!;
                         });
                       }),
-                  tileColor: Colors.grey[50],
+                  tileColor: Colors.white,
                   title: Text(
                     task['name'].toString(),
                     style: TextStyle(
@@ -89,7 +90,7 @@ class TaskScreenState extends State<TaskScreen>
                       Row(
                         children: [
                           Icon(
-                            Icons.access_time_outlined,
+                            IconlyLight.time_circle,
                             size: 15,
                             color: Colors.black.withOpacity(0.5),
                           ),
@@ -97,13 +98,15 @@ class TaskScreenState extends State<TaskScreen>
                               '${DateFormat('EEEE, MMMM d').format(task['date'])}',
                               style: TextStyle(
                                   fontSize: 10,
+                                  fontFamily:
+                                      GoogleFonts.lexendDeca().fontFamily,
                                   color: Colors.black.withOpacity(0.5)))
                         ],
                       )
                     ],
                   ),
                   trailing: IconButton(
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(IconlyBold.delete),
                       iconSize: 20,
                       onPressed: () {
                         print("Delete Task"); // Used to test delete button
