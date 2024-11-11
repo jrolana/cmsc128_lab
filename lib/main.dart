@@ -28,16 +28,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Rabbit Hole',
         theme: ThemeData(
-            useMaterial3: true,
-            textTheme: GoogleFonts.lexendDecaTextTheme(),
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-              titleTextStyle: TextStyle(
-                  color: StyleColor.primaryText,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: GoogleFonts.lexendDeca().fontFamily),
-            )),
+          useMaterial3: true,
+          textTheme: GoogleFonts.lexendDecaTextTheme(),
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                color: StyleColor.primaryText,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                fontFamily: GoogleFonts.lexendDeca().fontFamily),
+          ),
+        ),
         home: BottomNavBar(),
       ),
     );

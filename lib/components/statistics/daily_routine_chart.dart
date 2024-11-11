@@ -3,27 +3,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 
-class StatisticsDay extends StatelessWidget {
-  const StatisticsDay({super.key});
+class DailyRoutineChart extends StatefulWidget {
+  const DailyRoutineChart({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RadialChart(),
-      ],
-    );
-  }
+  State<DailyRoutineChart> createState() => _DailyRoutineChartState();
 }
 
-class RadialChart extends StatefulWidget {
-  const RadialChart({super.key});
-
-  @override
-  State<RadialChart> createState() => _RadialChartState();
-}
-
-class _RadialChartState extends State<RadialChart> {
+class _DailyRoutineChartState extends State<DailyRoutineChart> {
   late List<CompletionRateDay> _chartData;
 
   @override
@@ -36,12 +23,12 @@ class _RadialChartState extends State<RadialChart> {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-      margin: const EdgeInsets.all(30),
+      margin: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: SfCircularChart(
-        margin: const EdgeInsets.all(15),
+        margin: const EdgeInsets.all(20),
         title: ChartTitle(
             text: 'Your today\'s routines are almost done—keep it up!',
             textStyle: TextStyle(
