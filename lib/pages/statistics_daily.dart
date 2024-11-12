@@ -1,9 +1,9 @@
-import 'package:cmsc128_lab/components/statistics/daily_routine_list.dart';
+import 'package:cmsc128_lab/widgets/statistics/daily_routine_list.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
-import 'package:cmsc128_lab/components/statistics/daily_routine_chart.dart';
+import 'package:cmsc128_lab/widgets/statistics/daily_routine_chart.dart';
 
 class StatisticsDaily extends StatelessWidget {
   const StatisticsDaily({super.key});
