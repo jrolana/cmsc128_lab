@@ -33,13 +33,12 @@ class _DailyRoutineListState extends State<DailyRoutineList> {
         margin: const EdgeInsets.all(20),
         child: Column(
           children: listData.map((entry) {
-            // TASK: Only create widgets only those that aren't yet started
-            var routine = RoutineCard(
+            // TASK: Only create widgets only those that are not yet started
+            return RoutineCard(
               name: entry.name,
               numActivities: entry.numActivities,
               color: entry.color,
             );
-            return routine;
           }).toList(),
         ));
   }
