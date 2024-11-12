@@ -9,15 +9,16 @@ class ActivityButtonCreation extends StatelessWidget{
   Widget build(BuildContext context){
     return ElevatedButton(
       onPressed: (){},
-      child: Row(
-        children: const <Widget>[
+      child:Container (
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+        child: Row(
+        children: const[
           Expanded(
             child:Row(
             children: [
               Icon(Icons.bed),
-              Expanded(
-                child:Text("Make bed",textAlign: TextAlign.left,),
-              ),
+              SizedBox(width:10),
+              Text("Make bed",textAlign: TextAlign.left,),
             ],
           ),
           ),
@@ -30,6 +31,7 @@ class ActivityButtonCreation extends StatelessWidget{
           ),
         ],
 
+      ),
       ),
       
     );
