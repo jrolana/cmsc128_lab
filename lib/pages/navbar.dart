@@ -12,34 +12,33 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
 
-  List<Widget> widgetOptions = <Widget> [
+  List<Widget> widgetOptions = <Widget>[
     HomePage(),
     Statistics(),
     //Text('Account'),
-    HomePage()//For now cuz Empty pa ung account page
-   ];
+    HomePage() //For now cuz Empty pa ung account page
+  ];
 
   //Function to select on List
-   void _onItemTap(int index){
+  void _onItemTap(int index) {
     setState(() {
       _currentIndex = index;
     });
-   }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-      child: widgetOptions.elementAt(_currentIndex),
+        child: widgetOptions.elementAt(_currentIndex),
       ),
-
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
-      onPressed: () {
-        //Should redirect to Add Routine/Task
-        print("test");
-      },
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          //Should redirect to Add Routine/Task
+          print("test");
+        },
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(238, 233, 255, 100),
         items: const [

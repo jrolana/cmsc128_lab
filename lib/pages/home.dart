@@ -2,9 +2,10 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'task_screen.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -74,10 +75,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               // To be replaced with pages
               Expanded(
-                child: TabBarView(children: [
-                  Icon(Icons.directions_boat),
-                  Icon(Icons.directions_boat),
-                ]),
+                child: TabBarView(
+                    controller: _tcontroller,
+                    children: [Icon(Icons.directions_boat), TaskScreen()]),
               ),
             ],
           ),
