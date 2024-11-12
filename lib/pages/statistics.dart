@@ -74,9 +74,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
             ],
           ),
         ),
-        
       ),
     );
   }
 }
-  
