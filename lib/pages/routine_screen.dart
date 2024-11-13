@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/routineWidgets/rScreenRoutineBlock.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
@@ -25,7 +26,33 @@ class RoutineScreenState extends State<RoutineScreen>
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
-          
+          children: [
+            Container(
+              child: Column(
+                children: const [
+                  Text("Completed"),
+                  RoutineBlock(),
+
+                ],
+              ),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text("Upcoming"),
+
+                ],
+              ),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text("Other Routines"),
+
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
