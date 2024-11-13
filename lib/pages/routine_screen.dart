@@ -23,14 +23,19 @@ class RoutineScreenState extends State<RoutineScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
+        child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
             Container(
               child: Column(
+                
                 children: const [
-                  Text("Completed"),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Completed Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
+                    ),
                   RoutineBlock(),
 
                 ],
@@ -39,7 +44,12 @@ class RoutineScreenState extends State<RoutineScreen>
             Container(
               child: Column(
                 children: [
-                  Text("Upcoming"),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Upcoming Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
+                    ),
+                  RoutineBlock(),
+                  RoutineBlock(),
 
                 ],
               ),
@@ -47,13 +57,21 @@ class RoutineScreenState extends State<RoutineScreen>
             Container(
               child: Column(
                 children: [
-                  Text("Other Routines"),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Other Routines",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
+                    ),
+                  RoutineBlock(),
+                  RoutineBlock(),
+                  RoutineBlock(),
+                  RoutineBlock(),
 
                 ],
               ),
             ),
           ],
         ),
+      ),
       ),
     );
   }
