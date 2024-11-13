@@ -1,7 +1,8 @@
+import 'package:cmsc128_lab/pages/routineCreation.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:cmsc128_lab/pages/home.dart';
+import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: BottomNavBar(),
+        home: HomePage(),
+
       ),
     );
   }
