@@ -32,35 +32,43 @@ class _BottomNavBarState extends State<BottomNavBar> {
       body: Center(
       child: widgetOptions.elementAt(_currentIndex),
       ),
-
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
+      tooltip: 'Add Task/Routine', // Gonna have to fix this para specific 
+      foregroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(95, 51, 225, 1),
+      shape: RoundedRectangleBorder(side: BorderSide(width: 5,color: Colors.white,),borderRadius: BorderRadius.circular(100)),
+      elevation: 0.0,
       onPressed: () {
         //Should redirect to Add Routine/Task
         print("test");
       },
       ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromRGBO(238, 233, 255, 100),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task_alt_outlined),
-            activeIcon: Icon(Icons.task_alt_sharp),
-            label: "Task",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.poll_outlined),
-            activeIcon: Icon(Icons.poll_sharp),
-            label: "Statistics",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded),
-            activeIcon: Icon(Icons.person_rounded),
-            label: "Account",
-          ),
-        ],
-        currentIndex: _currentIndex,
-        onTap: _onItemTap, //Passing on Tap
+      bottomNavigationBar: Container( 
+        margin: EdgeInsets.only(top: 7.50, left: 0.0, right: 0.0),
+        child: BottomNavigationBar(
+          
+          backgroundColor: const Color.fromRGBO(238, 233, 255, 1),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.task_alt_outlined),
+              activeIcon: Icon(Icons.task_alt_sharp),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.poll_outlined),
+              activeIcon: Icon(Icons.poll_sharp),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
+              activeIcon: Icon(Icons.person_rounded),
+              label: "",
+            ),
+          ],
+          currentIndex: _currentIndex,
+          onTap: _onItemTap, //Passing on Tap
+        )
       ),
     );
   }
