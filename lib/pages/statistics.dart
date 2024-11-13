@@ -1,5 +1,6 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:cmsc128_lab/pages/statistics_daily.dart';
+import 'package:cmsc128_lab/pages/statistics_weekly.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,7 +69,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
               Expanded(
                 child: TabBarView(children: [
                   new StatisticsDaily(),
-                  Icon(Icons.directions_boat),
+                  new StatisticsWeekly(),
                   Icon(Icons.directions_boat),
                 ]),
               ),

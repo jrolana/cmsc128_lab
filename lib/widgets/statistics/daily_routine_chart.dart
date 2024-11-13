@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/utils/styles.dart';
+import 'package:cmsc128_lab/data/statistics_data.dart';
 
 class DailyRoutineChart extends StatefulWidget {
   const DailyRoutineChart({super.key});
@@ -11,7 +11,7 @@ class DailyRoutineChart extends StatefulWidget {
 }
 
 class _DailyRoutineChartState extends State<DailyRoutineChart> {
-  late List<CompletionRateDay> _chartData;
+  late List<DayRoutine> _chartData;
 
   @override
   void initState() {
@@ -40,16 +40,16 @@ class _DailyRoutineChartState extends State<DailyRoutineChart> {
           textStyle: TextStyle(fontFamily: GoogleFonts.lexendDeca().fontFamily),
         ),
         series: <CircularSeries>[
-          RadialBarSeries<CompletionRateDay, String>(
+          RadialBarSeries<DayRoutine, String>(
             useSeriesColor: true,
             trackOpacity: 0.1,
             dataSource: _chartData,
             sortingOrder: SortingOrder.ascending,
-            sortFieldValueMapper: (CompletionRateDay data, _) =>
-                data.routineRate,
-            xValueMapper: (CompletionRateDay data, _) => data.routineName,
-            yValueMapper: (CompletionRateDay data, _) => data.routineRate,
-            pointColorMapper: (CompletionRateDay data, _) => data.color,
+            sortFieldValueMapper: (DayRoutine data, _) =>
+                data.dailyCompletionRate,
+            xValueMapper: (DayRoutine data, _) => data.name,
+            yValueMapper: (DayRoutine data, _) => data.dailyCompletionRate,
+            pointColorMapper: (DayRoutine data, _) => data.color,
             maximumValue: 100,
             radius: '100%',
             cornerStyle: CornerStyle.bothCurve,
@@ -59,22 +59,9 @@ class _DailyRoutineChartState extends State<DailyRoutineChart> {
     ));
   }
 
-  List<CompletionRateDay> getChartData() {
-    final List<CompletionRateDay> chartData = [
-      CompletionRateDay('Routine 1', 100, StyleColor.secondary),
-      CompletionRateDay('Routine 2', 60, StyleColor.accentBlue),
-      CompletionRateDay('Routine 3', 70, StyleColor.accentPink),
-      CompletionRateDay('Routine 4', 20, StyleColor.secondary),
-      CompletionRateDay('Routine 5', 50, StyleColor.accentBlue),
-    ];
+  List<DayRoutine> getChartData() {
+    final List<DayRoutine> chartData = dailyData;
 
     return chartData;
   }
-}
-
-class CompletionRateDay {
-  CompletionRateDay(this.routineName, this.routineRate, this.color);
-  final String routineName;
-  final int routineRate;
-  final Color color;
 }
