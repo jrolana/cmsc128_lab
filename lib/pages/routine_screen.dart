@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/routineWidgets/rScreenRoutineBlock.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
