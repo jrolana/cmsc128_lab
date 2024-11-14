@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/statistics_data.dart';
+import 'package:cmsc128_lab/widgets/routine_card.dart';
+import 'package:cmsc128_lab/widgets/title_with_icon.dart';
+import 'package:iconly/iconly.dart';
+import 'package:cmsc128_lab/utils/styles.dart';
 
-class WeeklyRoutineList extends StatefulWidget {
-  const WeeklyRoutineList({super.key});
+int topLen = 3;
+
+class TopWeeklyRoutineList extends StatefulWidget {
+  const TopWeeklyRoutineList({super.key});
 
   @override
-  State<WeeklyRoutineList> createState() => _WeeklyRoutineListState();
+  State<TopWeeklyRoutineList> createState() => _TopWeeklyRoutineListState();
 }
 
-class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
+class _TopWeeklyRoutineListState extends State<TopWeeklyRoutineList> {
   @override
   Widget build(BuildContext context) {
-    List<WeeklyRoutineCard> routines = dailyData.map((entry) {
-      return WeeklyRoutineCard(
+    int n = dailyData.length > topLen ? topLen : dailyData.length - 1;
+
+    List<RoutineCard> routines = dailyData.sublist(0, n).map((entry) {
+      return RoutineCard(
         name: entry.name,
-        avgCompletionRate: entry
-            .dailyCompletionRate, // NOTE: Doesn't make sense but acts as dummy data for now
+        numActivities: entry.numActivities,
+        avgCompletionRate: entry.dailyCompletionRate /
+            100, // NOTE: Doesn't make sense but acts as dummy data for now
         color: entry.color,
       );
     }).toList();
@@ -25,12 +32,10 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
     return Container(
         margin: const EdgeInsets.all(20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            "Top Routines",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                fontFamily: GoogleFonts.lexendDeca().fontFamily),
+          const TitleWithIcon(
+            text: "Top Routines",
+            icon: Icon(size: 13, color: StyleColor.gold, IconlyBold.star),
+            iconBgColor: Color.fromARGB(255, 255, 247, 198),
           ),
           const SizedBox(height: 10),
           Column(
@@ -40,40 +45,47 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
   }
 }
 
-class WeeklyRoutineCard extends StatelessWidget {
-  const WeeklyRoutineCard({
-    super.key,
-    required this.name,
-    required this.avgCompletionRate,
-    required this.color,
-  });
-
-  final String name;
-  final double avgCompletionRate;
-  final Color color;
+class BottomWeeklyRoutineList extends StatefulWidget {
+  const BottomWeeklyRoutineList({super.key});
 
   @override
+  State<BottomWeeklyRoutineList> createState() => _BottomWeeklyRoutineList();
+}
+
+class _BottomWeeklyRoutineList extends State<BottomWeeklyRoutineList> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: const Icon(IconlyBold.bag_2),
-        trailing: CircularProgressIndicator(
-          value: avgCompletionRate,
-          valueColor: AlwaysStoppedAnimation(color),
-          backgroundColor: Colors.white,
-        ),
-        iconColor: color,
-        title: Text(name),
-        titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            fontFamily: GoogleFonts.lexendDeca().fontFamily),
-        tileColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
+    // NOTE: dailyData should already be sorted
+    int n = dailyData.length - 1;
+    late dynamic routines;
+
+    if (n > 3) {
+      routines = dailyData.sublist(n - 3, n).map((entry) {
+        return RoutineCard(
+          name: entry.name,
+          numActivities: entry.numActivities,
+
+          avgCompletionRate: entry.dailyCompletionRate /
+              100, // NOTE: Doesn't make sense but acts as dummy data for now
+          color: entry.color,
+        );
+      }).toList();
+    } else {
+      routines = const Text("No routines yet");
+    }
+
+    return Container(
+        margin: const EdgeInsets.all(20),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          TitleWithIcon(
+            text: "Routines to Focus On",
+            icon: const Icon(size: 12, color: Colors.red, IconlyBold.work),
+            iconBgColor: Colors.red[50]!,
+          ),
+          const SizedBox(height: 10),
+          Column(
+            children: routines,
+          ),
+        ]));
   }
 }
