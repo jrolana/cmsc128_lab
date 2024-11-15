@@ -1,11 +1,11 @@
-import 'package:cmsc128_lab/routineWidgets/rCreationScrollable.dart';
-import 'package:cmsc128_lab/routineWidgets/rCrerationActivityButton.dart';
-import 'package:cmsc128_lab/routineWidgets/rCreationActivityName.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_list.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class RoutineCreation extends StatefulWidget {
-  RoutineCreation({super.key});
+  const RoutineCreation({super.key});
 
   @override
   State<RoutineCreation> createState() {

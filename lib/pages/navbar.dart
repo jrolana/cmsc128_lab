@@ -51,7 +51,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         child: BottomAppBar(
           color: const Color.fromRGBO(238, 233, 255, 1),
           notchMargin: 7.5,
-          height: 99,
+          height: 100,
           shape: CircularNotchedRectangle(),
           clipBehavior: Clip.antiAlias,
           child: Container(
@@ -60,7 +60,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               child: BottomNavigationBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              type: BottomNavigationBarType.fixed,
               items: [
                 BottomNavigationBarItem(
                   icon: Container(
