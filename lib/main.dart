@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/pages/routineCreation.dart';
+import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

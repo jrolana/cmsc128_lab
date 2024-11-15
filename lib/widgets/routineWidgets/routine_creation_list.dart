@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cmsc128_lab/routineWidgets/rCrerationActivityButton.dart';
-import 'package:cmsc128_lab/routineWidgets/rCreationActivityName.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:flutter/material.dart';
 class ReorderableExample extends StatefulWidget {
   const ReorderableExample({super.key});
