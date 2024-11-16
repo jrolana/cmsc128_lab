@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:confetti/confetti.dart';
-import 'dart:math';
 
 class Streaks extends StatefulWidget {
   const Streaks({
@@ -18,9 +17,9 @@ class _StreaksState extends State<Streaks> {
   late ConfettiController _controller;
   late int _days;
   late String _phrase;
-  int index = DateTime.now().day % 10;
+  final int _index = DateTime.now().day % 10;
 
-  List<String> congratulatoryPhrases = [
+  final List<String> _congratulatoryPhrases = [
     "You’re on fire! Keep that streak going! 🔥",
     "Way to go! Consistency is paying off! 💪",
     "Streaks don’t lie—you're crushing it! 🎉",
@@ -33,7 +32,7 @@ class _StreaksState extends State<Streaks> {
     "Another day, another win! Keep that streak alive! 🏆"
   ];
 
-  List<String> upliftingPhrases = [
+  final List<String> _upliftingPhrases = [
     "A streak may take time, but you're building something real! 🌱",
     "It’s okay to stumble. Just get back on track and keep moving forward! 💫",
     "Every day counts. You’re making progress, no matter the pace. 💪",
@@ -51,10 +50,10 @@ class _StreaksState extends State<Streaks> {
     _controller = ConfettiController(duration: const Duration(seconds: 10));
     _days = getDays();
 
-    _phrase = upliftingPhrases[index];
+    _phrase = _upliftingPhrases[_index];
 
     if (_days > 0) {
-      _phrase = congratulatoryPhrases[index];
+      _phrase = _congratulatoryPhrases[_index];
     }
 
     super.initState();

@@ -11,13 +11,13 @@ class SwitchDate extends StatefulWidget {
 }
 
 class _SwitchDateState extends State<SwitchDate> {
-  late DateTime startDate;
-  late DateTime endDate;
+  late DateTime _startDate;
+  late DateTime _endDate;
 
   @override
   void initState() {
-    startDate = getStartDate(DateTime.now());
-    endDate = startDate.add(const Duration(days: 7));
+    _startDate = getStartDate(DateTime.now());
+    _endDate = _startDate.add(const Duration(days: 7));
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _SwitchDateState extends State<SwitchDate> {
             color: Colors.black54,
           ),
           Text(
-            '${DateFormat('MMM d').format(startDate)} - ${DateFormat('MMM d').format(endDate)}',
+            '${DateFormat('MMM d').format(_startDate)} - ${DateFormat('MMM d').format(_endDate)}',
             style: TextStyle(
                 fontSize: 12,
                 color: Colors.black54,

@@ -13,10 +13,21 @@ class DailyRoutineList extends StatefulWidget {
 }
 
 class _DailyRoutineListState extends State<DailyRoutineList> {
+  late List<DayRoutine> _dailyRoutines;
+
+  @override
+  void initState() {
+    _dailyRoutines = getRoutines();
+    super.initState();
+  }
+
+  List<DayRoutine> getRoutines() {
+    return dailyData;
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<RoutineCard> routines = dailyData.map((entry) {
-      // TASK: Only create widgets for those that are not yet started
+    List<RoutineCard> routines = _dailyRoutines.map((entry) {
       return RoutineCard(
         name: entry.name,
         numActivities: entry.numActivities,

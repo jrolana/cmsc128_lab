@@ -21,7 +21,6 @@ class RoutineCard extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: const Icon(IconlyBold.bag_2),
-        // TASK: Add label showing the percentage
         trailing: Stack(
           alignment: Alignment.center,
           children: [

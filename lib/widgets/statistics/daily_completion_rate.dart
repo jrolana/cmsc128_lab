@@ -3,14 +3,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/data/statistics_data.dart';
 
-class DailyRoutineChart extends StatefulWidget {
-  const DailyRoutineChart({super.key});
+class DailyCompletionRate extends StatefulWidget {
+  const DailyCompletionRate({super.key});
 
   @override
-  State<DailyRoutineChart> createState() => _DailyRoutineChartState();
+  State<DailyCompletionRate> createState() => _DailyCompletionRateState();
 }
 
-class _DailyRoutineChartState extends State<DailyRoutineChart> {
+class _DailyCompletionRateState extends State<DailyCompletionRate> {
   late List<DayRoutine> _chartData;
 
   @override

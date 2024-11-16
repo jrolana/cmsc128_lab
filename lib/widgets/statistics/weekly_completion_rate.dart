@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/data/statistics_data.dart';
-import 'package:cmsc128_lab/utils/styles.dart';
 
 class WeeklyRoutineChart extends StatefulWidget {
   const WeeklyRoutineChart({super.key});
