@@ -1,56 +1,65 @@
-import 'package:cmsc128_lab/main.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_list.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
+import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 
-
-
-class RoutineCreationActivityBlock extends StatelessWidget{
-  const RoutineCreationActivityBlock({super.key});
-
+class RoutineCreation extends StatefulWidget {
+  const RoutineCreation({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<RoutineCreation> createState() {
+    return _RoutineCreationDefaultState();
+  }
+
+}
+
+class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerProviderStateMixin{
+  @override
+  Widget build(BuildContext context){
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('ElevatedButton Sample')),
-        body: const ElevatedButtonExample(),
-      ),
-    );
-  }
-}
-  
-
-
-
-
-class ElevatedButtonExample extends StatefulWidget {
-  const ElevatedButtonExample({super.key});
-
-  @override
-  State<ElevatedButtonExample> createState() => _ElevatedButtonExampleState();
-}
-class _ElevatedButtonExampleState extends State<ElevatedButtonExample> {
-  @override
-  Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ElevatedButton(
-            style: style,
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+            style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+            onPressed:(){} , 
+            child: Container(
+              padding: EdgeInsets.all(8),
+              color: StyleColor.primary,
+              child: Text("Create Routine",style: TextStyle(color: Colors.white))
+              ),),
+            Container(
+              padding: EdgeInsets.all(9),
+              child:TextButton(
+              onPressed: (){}, 
+              style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+              child: Icon(Icons.playlist_add_rounded,color: Colors.white,))
+            ),
+          ]
+        ),
+        appBar: AppBar(
+          leading: const IconButton(
+            icon: Icon(Icons.arrow_back),
+            tooltip: 'Home',
             onPressed: null,
-            child: const Text('Disabled'),
           ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            style: style,
-            onPressed: () {},
-            child: const Text('Enabled'),
-          ),
-        ],
-      ),
-    );
-  }
+          title: const Text('Create a Routine'),
+        ),
+        body: Padding(
+          
+          padding: EdgeInsets.fromLTRB(20,20,20,80),
+            child:SingleChildScrollView(
+            child:Column(
+            children: const [
+            RCreationActivityName(),
+            SizedBox(height:20),
+            ReorderableExample(),
+          ],
+        ),), 
+    ),
+  ),
+);
+}
 }
