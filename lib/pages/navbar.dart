@@ -34,52 +34,53 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      tooltip: 'Add Task/Routine', // Gonna have to fix this para specific 
-      foregroundColor: Colors.white,
-      backgroundColor: Color.fromRGBO(95, 51, 225, 1),
-      shape: RoundedRectangleBorder(side: BorderSide(width: 5,color: Colors.white, style: BorderStyle.none),borderRadius: BorderRadius.circular(100)),
-      elevation: 0.0,
-      onPressed: () {
-        //Should redirect to Add Routine/Task
-        print("test");
-      },
+          child: Icon(Icons.add, size: 30,),
+        tooltip: 'Add Task/Routine', // Gonna have to fix this para specific 
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(95, 51, 225, 1),
+        shape: RoundedRectangleBorder(side: BorderSide(width: 5,color: Colors.white, style: BorderStyle.none),borderRadius: BorderRadius.circular(100)),
+        elevation: 5.0,
+        onPressed: () {
+          //Should redirect to Add Routine/Task
+          print("test");
+        },
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(0.0),
-        padding: EdgeInsets.all(0.0),
-        child: BottomAppBar(
-          color: const Color.fromRGBO(238, 233, 255, 1),
-          notchMargin: 7.5,
-          height: 100,
-          shape: CircularNotchedRectangle(),
-          clipBehavior: Clip.antiAlias,
+      extendBody: true,
+
+      bottomNavigationBar: BottomAppBar(
+        
+        color: Color.fromRGBO(238, 233, 255, 1),
+        notchMargin: 7.5,
+        shape: CircularNotchedRectangle(),
+        padding: EdgeInsets.all(0),
+        clipBehavior: Clip.hardEdge,
           child: Container(
-            margin: EdgeInsets.only(left: 40, right: 40, top: 0, bottom: 0),
-            padding: EdgeInsets.all(0.0), 
-              child: BottomNavigationBar(
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.only(left: 20, right: 60, top: 0, bottom: 0),
+            child: BottomNavigationBar(
+              
+              type: BottomNavigationBarType.fixed,
+              selectedFontSize: 0,
+              unselectedFontSize: 0,
+              unselectedItemColor: const Color.fromARGB(103, 80, 16, 139),
+              selectedItemColor: Colors.indigo[700],
               backgroundColor: Colors.transparent,
+              iconSize: 35,
               elevation: 0,
               items: [
                 BottomNavigationBarItem(
-                  icon: Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 0),
-                    padding: EdgeInsets.only(top: 5),
-                    child: Icon(Icons.task_alt_outlined, size: 30,)),
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.task_alt_outlined),
                   label: "",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 0),
-                    padding: EdgeInsets.only(top: 5),
-                    child: Icon(Icons.poll, size: 30,)),
+                  backgroundColor: Colors.transparent,
+                  icon:Icon(Icons.poll),
                   label: "",
                 ),
                 BottomNavigationBarItem(
-                  icon: Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 0),
-                    padding: EdgeInsets.only(top: 5),
-                    child: Icon(Icons.person_outline_rounded, size: 30,)),
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.person_outline_rounded),
                   label: "",
                 ),
                 ],
@@ -88,7 +89,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             )
           )
         ),
-      ),
     );
   }
 }
