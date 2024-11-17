@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
         ),
-        home: RoutineCreation(),
-
+        home: BottomNavBar(),
       ),
     );
   }
