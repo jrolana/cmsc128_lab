@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: WidgetTree(),
+        home: WelcomeScreen(),
       ),
     );
   }
