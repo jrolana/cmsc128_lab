@@ -17,6 +17,45 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formSignupKey = GlobalKey<FormState>();
   bool agreePersonalData = true;
+  String email = "", password = "", name = "";
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController mailcontroller = TextEditingController();
+
+  registration() async {
+    if (password != "" &&
+        namecontroller.text != "" &&
+        mailcontroller.text != "") {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+          "You have registered successfully!",
+          style: TextStyle(fontSize: 20.0),
+        )));
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.orangeAccent,
+              content: Text(
+                "The password you provided is too weak.",
+                style: TextStyle(fontSize: 18.0),
+              )));
+        } else if (e.code == "email-already-in-use") {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.orangeAccent,
+              content: Text(
+                "Sorry! An account already exists under this email.",
+                style: TextStyle(fontSize: 18.0),
+              )));
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,25 +102,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Full name';
+                            return 'Please enter a Nickname';
                           }
                           return null;
                         },
+                        controller: namecontroller,
                         decoration: InputDecoration(
-                          label: const Text('Full Name'),
-                          hintText: 'Enter Full Name',
+                          label: const Text('Nickname'),
+                          hintText: 'Enter a Nickname',
                           hintStyle: const TextStyle(
                             color: Colors.black26,
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -94,25 +134,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Email';
+                            return 'Please enter an Email';
                           }
                           return null;
                         },
+                        controller: mailcontroller,
                         decoration: InputDecoration(
                           label: const Text('Email'),
-                          hintText: 'Enter Email',
+                          hintText: 'Enter an Email',
                           hintStyle: const TextStyle(
                             color: Colors.black26,
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -127,25 +168,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obscuringCharacter: '*',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Password';
+                            return 'Please enter a Password';
                           }
                           return null;
                         },
+                        controller: passwordcontroller,
                         decoration: InputDecoration(
                           label: const Text('Password'),
-                          hintText: 'Enter Password',
+                          hintText: 'Enter a Password',
                           hintStyle: const TextStyle(
                             color: Colors.black26,
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
+                              color: StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -155,32 +197,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 25.0,
                       ),
                       // i agree to the processing
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: agreePersonalData,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                agreePersonalData = value!;
-                              });
-                            },
-                            activeColor: StyleColor.primary,
-                          ),
-                          const Text(
-                            'I agree to the processing of ',
-                            style: TextStyle(
-                              color: Colors.black45,
-                            ),
-                          ),
-                          const Text(
-                            'Personal data',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: StyleColor.primary,
-                            ),
-                          ),
-                        ],
-                      ),
                       const SizedBox(
                         height: 25.0,
                       ),
@@ -189,20 +205,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (_formSignupKey.currentState!.validate() &&
-                                agreePersonalData) {
+                            if (_formSignupKey.currentState!.validate()) {
+                              setState(() {
+                                email = mailcontroller.text;
+                                name = namecontroller.text;
+                                password = passwordcontroller.text;
+                              });
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Processing Data'),
+                                  content: Text(
+                                      'There seems to be a problem with your credentials, make sure that you entered a valid and existing email and try again.'),
                                 ),
                               );
-                            } else if (!agreePersonalData) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please agree to the processing of personal data')),
-                              );
-                            }
+                            } 
+                            registration();
                           },
                           child: const Text('Sign up'),
                         ),
@@ -228,14 +244,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: Text(
                               'Sign up with',
                               style: TextStyle(
-                                color: Colors.black45,
+                                color: StyleColor.primaryText,
                               ),
                             ),
                           ),
                           Expanded(
                             child: Divider(
                               thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withOpacity(0.7),
                             ),
                           ),
                         ],
@@ -260,7 +276,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const Text(
                             'Already have an account? ',
                             style: TextStyle(
-                              color: Colors.black45,
+                              color: StyleColor.primaryText,
                             ),
                           ),
                           GestureDetector(

@@ -1,10 +1,13 @@
+import 'package:cmsc128_lab/pages/forgot_password_screen.dart';
+import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/pages/signup_screen.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
+import 'package:cmsc128_lab/service/database.dart';
+import 'package:cmsc128_lab/service/auth.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -15,12 +18,40 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   final _formSignInKey = GlobalKey<FormState>();
+  String email = "", password = "";
   bool rememeberPassword = true;
   String? errorMessage = '';
   bool isLogin = true;
 
-  @override
+  TextEditingController mailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
 
+  userLogin() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Sorry! There is user found for this Email.",
+              style: TextStyle(fontSize: 18.0),
+            )));
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Incorrect password, try again.",
+              style: TextStyle(fontSize: 18.0),
+            )));
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       child: Column(
@@ -66,6 +97,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             }
                             return null;
                           },
+                          controller: mailcontroller,
                           decoration: InputDecoration(
                             label: const Text('Email'),
                             hintText: 'Enter Email',
@@ -74,13 +106,13 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             border: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: Colors.black,
+                                color: StyleColor.secondary,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: Colors.black,
+                                color: StyleColor.secondary,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -98,6 +130,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             }
                             return null;
                           },
+                          controller: passwordcontroller,
                           decoration: InputDecoration(
                             label: const Text('Password'),
                             hintText: 'Enter Password',
@@ -106,13 +139,13 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                             border: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: StyleColor.primaryText,
+                                color: StyleColor.secondary,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: StyleColor.primaryText,
+                                color: StyleColor.secondary,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -124,26 +157,14 @@ class _LogInScreenState extends State<LogInScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: rememeberPassword,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      rememeberPassword = value!;
-                                    });
-                                  },
-                                  activeColor: StyleColor.primary,
-                                ),
-                                const Text(
-                                  'Remember Me',
-                                  style: TextStyle(
-                                    color: StyleColor.primaryText,
-                                  ),
-                                )
-                              ],
-                            ),
                             GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ForgotPassword()));
+                              },
                               child: const Text(
                                 'Forget Password?',
                                 style: TextStyle(
@@ -161,17 +182,17 @@ class _LogInScreenState extends State<LogInScreen> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_formSignInKey.currentState!.validate() &&
-                                  rememeberPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Processing Data')));
-                              } else if (!rememeberPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'Please agree to the processing of personal')));
+                              if (_formSignInKey.currentState!.validate()) {
+                                setState(() {
+                                  email = mailcontroller.text;
+                                  password = passwordcontroller.text;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'There seems to be an error with your Log In Credentials, recheck them and try again.')));
+                                });
                               }
+                              userLogin();
                             },
                             child: const Text('Log In'),
                           ),
@@ -203,7 +224,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             Expanded(
                                 child: Divider(
                               thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withOpacity(0.7),
                             )),
                           ],
                         ),
@@ -213,7 +234,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Logo(Logos.google),
+                            GestureDetector(
+                              onTap: () {
+                                AuthMethods().signInWithGoogle(context);
+                              },
+                              child: Logo(Logos.google),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -223,7 +249,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              'Are you new here?',
+                              'Are you new here? ',
                               style: TextStyle(
                                 color: StyleColor.primaryText,
                               ),
@@ -236,8 +262,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                           builder: (e) =>
                                               const SignUpScreen()));
                                 },
-                                child: const Text(' Sign Up')),
-                          ],
+                                child: const Text('Sign Up',
+                                style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: StyleColor.primary,)),
+                        )],
                         ),
                         const SizedBox(
                           height: 25.0,
@@ -250,4 +279,3 @@ class _LogInScreenState extends State<LogInScreen> {
     );
   }
 }
-

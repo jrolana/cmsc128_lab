@@ -7,7 +7,6 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/pages/welcome_screen.dart';
-import 'package:cmsc128_lab/widget_tree.dart';
 
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
