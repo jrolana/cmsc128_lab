@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,11 +24,11 @@ class RoutineScreenState extends State<RoutineScreen>
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              
+
               //Completed Today Section
               Container(
                 child: Column(
-                  
+
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
@@ -37,7 +38,7 @@ class RoutineScreenState extends State<RoutineScreen>
                   ],
                 ),
               ),
-              
+
               //Upcoming Today Section
               Container(
                 child: Column(
@@ -48,7 +49,7 @@ class RoutineScreenState extends State<RoutineScreen>
                       ),
                     RoutineBlock(),
                     RoutineBlock(),
-        
+
                   ],
                 ),
               ),
@@ -64,7 +65,7 @@ class RoutineScreenState extends State<RoutineScreen>
                     RoutineBlock(),
                     RoutineBlock(),
                     RoutineBlock(),
-        
+
                   ],
                 ),
               ),
