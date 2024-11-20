@@ -2,21 +2,20 @@
 
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:flutter/material.dart';
-class ReorderableExample extends StatefulWidget {
-  const ReorderableExample({super.key});
+class ActivitiesListReorderable extends StatefulWidget {
+  const ActivitiesListReorderable({super.key});
 
   @override
-  State<ReorderableExample> createState() => _ReorderableListViewExampleState();
+  State<ActivitiesListReorderable> createState() => ReorderableList();
 }
 
-class _ReorderableListViewExampleState extends State<ReorderableExample> {
+class ReorderableList extends State<ActivitiesListReorderable> {
   final List<int> _items = List<int>.generate(5, (int index) => index);
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
-    final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+    //final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
+    //final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
 
     return ReorderableListView(
       shrinkWrap: true,

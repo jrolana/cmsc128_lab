@@ -1,11 +1,6 @@
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
-import '../utils/styles.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/data/task_data.dart';
-import 'package:intl/intl.dart';
-import 'package:cmsc128_lab/widgets/searchbox.dart';
 
 class RoutineScreen extends StatefulWidget {
   const RoutineScreen({super.key});
@@ -28,19 +23,18 @@ class RoutineScreenState extends State<RoutineScreen>
         padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
-            Container(
-              child: Column(
-                
-                children: const [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Completed Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
-                    ),
-                  RoutineBlock(),
+            Column(
 
-                ],
-              ),
+              children: const [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Completed Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
+                  ),
+                RoutineBlock(),
+
+              ],
             ),
+            // ignore: avoid_unnecessary_containers
             Container(
               child: Column(
                 children: [
@@ -54,20 +48,18 @@ class RoutineScreenState extends State<RoutineScreen>
                 ],
               ),
             ),
-            Container(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Other Routines",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
-                    ),
-                  RoutineBlock(),
-                  RoutineBlock(),
-                  RoutineBlock(),
-                  RoutineBlock(),
+            Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Other Routines",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
+                  ),
+                RoutineBlock(),
+                RoutineBlock(),
+                RoutineBlock(),
+                RoutineBlock(),
 
-                ],
-              ),
+              ],
             ),
           ],
         ),

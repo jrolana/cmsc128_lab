@@ -1,5 +1,4 @@
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_list.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,8 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
           children: [
             TextButton(
             style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
-            onPressed:(){} , 
+            onPressed:(){
+            } ,
             child: Container(
               padding: EdgeInsets.all(8),
               color: StyleColor.primary,
@@ -40,10 +40,12 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
           ]
         ),
         appBar: AppBar(
-          leading: const IconButton(
-            icon: Icon(Icons.arrow_back),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
             tooltip: 'Home',
-            onPressed: null,
+            onPressed: (){
+              Navigator.pop(context);
+            },
           ),
           title: const Text('Create a Routine'),
         ),
@@ -55,7 +57,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
             children: const [
             RCreationActivityName(),
             SizedBox(height:20),
-            ReorderableExample(),
+            ActivitiesListReorderable(),
           ],
         ),), 
     ),

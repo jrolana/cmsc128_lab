@@ -1,3 +1,5 @@
+import 'package:cmsc128_lab/pages/routine_creation.dart';
+import 'package:cmsc128_lab/pages/routine_screen.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';
@@ -11,7 +13,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
-
+  Widget screenNav = RoutineCreation();
   List<Widget> widgetOptions = <Widget>[
     HomePage(),
     Statistics(),
@@ -35,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add, size: 30,),
-        tooltip: 'Add Task/Routine', // Gonna have to fix this para specific 
+        tooltip: 'Add Routine', // Gonna have to fix this para specific
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(95, 51, 225, 1),
         shape: RoundedRectangleBorder(side: BorderSide(width: 5,color: Colors.white, style: BorderStyle.none),borderRadius: BorderRadius.circular(100)),
@@ -43,6 +45,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onPressed: () {
           //Should redirect to Add Routine/Task
           print("test");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screenNav )
+          );
         },
       ),
       extendBody: true,
