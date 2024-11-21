@@ -18,13 +18,18 @@ class ReorderableList extends State<ActivitiesListReorderable> {
     //final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
 
     return ReorderableListView(
+      proxyDecorator: (child,index,animation) =>
+      Material(
+        borderRadius: BorderRadius.circular(100),
+        child:child
+      ),
       shrinkWrap: true,
-      children: <Widget>[
+      children: [
         for (int index = 0; index < _items.length; index += 1)
           Padding(
             padding: EdgeInsets.symmetric(vertical: 2.0),
             key: Key('$index'),
-              child:ActivityButtonCreation()
+            child:ActivityBlock(),
           )
       ],
       onReorder: (int oldIndex, int newIndex) {

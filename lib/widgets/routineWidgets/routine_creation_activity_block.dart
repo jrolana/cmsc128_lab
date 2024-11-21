@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 // import 'package:cmsc128_lab/utils/styles.dart';
-
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 class ActivityBlock extends StatefulWidget{
   const ActivityBlock({super.key});
 
   @override
-  State<ActivityBlock> createState() => DefaultActivityBlock();
+  State<ActivityBlock> createState() => _DefaultActivityBlock();
 
 
 }
 
-class DefaultActivityBlock extends State<ActivityBlock>{
+class _DefaultActivityBlock extends State<ActivityBlock>{
+  bool showTextField = false;
   String actName = 'Default Name';
   int minDuration = 1;
   int hourDuration = 0;
-  IconData actIcon = Icons.square_rounded;
-
+  Icon actIcon = Icon(Icons.square_rounded);
+  TextEditingController actController = TextEditingController();
+  String defActVal = 'Enter an activity name';
+  @override
+  void dispose() {
+    actController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context){
     return ElevatedButton(
@@ -24,12 +31,13 @@ class DefaultActivityBlock extends State<ActivityBlock>{
             padding: EdgeInsets.symmetric(vertical:10,horizontal: 20),
             child: Row(
           children: [
-            Icon(actIcon),
+            IconButton(
+                onPressed: (){
+                   _pickIcon();
+                },
+                icon: actIcon),
             Expanded(
-              child: Text(
-                actName,
-                textAlign: TextAlign.left,
-              ),
+              child: showTextField ? activityInputField() : activityInputButton(),
             ),
             Row(
               children: [
@@ -41,39 +49,34 @@ class DefaultActivityBlock extends State<ActivityBlock>{
         ))
     );
   }
-}
-class ActivityButtonCreation extends StatelessWidget{
-  const ActivityButtonCreation({super.key});
-
-  @override
-  Widget build(BuildContext context){
-    return ElevatedButton(
-      onPressed: (){},
-      child:Container (
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-        child: Row(
-        children: const[
-          Expanded(
-            child:Row(
-            children: [
-              Icon(Icons.bed),
-              SizedBox(width:10),
-              Text("Make bed",textAlign: TextAlign.left,),
-            ],
-          ),
-          ),
-          Row(
-            children: [
-              Icon(Icons.timer_sharp),
-              Text('1min', textAlign: TextAlign.right,),
-            ],
-
-          ),
-        ],
-
-      ),
-      ),
-      
+  Widget activityInputField(){
+    return TextField(
+      controller: actController,
+      autofocus: true,
+      onSubmitted: (String value){
+          setState(() {
+            showTextField = false;
+            actName = value.isEmpty ? defActVal:value;
+          });
+        },
+      textAlign: TextAlign.left,
     );
   }
+
+  Widget activityInputButton(){
+    return TextButton(
+        onPressed: (){
+          setState(() {
+            actController.text = actName == defActVal? '':actName;
+            showTextField = true;
+          });
+        },
+        child: Text(actName, textAlign: TextAlign.left,));
+  }
+_pickIcon() async{
+    IconPickerIcon? iconPicked = await showIconPicker(context);
+    actIcon = Icon(iconPicked?.data);
+    setState(() {});
 }
+}
+
