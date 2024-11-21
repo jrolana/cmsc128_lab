@@ -1,4 +1,3 @@
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +53,6 @@ class RoutineScreenState extends State<RoutineScreen>
                   alignment: Alignment.centerLeft,
                   child: Text("Other Routines",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
                   ),
-                RoutineBlock(),
                 RoutineBlock(),
                 RoutineBlock(),
                 RoutineBlock(),

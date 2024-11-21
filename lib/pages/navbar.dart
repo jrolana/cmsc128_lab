@@ -1,5 +1,4 @@
 import 'package:cmsc128_lab/pages/routine_creation.dart';
-import 'package:cmsc128_lab/pages/routine_screen.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';

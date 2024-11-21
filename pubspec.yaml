@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: ^5.4.4
   firebase_auth: ^5.3.1
   intl: ^0.19.0
+  flutter_iconpicker:
 
 dev_dependencies:
   flutter_test:
