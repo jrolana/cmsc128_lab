@@ -1,11 +1,14 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:cmsc128_lab/pages/statistics_daily.dart';
+import 'package:cmsc128_lab/pages/statistics_monthly.dart';
+import 'package:cmsc128_lab/pages/statistics_weekly.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
 class Statistics extends StatefulWidget {
-  Statistics({super.key});
+  const Statistics({super.key});
 
   @override
   State<Statistics> createState() => _StatisticsState();
@@ -20,7 +23,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
       text: 'Week',
     ),
     Tab(
-      text: 'Year',
+      text: 'Month',
     ),
   ];
 
@@ -63,12 +66,11 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
                 unselectedLabelStyle: StyleText.unselectedLabelStyle,
                 tabs: tabs,
               ),
-              // To be replaced with pages
-              Expanded(
+              const Expanded(
                 child: TabBarView(children: [
-                  Icon(Icons.directions_boat),
-                  Icon(Icons.directions_boat),
-                  Icon(Icons.directions_boat),
+                  StatisticsDaily(),
+                  StatisticsWeekly(),
+                  StatisticsMonthly(),
                 ]),
               ),
             ],

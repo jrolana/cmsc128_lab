@@ -37,7 +37,9 @@ dependencies:
   firebase_core: ^3.6.0
   cloud_firestore: ^5.4.4
   firebase_auth: ^5.3.1
+  syncfusion_flutter_charts: ^27.1.56
   intl: ^0.19.0
+  confetti: ^0.8.0
 
 dev_dependencies:
   flutter_test:

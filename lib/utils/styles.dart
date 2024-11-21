@@ -31,4 +31,6 @@ class StyleColor {
   static const Color accentYellow = Color(0xFFFDFCE7);
 
   static const Color primaryText = Color(0xFF24252C);
+
+  static const Color gold = Color(0xFFFfd700);
 }
