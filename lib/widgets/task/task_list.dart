@@ -2,7 +2,8 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/data/task_data.dart';
+// import 'package:cmsc128_lab/data/task_data.dart';
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:intl/intl.dart';
 
 class TaskList extends StatefulWidget {
@@ -15,15 +16,42 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
+  List<Map<String, dynamic>> tasks = [];
+  bool isLoading = true;
+
+  Future<void> fetchTasks({List<String>? filterCategories}) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<Map<String, dynamic>> fetchedTasks =
+        await FirestoreUtils.getTasks(filterCategories: filterCategories);
+
+    setState(() {
+      tasks = fetchedTasks;
+      isLoading = false;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant TaskList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.filterCategories != oldWidget.filterCategories) {
+      fetchTasks(
+          filterCategories:
+              widget.filterCategories); // Refetch tasks when filter changes
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTasks(filterCategories: widget.filterCategories); // Initial fetch
+  }
+
   @override
   Widget build(BuildContext context) {
-    final filteredTasks = widget.filterCategories.isEmpty
-        ? tasks
-        : tasks.where((task) {
-            return widget.filterCategories.contains(task['category']);
-          }).toList();
-
-    if (filteredTasks.isEmpty) {
+    if (tasks.isEmpty) {
       return Expanded(
           child: Center(
               child: Column(
@@ -48,9 +76,9 @@ class _TaskListState extends State<TaskList> {
           height: 10,
         );
       },
-      itemCount: filteredTasks.length,
+      itemCount: tasks.length,
       itemBuilder: (context, index) {
-        final task = filteredTasks[index];
+        final task = tasks[index];
         return ListTile(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -91,7 +119,8 @@ class _TaskListState extends State<TaskList> {
                     size: 15,
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  Text('${DateFormat('EEEE, MMMM d').format(task['date'])}',
+                  Text(
+                      '${DateFormat('EEEE, MMMM d').format(DateTime.parse(task['date']))}',
                       style: TextStyle(
                           fontSize: 10,
                           fontFamily: GoogleFonts.lexendDeca().fontFamily,

@@ -23,8 +23,7 @@ class _FilterDialogState extends State<FilterDialog> {
   @override
   void initState() {
     super.initState();
-    _tempSelectedCategories = List.from(
-        widget.selectedCategories); // Initialize with current selections
+    _tempSelectedCategories = List.from(widget.selectedCategories);
   }
 
   @override
@@ -63,14 +62,14 @@ class _FilterDialogState extends State<FilterDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(context), // Cancel without changes
+          onPressed: () => Navigator.pop(context),
           child: const Text("Cancel"),
         ),
         TextButton(
           onPressed: () {
-            widget
-                .onApply(_tempSelectedCategories); // Apply selected categories
-            Navigator.pop(context); // Close dialog
+            widget.onApply(_tempSelectedCategories);
+
+            Navigator.pop(context);
           },
           child: const Text("Apply"),
         ),

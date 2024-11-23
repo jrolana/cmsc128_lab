@@ -1,4 +1,5 @@
 import 'package:cmsc128_lab/utils/styles.dart';
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
@@ -129,18 +130,24 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       String taskName = _taskNameController.text;
                       taskName =
                           taskName[0].toUpperCase() + taskName.substring(1);
-                      // Change to store values in database
-                      print(taskName);
-                      print(_dateController.text);
-                      // Convert String to DateTime object
-                      print(DateTime.parse(_dateController.text));
-                      print(_selectedCategory);
+
+                      // Add to database
+                      final newTask = {
+                        'name': taskName,
+                        'category': _selectedCategory, // Example category
+                        'date': _dateController.text,
+                        'isDone': false,
+                        'actID': null,
+                      };
+
+                      FirestoreUtils.addTask(newTask);
 
                       // Notify if added successfully
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text('Task Added Successfully')),
                       );
+
                       Navigator.pop(context);
                     }
                   },
