@@ -76,10 +76,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               // To be replaced with pages
               Expanded(
-                child: TabBarView(children: [
-                  Icon(Icons.directions_boat),
-                  Icon(Icons.directions_boat),
-                ]),
+                child: TabBarView(
+                    controller: _tcontroller,
+                    children: [RoutineScreen(), TaskScreen()]),
               ),
             ],
           ),

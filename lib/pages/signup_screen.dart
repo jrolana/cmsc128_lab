@@ -211,12 +211,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 name = namecontroller.text;
                                 password = passwordcontroller.text;
                               });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'There seems to be a problem with your credentials, make sure that you entered a valid and existing email and try again.'),
-                                ),
-                              );
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   const SnackBar(
+                              //     content: Text(
+                              //         'There seems to be a problem with your credentials, make sure that you entered a valid and existing email and try again.'),
+                              //   ),
+                              // );
                             } 
                             registration();
                           },

@@ -1,13 +1,12 @@
 import 'package:cmsc128_lab/pages/forgot_password_screen.dart';
-import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/pages/signup_screen.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cmsc128_lab/service/database.dart';
 import 'package:cmsc128_lab/service/auth.dart';
+import 'package:cmsc128_lab/pages/navbar.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -31,7 +30,7 @@ class _LogInScreenState extends State<LogInScreen> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+          context, MaterialPageRoute(builder: (context) => const BottomNavBar()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -189,7 +188,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                           content: Text(
-                                              'There seems to be an error with your Log In Credentials, recheck them and try again.')));
+                                              'Logging you in...')));
                                 });
                               }
                               userLogin();

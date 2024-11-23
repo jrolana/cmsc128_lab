@@ -30,8 +30,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Prac Flutter',
+        title: 'Rabbit Hole',
         theme: ThemeData(
             useMaterial3: true,
             textTheme: GoogleFonts.lexendDecaTextTheme(),
@@ -50,4 +49,3 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {}
-
