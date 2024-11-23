@@ -4,6 +4,7 @@ import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/widgets/searchbox.dart';
 import 'package:cmsc128_lab/widgets/task/task_list.dart';
+import 'package:cmsc128_lab/widgets/task/filter_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -14,8 +15,25 @@ class TaskScreen extends StatefulWidget {
 
 class TaskScreenState extends State<TaskScreen>
     with AutomaticKeepAliveClientMixin {
+  List<String> _selectedCategories = [];
+
   @override
   bool get wantKeepAlive => true;
+
+  void showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return FilterDialog(
+            selectedCategories: _selectedCategories,
+            onApply: (List<String> categories) {
+              setState(() {
+                _selectedCategories = categories;
+              });
+            });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +59,12 @@ class TaskScreenState extends State<TaskScreen>
                       iconSize: 25,
                       color: StyleColor.primary,
                       onPressed: () {
-                        print("Filter Task"); // Used to test delete button
+                        showFilterDialog();
                       }),
                 ],
               ),
             ),
-            const TaskList()
+            TaskList(filterCategories: _selectedCategories),
           ],
         ),
       ),

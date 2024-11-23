@@ -2,6 +2,7 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddTaskForm extends StatefulWidget {
   const AddTaskForm({super.key});
@@ -43,10 +44,14 @@ class _AddTaskFormState extends State<AddTaskForm> {
             // Task Name
             TextFormField(
               controller: _taskNameController,
-              decoration: const InputDecoration(
-                label: Text('Task Name'),
-                prefixIcon:
-                    Icon(IconlyLight.edit_square, color: StyleColor.primary),
+              decoration: InputDecoration(
+                label: Text('Task Name',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                        color: Colors.black.withOpacity(0.5))),
+                prefixIcon: const Icon(IconlyLight.edit_square,
+                    color: StyleColor.primary),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -59,15 +64,19 @@ class _AddTaskFormState extends State<AddTaskForm> {
             // Input Date
             TextFormField(
               controller: _dateController,
-              decoration: const InputDecoration(
-                  label: Text('Enter Date'),
+              decoration: InputDecoration(
+                  label: Text('Enter Date',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          color: Colors.black.withOpacity(0.5))),
                   // filled: true,
-                  prefixIcon:
-                      Icon(IconlyLight.calendar, color: StyleColor.primary),
-                  enabledBorder: OutlineInputBorder(
+                  prefixIcon: const Icon(IconlyLight.calendar,
+                      color: StyleColor.primary),
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide:
                         BorderSide(color: StyleColor.primary, width: 1.0),
                   )),
@@ -86,15 +95,26 @@ class _AddTaskFormState extends State<AddTaskForm> {
             // Category
             DropdownButtonFormField(
                 value: _selectedCategory,
-                decoration: const InputDecoration(
-                  label: Text('Category'),
+                decoration: InputDecoration(
+                  label: Text('Category',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          color: Colors.black.withOpacity(0.5))),
                 ),
                 items: categories.map((c) {
                   return DropdownMenuItem(
                     value: c,
-                    child: Text(c),
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text(c,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                                color: Colors.black.withOpacity(0.5)))),
                   );
                 }).toList(),
+                menuMaxHeight: 190,
                 onChanged: (value) {
                   setState(() {
                     _selectedCategory = value!;

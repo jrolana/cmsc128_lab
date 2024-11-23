@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,7 +6,9 @@ import 'package:cmsc128_lab/data/task_data.dart';
 import 'package:intl/intl.dart';
 
 class TaskList extends StatefulWidget {
-  const TaskList({super.key});
+  final List<String> filterCategories;
+
+  const TaskList({super.key, required this.filterCategories});
 
   @override
   State<TaskList> createState() => _TaskListState();
@@ -14,6 +17,29 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
+    final filteredTasks = widget.filterCategories.isEmpty
+        ? tasks
+        : tasks.where((task) {
+            return widget.filterCategories.contains(task['category']);
+          }).toList();
+
+    if (filteredTasks.isEmpty) {
+      return Expanded(
+          child: Center(
+              child: Column(
+        children: [
+          const Icon(IconlyLight.activity),
+          const SizedBox(height: 10),
+          Text('You have no tasks for this category yet!',
+              style: TextStyle(
+                  fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: StyleColor.secondary))
+        ],
+      )));
+    }
+
     return Expanded(
         child: ListView.separated(
       physics: const BouncingScrollPhysics(),
@@ -22,9 +48,9 @@ class _TaskListState extends State<TaskList> {
           height: 10,
         );
       },
-      itemCount: tasks.length,
+      itemCount: filteredTasks.length,
       itemBuilder: (context, index) {
-        final task = tasks[index];
+        final task = filteredTasks[index];
         return ListTile(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -42,7 +68,10 @@ class _TaskListState extends State<TaskList> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 fontSize: 14,
-                fontFamily: GoogleFonts.lexendDeca().fontFamily),
+                fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                decoration: task['isDone'] == true
+                    ? TextDecoration.lineThrough // Apply strikethrough
+                    : TextDecoration.none),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
