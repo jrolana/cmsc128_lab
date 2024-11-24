@@ -35,3 +35,15 @@ class DayRoutine extends Routine {
     this.completionRate,
   });
 }
+
+class WeekRoutine {
+  final String day;
+  final List<double> routineCompletionRates;
+  final List<Color> routineColors;
+
+  WeekRoutine(
+    this.day,
+    this.routineCompletionRates,
+    this.routineColors,
+  );
+}

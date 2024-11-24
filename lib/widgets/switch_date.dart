@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/utils/time.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
@@ -16,13 +17,9 @@ class _SwitchDateState extends State<SwitchDate> {
 
   @override
   void initState() {
-    _startDate = getStartDate(DateTime.now());
-    _endDate = _startDate.add(const Duration(days: 7));
+    _startDate = Time.getWeekStart(DateTime.now());
+    _endDate = Time.addDays(_startDate, 7);
     super.initState();
-  }
-
-  DateTime getStartDate(DateTime date) {
-    return DateTime(date.year, date.month, date.day - date.weekday % 7);
   }
 
   @override
