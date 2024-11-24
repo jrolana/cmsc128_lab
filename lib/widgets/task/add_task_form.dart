@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cmsc128_lab/widgets/task/task_list.dart';
 
 class AddTaskForm extends StatefulWidget {
   const AddTaskForm({super.key});
@@ -134,7 +135,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       // Add to database
                       final newTask = {
                         'name': taskName,
-                        'category': _selectedCategory, // Example category
+                        'category': _selectedCategory,
                         'date': _dateController.text,
                         'isDone': false,
                         'actID': null,

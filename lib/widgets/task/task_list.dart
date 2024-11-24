@@ -37,20 +37,22 @@ class _TaskListState extends State<TaskList> {
   void didUpdateWidget(covariant TaskList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.filterCategories != oldWidget.filterCategories) {
-      fetchTasks(
-          filterCategories:
-              widget.filterCategories); // Refetch tasks when filter changes
+      fetchTasks(filterCategories: widget.filterCategories);
     }
   }
 
   @override
   void initState() {
     super.initState();
-    fetchTasks(filterCategories: widget.filterCategories); // Initial fetch
+    fetchTasks(filterCategories: widget.filterCategories);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     if (tasks.isEmpty) {
       return Expanded(
           child: Center(
@@ -98,7 +100,7 @@ class _TaskListState extends State<TaskList> {
                 fontSize: 14,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily,
                 decoration: task['isDone'] == true
-                    ? TextDecoration.lineThrough // Apply strikethrough
+                    ? TextDecoration.lineThrough
                     : TextDecoration.none),
           ),
           subtitle: Column(
@@ -132,8 +134,11 @@ class _TaskListState extends State<TaskList> {
           trailing: IconButton(
               icon: const Icon(IconlyBold.delete),
               iconSize: 20,
-              onPressed: () {
-                print("Delete Task"); // Used to test delete button
+              onPressed: () async {
+                final taskId = task['id'];
+                await FirestoreUtils.deleteTask(taskId);
+                fetchTasks(filterCategories: widget.filterCategories);
+                print('Delete: $taskId');
               }),
           isThreeLine: true,
         );
