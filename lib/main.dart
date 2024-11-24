@@ -1,37 +1,19 @@
-import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/database_service.dart';
-import 'package:cmsc128_lab/model/routine.dart';
-import 'dart:developer' show log;
 
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() async {
+Future<void> main() async {
   // Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  DatabaseService db = DatabaseService();
-  List<Routine> routines = await db.retrieveRoutines();
-
-  if (routines.isEmpty) {
-    log("empty putanginang yan");
-  }
-  for (Routine r in routines) {
-    log("TANGINA");
-    log(r.name);
-  }
-
-  log("putangina");
 
   runApp(const MyApp());
 }
