@@ -2,9 +2,9 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:cmsc128_lab/data/task_data.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskList extends StatefulWidget {
   final List<String> filterCategories;
@@ -44,7 +44,30 @@ class _TaskListState extends State<TaskList> {
   @override
   void initState() {
     super.initState();
-    fetchTasks(filterCategories: widget.filterCategories);
+    // Listen to Firestore changes
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('8ESa4lmztTB5VUhaJo7r')
+        .collection('tasks')
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        tasks = snapshot.docs.map((doc) {
+          return {
+            'id': doc.id,
+            ...doc.data(),
+          };
+        }).toList();
+
+        if (widget.filterCategories.isNotEmpty) {
+          tasks = tasks
+              .where(
+                  (task) => widget.filterCategories.contains(task['category']))
+              .toList();
+        }
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -86,10 +109,13 @@ class _TaskListState extends State<TaskList> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           leading: Checkbox(
               value: task['isDone'],
-              onChanged: (bool? value) {
+              onChanged: (bool? value) async {
                 setState(() {
                   task['isDone'] = value!;
                 });
+
+                await FirestoreUtils.updateTaskField(
+                    task['id'], 'isDone', value);
               }),
           tileColor: Colors.white,
           title: Text(
@@ -138,7 +164,6 @@ class _TaskListState extends State<TaskList> {
                 final taskId = task['id'];
                 await FirestoreUtils.deleteTask(taskId);
                 fetchTasks(filterCategories: widget.filterCategories);
-                print('Delete: $taskId');
               }),
           isThreeLine: true,
         );

@@ -37,7 +37,7 @@ class FirestoreUtils {
       List<Map<String, dynamic>> tasks = querySnapshot.docs
           .map((doc) => {
                 ...doc.data() as Map<String, dynamic>,
-                'id': doc.id, // Include document ID
+                'id': doc.id,
               })
           .toList();
 
@@ -51,6 +51,20 @@ class FirestoreUtils {
     } catch (e) {
       print("Failed to fetch tasks: $e");
       return [];
+    }
+  }
+
+  static Future<void> updateTaskField(
+      String taskId, String field, dynamic value) async {
+    try {
+      await db
+          .collection('users')
+          .doc(uid)
+          .collection('tasks')
+          .doc(taskId)
+          .update({field: value});
+    } catch (e) {
+      print('Error updating task field: $e');
     }
   }
 }
