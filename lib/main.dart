@@ -12,9 +12,8 @@ import 'package:cmsc128_lab/pages/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
-Future <void> main() async{
- // Firebase 
+Future<void> main() async {
+  // Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: WelcomeScreen(),
+        home: BottomNavBar(),
       ),
     );
   }

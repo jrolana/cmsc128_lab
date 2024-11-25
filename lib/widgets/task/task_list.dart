@@ -29,6 +29,7 @@ class _TaskListState extends State<TaskList> {
 
     setState(() {
       tasks = fetchedTasks;
+      sortTasks();
       isLoading = false;
     });
   }
@@ -41,13 +42,24 @@ class _TaskListState extends State<TaskList> {
     }
   }
 
+  void sortTasks() {
+    tasks.sort((a, b) {
+      if (a['isDone'] && !b['isDone']) return 1;
+      if (!a['isDone'] && b['isDone']) return -1;
+
+      DateTime dateA = DateTime.parse(a['date']);
+      DateTime dateB = DateTime.parse(b['date']);
+      return dateA.compareTo(dateB);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     // Listen to Firestore changes
     FirebaseFirestore.instance
         .collection('users')
-        .doc('8ESa4lmztTB5VUhaJo7r')
+        .doc('8ESa4lmztTB5VUhaJo7r') // Temporary userID
         .collection('tasks')
         .snapshots()
         .listen((snapshot) {
@@ -65,6 +77,7 @@ class _TaskListState extends State<TaskList> {
                   (task) => widget.filterCategories.contains(task['category']))
               .toList();
         }
+        sortTasks();
         isLoading = false;
       });
     });

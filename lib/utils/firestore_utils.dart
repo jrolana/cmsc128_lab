@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreUtils {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   // Get user ID
-  static String uid = '8ESa4lmztTB5VUhaJo7r';
+  static String uid = '8ESa4lmztTB5VUhaJo7r'; // This one is temporary
 
   static Future<void> addTask(Map<String, dynamic> task) async {
     try {

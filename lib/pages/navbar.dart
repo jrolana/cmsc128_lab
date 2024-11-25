@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';
 import 'package:cmsc128_lab/widgets/task/add_task_dialog.dart';
-import 'package:cmsc128_lab/widgets/task/test.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -28,6 +27,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     });
   }
 
+  // Used to show the dialog for adding tasks
+  // when the user is in the task page
   void showAddTaskDialog() {
     showDialog(
       context: context,
