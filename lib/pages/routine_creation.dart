@@ -47,12 +47,12 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
           ),
           title: const Text('Create a Routine'),
         ),
-        body: Padding(
+        body: const Padding(
           
           padding: EdgeInsets.fromLTRB(20,20,20,80),
             child:SingleChildScrollView(
             child:Column(
-            children: const [
+            children: [
             RCreationActivityName(),
             SizedBox(height:20),
             ReorderableExample(),
