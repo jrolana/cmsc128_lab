@@ -7,8 +7,7 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
+import 'package:cmsc128_lab/pages/routine_session.dart';
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -33,18 +32,18 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Rabbit Hole',
         theme: ThemeData(
-            useMaterial3: true,
-            textTheme: GoogleFonts.lexendDecaTextTheme(),
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-              titleTextStyle: TextStyle(
-                  color: StyleColor.primaryText,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: GoogleFonts.lexendDeca().fontFamily),
-            )),
-        // home: WelcomeScreen(),
-        home: const BottomNavBar(),
+          useMaterial3: true,
+          textTheme: GoogleFonts.lexendDecaTextTheme(),
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                color: StyleColor.primaryText,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                fontFamily: GoogleFonts.lexendDeca().fontFamily),
+          ),
+        ),
+        home: RoutineSession(),
       ),
     );
   }
