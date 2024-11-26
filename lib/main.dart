@@ -1,4 +1,5 @@
 import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:cmsc128_lab/pages/welcome_screen.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  DatabaseService.retrieveWeekRoutines();
 
   runApp(const MyApp());
 }
@@ -41,7 +40,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        home: WelcomeScreen(),
+        // home: WelcomeScreen(),
+        home: BottomNavBar(),
       ),
     );
   }

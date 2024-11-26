@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
@@ -15,7 +18,7 @@ class Streaks extends StatefulWidget {
 
 class _StreaksState extends State<Streaks> {
   late ConfettiController _controller;
-  late int _days;
+  int _days = 0;
   late String _phrase;
   final int _index = DateTime.now().day % 10;
 
@@ -47,20 +50,38 @@ class _StreaksState extends State<Streaks> {
 
   @override
   void initState() {
+    super.initState();
+
     _controller = ConfettiController(duration: const Duration(seconds: 10));
-    _days = getDays();
 
     _phrase = _upliftingPhrases[_index];
 
-    if (_days > 0) {
-      _phrase = _congratulatoryPhrases[_index];
-    }
+    // should be called when a user has done an act
+    DatabaseService.updateStreak();
 
-    super.initState();
+    // addPostFrameCallback is needed as future function updateStreak takes time to return a value
+    // making _days be null (it is not enough that _days was initialized to 0)
+    DatabaseService.getStreak().then((value) {
+      SchedulerBinding.instance.addPostFrameCallback((timestamp) {
+        setState(() {
+          _days = value;
+
+          if (_days > 0) {
+            _phrase = _congratulatoryPhrases[_index];
+          }
+        });
+      });
+    });
   }
 
-  int getDays() {
-    return 7;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  getDays() async {
+    _days = await DatabaseService.getStreak();
   }
 
   @override

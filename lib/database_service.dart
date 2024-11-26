@@ -65,9 +65,9 @@ class DatabaseService {
       List<Color> colors = [];
       day = Time.addDays(day, i);
 
-      log("$i");
-      log(weekdays[i]);
-      log(DateFormat.yMd().format(day));
+      // log("$i");
+      // log(weekdays[i]);
+      // log(DateFormat.yMd().format(day));
 
       for (Routine routine in routines) {
         double completionRate =
@@ -81,5 +81,42 @@ class DatabaseService {
     }
 
     yield weekRoutines;
+  }
+
+  static Future<int> getStreak() async {
+    final DocumentReference docRef = _db.collection("users").doc(_user);
+    final DocumentSnapshot<Map<String, dynamic>> doc =
+        await docRef.get() as DocumentSnapshot<Map<String, dynamic>>;
+
+    int streak = doc.data()!["streak"];
+    return streak;
+  }
+
+  static updateStreak() async {
+    final DocumentReference docRef = _db.collection("users").doc(_user);
+    final DocumentSnapshot<Map<String, dynamic>> doc =
+        await docRef.get() as DocumentSnapshot<Map<String, dynamic>>;
+    int prevStreak = doc.data()!["streak"];
+    int newStreak = 0;
+    String lastAct = doc.data()!["lastActDate"];
+
+    DateTime today = DateTime.now();
+    DateTime yesterday = Time.subtractDays(today, 1);
+    String currDate = DateFormat.yMd().format(today);
+    String prevDate = DateFormat.yMd().format(yesterday);
+
+    // NOTE: Should only be valid when there is a change in completed routines section at the current date
+    String newAct = currDate;
+
+    if (lastAct != prevDate || lastAct != prevDate) {
+      await docRef.update({"streak": newStreak, "lastActDate": newAct});
+      return;
+    }
+
+    if (lastAct == prevDate) {
+      newStreak += 1;
+    }
+
+    await docRef.update({"streak": newStreak, "lastActDate": newAct});
   }
 }
