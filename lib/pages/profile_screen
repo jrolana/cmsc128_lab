@@ -19,3 +19,108 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   const Prof
 }
+
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ProfilePage(),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("HomePage"),
+        backgroundColor: Colors.teal[700],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Profile Avatar Section
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.blue[900],
+                child: const Icon(
+                  Icons.pets, // Rabbit icon placeholder
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                "User Nickname",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Joined last MM/DD/YYYY",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.purple,
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Profile Details Section
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[300]!),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Profile Details",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.purple,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      "Nickname",
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
+                    const TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Enter your nickname",
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      "Nickname",
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
+                    const TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Enter your nickname",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
