@@ -57,7 +57,7 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
         return RoutineCard(
           name: entry.name,
           numActivities: entry.numActivities,
-          avgCompletionRate: entry.dailyCompletionRate /
+          completionRate: entry.dailyCompletionRate /
               100, // NOTE: Doesn't make sense but acts as dummy data for now
           color: entry.color,
         );
