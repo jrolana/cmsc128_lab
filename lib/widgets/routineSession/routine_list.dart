@@ -17,12 +17,16 @@ class _RoutineSessionListState extends State<RoutineSessionList>{
 
   @override
   void initState() {
+    // TODO: implement initState
     activityIDs = getActivities();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context){
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      children:[
     return ListView.separated(
       itemCount: activityIDs.length,
       itemBuilder: (context,index){
@@ -37,10 +41,12 @@ class _RoutineSessionListState extends State<RoutineSessionList>{
         );
       },
 
+      ],
     );
   }
 
   List getActivities(){
+    // TODO: Insert Query for activities in routine
 
     return [];
   }
