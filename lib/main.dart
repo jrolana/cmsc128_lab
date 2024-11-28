@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
         ),
-        home: RoutineSession(),
+        home: RoutineSession('243411411'),
       ),
     );
   }

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/widgets/routineSession/routine_timer.dart';
 
 class RoutineSession extends StatefulWidget{
-  const RoutineSession({super.key});
+  String routineID;
+  RoutineSession(this.routineID,{super.key});
   @override
   State<RoutineSession> createState() => _StateRoutineSession();
 }
