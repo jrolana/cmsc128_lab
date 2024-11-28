@@ -13,11 +13,10 @@ class ActivityBlock extends StatefulWidget{
 class _DefaultActivityBlock extends State<ActivityBlock>{
   bool showTextField = false;
   String actName = 'Default Name';
-  int minDuration = 1;
-  int hourDuration = 0;
   Icon actIcon = Icon(Icons.square_rounded);
   TextEditingController actController = TextEditingController();
   String defActVal = 'Enter an activity name';
+  Duration duration=Duration(minutes: 1);
   @override
   void dispose() {
     actController.dispose();
@@ -39,11 +38,10 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
             Expanded(
               child: showTextField ? activityInputField() : activityInputButton(),
             ),
-            Row(
-              children: [
-                Text('$hourDuration hr'),
-                Text('$minDuration min')
-              ],
+            TextButton(
+              onPressed: () {  },
+              child: Text(_printDuration(duration)),
+
             )
           ],
         ))
@@ -73,10 +71,20 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
         },
         child: Text(actName, textAlign: TextAlign.left,));
   }
-_pickIcon() async{
-    IconPickerIcon? iconPicked = await showIconPicker(context);
-    actIcon = Icon(iconPicked?.data);
-    setState(() {});
-}
+  _pickIcon() async{
+      IconPickerIcon? iconPicked = await showIconPicker(context);
+      actIcon = Icon(iconPicked?.data);
+      setState(() {});
+  }
+  String _printDuration(Duration duration) {
+
+    String twoDigitMinutes = duration.inMinutes.remainder(60).abs().toString();
+    String twoDigitSeconds = duration.inSeconds.remainder(60).abs().toString();
+    if(duration.inHours ==0 ){
+      return "$twoDigitMinutes min $twoDigitSeconds sec";
+    } else{
+      return "${duration.inHours} hr $twoDigitMinutes min";
+    }
+  }
 }
 
