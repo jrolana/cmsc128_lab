@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/widgets/routineWidgets/complete_today_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -24,55 +25,59 @@ class RoutineScreenState extends State<RoutineScreen>
     super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          children: [
-            Container(
-              child: Column(
-                
-                children: const [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Completed Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
-                    ),
-                  RoutineBlock(),
-
-                ],
+          child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              
+              //Completed Today Section
+              Container(
+                child: Column(
+                  
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Completed Today", style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                      ),
+                    RoutineBlock(),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Upcoming Today",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
-                    ),
-                  RoutineBlock(),
-                  RoutineBlock(),
-
-                ],
+              
+              //Upcoming Today Section
+              Container(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Upcoming Today",style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                      ),
+                    RoutineBlock(),
+                    RoutineBlock(),
+        
+                  ],
+                ),
               ),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Other Routines",style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,)),
-                    ),
-                  RoutineBlock(),
-                  RoutineBlock(),
-                  RoutineBlock(),
-                  RoutineBlock(),
-
-                ],
+              //Other Routines
+              Container(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Other Routines",style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                      ),
+                    RoutineBlock(),
+                    RoutineBlock(),
+                    RoutineBlock(),
+                    RoutineBlock(),
+        
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      ),
+        ),
     );
   }
 }

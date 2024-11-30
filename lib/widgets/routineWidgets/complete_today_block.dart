@@ -1,0 +1,69 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+
+//Notes gonna have to fix the user id accessing
+
+class CompleteTodayBlock extends StatefulWidget {
+  const CompleteTodayBlock({super.key});
+
+  @override
+  State<CompleteTodayBlock> createState() => _CompleteTodayBlock();
+}
+
+class _CompleteTodayBlock extends State<CompleteTodayBlock> {
+  final routine_stream = FirebaseFirestore.instance.collection('users').doc('8ESa4lmztTB5VUhaJo7r').collection('routines').where('routineType', isEqualTo: 'completedtoday').snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        alignment: FractionalOffset.center, 
+        decoration: myBoxDecoration(),
+        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: StreamBuilder(
+          stream: routine_stream, 
+          builder: (context, snapshot){
+            if(snapshot.hasError){
+              return const Text("Connection error");
+            }
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Text('Loading ...');
+            }
+        
+            var docs = snapshot.data!.docs; 
+        
+            return  Flexible(
+              child: ListView.builder(
+                padding: EdgeInsets.all(0.0),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: docs.length,
+                itemBuilder: (context, index){
+                  return ListTile(
+                    leading: Icon(Icons.cases_sharp, size:30, color: const Color.fromARGB(255, 25, 36, 108)),
+                    title: Text(docs[index]['name'], style: GoogleFonts.lexendDeca(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:14,))),
+                    subtitle: Text('${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'),
+                  );
+                }
+              ),
+            );
+          }    
+        ),
+      ),
+    );
+  }
+}
+
+BoxDecoration myBoxDecoration() {
+  return BoxDecoration(
+    border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
+    color:Color.fromARGB(255, 254, 254, 254),
+    borderRadius: BorderRadius.circular(20.0),
+  );
+}
