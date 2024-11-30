@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -38,20 +36,18 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
         
             var docs = snapshot.data!.docs; 
         
-            return  Flexible(
-              child: ListView.builder(
-                padding: EdgeInsets.all(0.0),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: docs.length,
-                itemBuilder: (context, index){
-                  return ListTile(
-                    leading: Icon(Icons.cases_sharp, size:30, color: const Color.fromARGB(255, 25, 36, 108)),
-                    title: Text(docs[index]['name'], style: GoogleFonts.lexendDeca(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:14,))),
-                    subtitle: Text('${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'),
-                  );
-                }
-              ),
+            return ListView.builder(
+              padding: EdgeInsets.all(0.0),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: docs.length,
+              itemBuilder: (context, index){
+                return ListTile(
+                  leading: Icon(Icons.cases_sharp, size:30, color: const Color.fromARGB(255, 25, 36, 108)),
+                  title: Text(docs[index]['name'], style: GoogleFonts.lexendDeca(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:14,))),
+                  subtitle: Text('${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'),
+                );
+              }
             );
           }    
         ),

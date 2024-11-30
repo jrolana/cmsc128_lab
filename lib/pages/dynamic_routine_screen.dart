@@ -1,14 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/complete_today_block.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/upcoming_today_block';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
-import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/data/task_data.dart';
-import 'package:intl/intl.dart';
-import 'package:cmsc128_lab/widgets/searchbox.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/other_routine_block';
 
 class DynamicHomeRoutine extends StatefulWidget {
@@ -27,7 +20,7 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
-            margin: EdgeInsets.only(bottom: 70),
+            margin: const EdgeInsets.only(bottom: 70),
             child: Column(
               children: [
                 //Completed Today
@@ -35,9 +28,9 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Completed Today", style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                        child: Text("Completed Today", style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
                       ),
-                      CompleteTodayBlock(),
+                      const CompleteTodayBlock(),
                     ],
                   ),
                 //Upcoming Today
@@ -45,10 +38,10 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                     children: [
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Upcoming Today",style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                          child: Text("Upcoming Today",style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
                         ),
-                      UpcomingTodayBlock(),   
-                      UpcomingTodayBlock()                 
+                      const UpcomingTodayBlock(),   
+                      const UpcomingTodayBlock()                 
                     ],
                   ),
                 //Other Routines
@@ -56,9 +49,9 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Other Routines", style: GoogleFonts.lexend(textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
+                        child: Text("Other Routines", style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
                         ),
-                      OtherRoutines(),
+                      const OtherRoutines(),
                     ],
                   ),
               ],
