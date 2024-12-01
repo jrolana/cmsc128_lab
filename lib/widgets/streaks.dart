@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/utils/styles.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
-import 'package:cmsc128_lab/utils/styles.dart';
-import 'package:confetti/confetti.dart';
 
 class Streaks extends StatefulWidget {
   const Streaks({
@@ -56,7 +55,8 @@ class _StreaksState extends State<Streaks> {
 
     _phrase = _upliftingPhrases[_index];
 
-    // should be called when a user has done an act
+    // NOTE: should be called when a user has done an act
+    // TODO: add to routine screen (?)
     DatabaseService.updateStreak();
 
     // addPostFrameCallback is needed as future function updateStreak takes time to return a value
@@ -68,6 +68,7 @@ class _StreaksState extends State<Streaks> {
 
           if (_days > 0) {
             _phrase = _congratulatoryPhrases[_index];
+            _controller.play();
           }
         });
       });
@@ -80,14 +81,12 @@ class _StreaksState extends State<Streaks> {
     super.dispose();
   }
 
-  getDays() async {
+  void getDays() async {
     _days = await DatabaseService.getStreak();
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller.play();
-
     return ConfettiWidget(
       confettiController: _controller,
       blastDirectionality: BlastDirectionality.explosive,

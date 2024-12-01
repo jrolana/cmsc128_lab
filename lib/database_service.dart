@@ -97,7 +97,7 @@ class DatabaseService {
     final DocumentSnapshot<Map<String, dynamic>> doc =
         await docRef.get() as DocumentSnapshot<Map<String, dynamic>>;
     int prevStreak = doc.data()!["streak"];
-    int newStreak = 0;
+    int newStreak = prevStreak;
     String lastAct = doc.data()!["lastActDate"];
 
     DateTime today = DateTime.now();
