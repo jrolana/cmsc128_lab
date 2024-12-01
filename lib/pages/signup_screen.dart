@@ -5,7 +5,6 @@ import 'package:cmsc128_lab/pages/login_screen.dart';
 import 'package:cmsc128_lab/pages/home.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
