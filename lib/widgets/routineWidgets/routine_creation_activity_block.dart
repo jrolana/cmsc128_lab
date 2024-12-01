@@ -7,7 +7,6 @@ class ActivityBlock extends StatefulWidget{
   @override
   State<ActivityBlock> createState() => _DefaultActivityBlock();
 
-
 }
 
 class _DefaultActivityBlock extends State<ActivityBlock>{
