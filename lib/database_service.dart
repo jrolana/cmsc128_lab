@@ -8,6 +8,9 @@ import 'dart:developer' show log;
 class DatabaseService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
   static const String _user = "user1";
+  static List<String> weekdays = ["Sn", "M", "T", "W", "Th", "F", "S"];
+  static const weekdaysLen = 7;
+  static List<int> weekIndices = List.generate(weekdaysLen, (index) => index);
 
   static Future<List<Routine>> retrieveRoutines() async {
     final DocumentReference userRef = _db.collection("users").doc(_user);
@@ -40,47 +43,16 @@ class DatabaseService {
   }
 
   static Future<double> getDayCompletionRate(
-      Routine routine, String now) async {
+      Routine routine, String day) async {
     CollectionReference collectionRef =
         routine.docRef!.collection("completedActivities");
 
     QuerySnapshot docs =
-        await collectionRef.where("date", isEqualTo: now).get();
+        await collectionRef.where("date", isEqualTo: day).get();
 
     double completionRate =
         (docs.size / (routine.numActivities).toDouble()) * 100;
     return completionRate;
-  }
-
-  static Stream<List<WeekRoutine>> retrieveWeekRoutines() async* {
-    List<Routine> routines = await retrieveRoutines();
-    DateTime now = DateTime.utc(2024, 11, 23);
-    List<WeekRoutine> weekRoutines = [];
-    List<String> weekdays = ["Sn", "M", "T", "W", "Th", "F", "S"];
-    List<int> weekIndices = List.generate(weekdays.length, (index) => index);
-    DateTime day = Time.getWeekStart(now);
-
-    for (int i in weekIndices) {
-      List<double> rates = [];
-      List<Color> colors = [];
-      day = Time.addDays(day, i);
-
-      // log("$i");
-      // log(weekdays[i]);
-      // log(DateFormat.yMd().format(day));
-
-      for (Routine routine in routines) {
-        double completionRate =
-            await getDayCompletionRate(routine, DateFormat.yMd().format(day));
-
-        rates.add(completionRate);
-        colors.add(routine.color);
-      }
-
-      weekRoutines.add(WeekRoutine(weekdays[i], rates, colors));
-    }
-
-    yield weekRoutines;
   }
 
   static Future<int> getStreak() async {
@@ -118,5 +90,62 @@ class DatabaseService {
     }
 
     await docRef.update({"streak": newStreak, "lastActDate": newAct});
+  }
+
+  static Future<List<DailyAverage>> getDailyAvgCompletionRate() async {
+    List<Routine> routines = await retrieveRoutines();
+    DateTime now = DateTime.utc(2024, 11, 23);
+    List<DailyAverage> dailyAvgCompletionRate = [];
+    DateTime startDay = Time.getWeekStart(now);
+    DateTime day;
+    int routinesLen = routines.length;
+
+    for (int i in weekIndices) {
+      double total = 0;
+      day = Time.addDays(startDay, i);
+
+      for (Routine routine in routines) {
+        double completionRate =
+            await getDayCompletionRate(routine, DateFormat.yMd().format(day));
+
+        total += completionRate;
+      }
+
+      dailyAvgCompletionRate
+          .add(DailyAverage(weekdays[i], total / routinesLen));
+    }
+
+    return dailyAvgCompletionRate;
+  }
+
+  static Future<List<DayRoutine>> getWeeklyAverageCompletionRate() async {
+    List<Routine> routines = await retrieveRoutines();
+    DateTime now = DateTime.utc(2024, 11, 23);
+    List<DayRoutine> weeklyAvgCompletionRate = [];
+    DateTime startDay = Time.getWeekStart(now);
+    DateTime day;
+    double completionRate;
+    double total;
+
+    for (Routine routine in routines) {
+      total = 0;
+      for (int i in weekIndices) {
+        day = Time.addDays(startDay, i);
+        completionRate =
+            await getDayCompletionRate(routine, DateFormat.yMd().format(day));
+        total += completionRate;
+      }
+
+      weeklyAvgCompletionRate.add(
+        DayRoutine(
+            name: routine.name,
+            color: routine.color,
+            icon: routine.icon,
+            numActivities: routine.numActivities,
+            completionRate: total / weekdaysLen),
+      );
+    }
+
+    return weeklyAvgCompletionRate;
   }
 }

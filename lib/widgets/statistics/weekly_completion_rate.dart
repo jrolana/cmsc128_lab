@@ -1,17 +1,23 @@
 import 'package:cmsc128_lab/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
+import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:developer' show log;
 
-class WeeklyRoutineChart extends StatelessWidget {
+class WeeklyRoutineChart extends StatefulWidget {
   const WeeklyRoutineChart({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<int> indices = List.generate(3, (index) => index);
+  State<WeeklyRoutineChart> createState() => _WeeklyRoutineChartState();
+}
 
+class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(20),
       child: Column(
@@ -24,20 +30,20 @@ class WeeklyRoutineChart extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-            height: 400,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: StreamBuilder<List<WeekRoutine>>(
-                stream: DatabaseService.retrieveWeekRoutines(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const FetchingData();
-                  }
+          FutureBuilder<List<DailyAverage>>(
+              future: DatabaseService.getDailyAvgCompletionRate(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const FetchingData();
+                }
 
-                  return SfCartesianChart(
+                return Container(
+                  margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  height: 400,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: SfCartesianChart(
                     margin: const EdgeInsets.all(30),
                     title: ChartTitle(
                         text:
@@ -45,12 +51,9 @@ class WeeklyRoutineChart extends StatelessWidget {
                         textStyle: TextStyle(
                             fontSize: 12,
                             fontFamily: GoogleFonts.lexendDeca().fontFamily)),
-                    legend: Legend(
-                      isVisible: true,
-                      position: LegendPosition.bottom,
-                      textStyle: TextStyle(
-                          fontFamily: GoogleFonts.lexendDeca().fontFamily),
-                    ),
+                    // legend: Legend(
+                    //   isVisible: false,
+                    // ),
                     primaryXAxis: CategoryAxis(
                       labelStyle: TextStyle(
                         color: Colors.black54,
@@ -66,23 +69,27 @@ class WeeklyRoutineChart extends StatelessWidget {
                         fontFamily: GoogleFonts.lexendDeca().fontFamily,
                       ),
                     ),
-                    series: indices.map((i) {
-                      return StackedColumnSeries<WeekRoutine, String>(
-                        // name: routineNames[i],
+                    palette: <Color>[
+                      StyleColor.primary,
+                      StyleColor.accentYellow,
+                      StyleColor.accentBlue,
+                      StyleColor.secondary,
+                      StyleColor.accentPink,
+                    ],
+                    series: <CartesianSeries>[
+                      ColumnSeries<DailyAverage, String>(
                         dataSource: snapshot.data,
-                        xValueMapper: (WeekRoutine data, _) => data.day,
-                        yValueMapper: (WeekRoutine data, _) =>
-                            data.routineCompletionRates[i],
-                        pointColorMapper: (WeekRoutine data, _) =>
-                            data.routineColors[i],
+                        xValueMapper: (DailyAverage data, _) => data.day,
+                        yValueMapper: (DailyAverage data, _) =>
+                            data.completionRate,
                         width: 0.2,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(15)),
-                      );
-                    }).toList(),
-                  );
-                }),
-          ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
         ],
       ),
     );

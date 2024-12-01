@@ -36,14 +36,12 @@ class DayRoutine extends Routine {
   });
 }
 
-class WeekRoutine {
+class DailyAverage {
   final String day;
-  final List<double> routineCompletionRates;
-  final List<Color> routineColors;
+  final double completionRate;
 
-  WeekRoutine(
+  DailyAverage(
     this.day,
-    this.routineCompletionRates,
-    this.routineColors,
+    this.completionRate,
   );
 }
