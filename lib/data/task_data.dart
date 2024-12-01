@@ -1,6 +1,16 @@
 // List of Sample Tasks
 // Delete if database is created
 
+List<String> categories = [
+  "Personal",
+  "School",
+  "Work",
+  "Home",
+  "Health",
+  "Social",
+  "Financial"
+];
+
 List<Map<String, dynamic>> tasks = [
   {
     "name": "Grocery Shopping",
