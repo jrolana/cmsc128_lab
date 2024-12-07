@@ -2,7 +2,7 @@ import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 class RoutineCreation extends StatefulWidget {
   const RoutineCreation({super.key});
 
@@ -14,8 +14,7 @@ class RoutineCreation extends StatefulWidget {
 
 class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerProviderStateMixin {
   int actCount  = 1;
-  //List<int> _items = List<int>.generate(1, (int index) => index);
-  List<ActivityBlock> activityBlocks = [];
+  List<ActivityBlock> activityBlocks = [ActivityBlock()];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,11 +34,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
               padding: EdgeInsets.all(9),
               child: TextButton(
                   onPressed: () {
-                    setState(() {
-                      activityBlocks.add(ActivityBlock());
-                      print(activityBlocks);
-                    });
-
+                    addActivity();
                   },
                   style:
                       TextButton.styleFrom(backgroundColor: StyleColor.primary),
@@ -58,20 +53,34 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
           ),
           title: const Text('Create a Routine'),
         ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 80),
-          child: SingleChildScrollView(
-            child: Column(
+        body: Column(
               children: [
                 RCreationActivityName(),
                 SizedBox(height: 20),
-                ListView.builder(itemBuilder:(context,index){
-                  return
-                }),
+                Expanded(
+                    child: ListView.separated(
+                        itemBuilder: (context, index){
+                          return ListTile(
+
+                            title: activityBlocks[index],
+                            trailing: IconButton(onPressed: (){
+                              setState(() {
+                                activityBlocks.removeAt(index);
+                                actCount-=1;
+                              });
+                              }, icon: Icon(Icons.delete)),
+                          );
+                        },
+                        separatorBuilder: (context, index){
+                          return const SizedBox(
+                            height: 10,
+                          );
+                        },
+                        itemCount: actCount
+                    )
+                )
               ],
-            ),
           ),
-        ),
       ),
     );
   }
@@ -83,8 +92,12 @@ class _RoutineCreationDefaultState extends State<RoutineCreation> with TickerPro
       ],
     );
   }
-
-
+  void addActivity(){
+    setState(() {
+      activityBlocks.add(ActivityBlock());
+      actCount+=1;
+    });
+  }
 
   // TODO figure out reorderable list view if possible
   // Widget makeList() {
