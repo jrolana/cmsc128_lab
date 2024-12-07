@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
@@ -11,7 +12,7 @@ class ActivityBlock extends StatefulWidget{
 
 class _DefaultActivityBlock extends State<ActivityBlock>{
   bool showTextField = false;
-  String actName = 'Default Name';
+  String actName = 'Enter an activity name';
   Icon actIcon = Icon(Icons.square_rounded);
   TextEditingController actController = TextEditingController();
   String defActVal = 'Enter an activity name';
@@ -38,7 +39,16 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
               child: showTextField ? activityInputField() : activityInputButton(),
             ),
             TextButton(
-              onPressed: () {  },
+              onPressed: () => _showDialog(
+                  CupertinoTimerPicker(
+                    mode: CupertinoTimerPickerMode.hms,
+                    initialTimerDuration: duration,
+                    // This is called when the user changes the timer's
+                    // duration.
+                    onTimerDurationChanged: (Duration newDuration) {
+                      setState(() => duration = newDuration);
+                    },
+                  )),
               child: Text(_printDuration(duration)),
 
             )
@@ -48,8 +58,15 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
   }
   Widget activityInputField(){
     return TextField(
+
       controller: actController,
       autofocus: true,
+      onTapOutside: (event){
+        setState(() {
+          actName = actController.text;
+          showTextField = false;
+        });
+      },
       onSubmitted: (String value){
           setState(() {
             showTextField = false;
@@ -62,6 +79,7 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
 
   Widget activityInputButton(){
     return TextButton(
+      style: ButtonStyle(alignment: Alignment.centerLeft),
         onPressed: (){
           setState(() {
             actController.text = actName == defActVal? '':actName;
@@ -85,5 +103,18 @@ class _DefaultActivityBlock extends State<ActivityBlock>{
       return "${duration.inHours} hr $twoDigitMinutes min";
     }
   }
+  void _showDialog(Widget child){
+    showCupertinoModalPopup(context: context,
+        builder: (BuildContext context) => Container(
+          height:216,
+          padding: const EdgeInsets.only(top:6.0),
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom,),
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          child: SafeArea(top:false,child: child),
+        ));
+  }
+
+
+
 }
 
