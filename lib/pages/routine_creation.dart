@@ -1,5 +1,7 @@
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,15 +37,17 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               )),
           ElevatedButton(
               onPressed: () {
-                print('Add Task Block');
+                addTaskBlock();
               },
               child: Text('Add Task Block')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
-            onPressed: () {},
-            child:Text("Create Routine",
-                    style: TextStyle(color: Colors.white),
-          )),
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
+              onPressed: () {},
+              child: Text(
+                "Create Routine",
+                style: TextStyle(color: Colors.white),
+              )),
         ]),
         appBar: AppBar(
           leading: IconButton(
@@ -95,6 +99,14 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   void addActivity() {
     setState(() {
       activityBlocks.add(ActivityBlock());
+      actCount += 1;
+    });
+  }
+
+  void addTaskBlock() {
+    setState(() {
+      // activityBlocks.add(TaskSelectBlock(category: "School")); // For Selection of Task Sample
+      activityBlocks.add(TaskBlock());
       actCount += 1;
     });
   }

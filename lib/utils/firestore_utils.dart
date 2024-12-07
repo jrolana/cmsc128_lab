@@ -67,4 +67,29 @@ class FirestoreUtils {
       print('Error updating task field: $e');
     }
   }
+
+  static Future<List<Map<String, dynamic>>> getTasksForRoutine(
+      String? category) async {
+    try {
+      QuerySnapshot querySnapshot = await db
+          .collection('users')
+          .doc(uid)
+          .collection('tasks')
+          .where('category', isEqualTo: category)
+          .get();
+
+      List<Map<String, dynamic>> tasks = querySnapshot.docs
+          .map((doc) => {
+                ...doc.data() as Map<String, dynamic>,
+                'id': doc.id,
+              })
+          .toList();
+
+      tasks = tasks.where((task) => task['isDone'] == false).toList();
+      return tasks;
+    } catch (e) {
+      print("Failed to fetch tasks: $e");
+      return [];
+    }
+  }
 }
