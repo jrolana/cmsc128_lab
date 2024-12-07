@@ -7,6 +7,8 @@ class Routine {
   final dynamic icon;
   final Color color;
   final int numActivities;
+  final double? repeatWeeksCount;
+  final double? repeatDaysCount;
 
   Routine({
     this.docRef,
@@ -14,6 +16,8 @@ class Routine {
     required this.icon,
     required this.color,
     required this.numActivities,
+    this.repeatWeeksCount,
+    this.repeatDaysCount,
   });
 
   Routine.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
@@ -21,7 +25,9 @@ class Routine {
         name = doc.data()!["name"],
         icon = doc.data()!["icon"],
         color = Color(doc.data()!["color"]),
-        numActivities = doc.data()!["numActivities"];
+        numActivities = doc.data()!["numActivities"],
+        repeatWeeksCount = doc.data()!["repeatWeeksCount"],
+        repeatDaysCount = doc.data()!["repeatDaysCount"];
 }
 
 class DayRoutine extends Routine {
@@ -36,12 +42,12 @@ class DayRoutine extends Routine {
   });
 }
 
-class DailyAverage {
-  final String day;
+class RoutineAverage {
+  final String name;
   final double completionRate;
 
-  DailyAverage(
-    this.day,
+  RoutineAverage(
+    this.name,
     this.completionRate,
   );
 }

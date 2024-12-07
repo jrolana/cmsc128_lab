@@ -10,4 +10,8 @@ class Time {
   static DateTime subtractDays(DateTime date, int days) {
     return date.subtract(Duration(days: days));
   }
+
+  static int getMonthDays(DateTime date) {
+    return DateTime(date.year, date.month + 1, 0).day;
+  }
 }

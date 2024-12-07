@@ -1,3 +1,7 @@
+import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/model/routine.dart';
+import 'package:cmsc128_lab/widgets/fetching_data.dart';
+import 'package:cmsc128_lab/utils/time.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,29 +15,44 @@ class MonthlyCompletionRate extends StatefulWidget {
 }
 
 class _MonthlyCompletionRateState extends State<MonthlyCompletionRate> {
-  late List<MonthRoutine> _thirdMonthData;
-  late List<MonthRoutine> _prevMonthData;
-  late List<MonthRoutine> _currMonthData;
+  List<RoutineAverage> currMonthData = [];
+  List<RoutineAverage> prevMonthData = [];
+  List<RoutineAverage> prevPrevMonthData = [];
 
   @override
   void initState() {
-    _thirdMonthData = getThirdMonthData();
-    _prevMonthData = getPrevMonthData();
-    _currMonthData = getCurrMonthData();
-
     super.initState();
+
+    DateTime currDate = DateTime.now();
+    DateTime currMonth = DateTime.utc(currDate.year, currDate.month, 1);
+    DateTime prevMonth = DateTime.utc(currDate.year, currDate.month - 1, 1);
+    DateTime prevPrevMonth = DateTime.utc(currDate.year, currDate.month - 2, 1);
+
+    DatabaseService.getMonthlyAverageCompletionRate(currMonth).then((data) {
+      setState(() {
+        currMonthData = data;
+      });
+    });
+
+    DatabaseService.getMonthlyAverageCompletionRate(prevMonth).then((data) {
+      setState(() {
+        prevMonthData = data;
+      });
+    });
+
+    DatabaseService.getMonthlyAverageCompletionRate(prevPrevMonth).then((data) {
+      setState(() {
+        prevPrevMonthData = data;
+      });
+    });
   }
 
-  List<MonthRoutine> getThirdMonthData() {
-    return thirdMonthData;
-  }
-
-  List<MonthRoutine> getPrevMonthData() {
-    return prevMonthData;
-  }
-
-  List<MonthRoutine> getCurrMonthData() {
-    return currMonthData;
+  // Prevents setState() called after dispose()
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override
@@ -86,24 +105,24 @@ class _MonthlyCompletionRateState extends State<MonthlyCompletionRate> {
                 ),
               ),
               series: <CartesianSeries>[
-                StackedLineSeries<MonthRoutine, String>(
+                StackedLineSeries<RoutineAverage, String>(
                     name: months[0],
-                    dataSource: _thirdMonthData,
-                    xValueMapper: (MonthRoutine data, _) => data.routine,
-                    yValueMapper: (MonthRoutine data, _) =>
-                        data.avgCompletionRate),
-                StackedLineSeries<MonthRoutine, String>(
+                    dataSource: currMonthData,
+                    xValueMapper: (RoutineAverage data, _) => data.name,
+                    yValueMapper: (RoutineAverage data, _) =>
+                        data.completionRate),
+                StackedLineSeries<RoutineAverage, String>(
                     name: months[1],
-                    dataSource: _prevMonthData,
-                    xValueMapper: (MonthRoutine data, _) => data.routine,
-                    yValueMapper: (MonthRoutine data, _) =>
-                        data.avgCompletionRate),
-                StackedLineSeries<MonthRoutine, String>(
+                    dataSource: prevMonthData,
+                    xValueMapper: (RoutineAverage data, _) => data.name,
+                    yValueMapper: (RoutineAverage data, _) =>
+                        data.completionRate),
+                StackedLineSeries<RoutineAverage, String>(
                     name: months[2],
-                    dataSource: _currMonthData,
-                    xValueMapper: (MonthRoutine data, _) => data.routine,
-                    yValueMapper: (MonthRoutine data, _) =>
-                        data.avgCompletionRate),
+                    dataSource: prevPrevMonthData,
+                    xValueMapper: (RoutineAverage data, _) => data.name,
+                    yValueMapper: (RoutineAverage data, _) =>
+                        data.completionRate),
               ],
             ),
           ),

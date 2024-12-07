@@ -1,11 +1,11 @@
 import 'package:cmsc128_lab/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
+import 'package:cmsc128_lab/widgets/no_fetched_data.dart';
 import 'package:cmsc128_lab/widgets/routine_card.dart';
 import 'package:cmsc128_lab/widgets/title_with_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
 class WeeklyRoutineList extends StatefulWidget {
@@ -15,25 +15,29 @@ class WeeklyRoutineList extends StatefulWidget {
     required this.title,
     required this.iconColor,
     required this.iconBgColor,
+    required this.date,
   });
 
   final String title;
   final Color iconColor;
   final Color iconBgColor;
   final bool isTop;
+  final DateTime date;
 
   @override
   State<WeeklyRoutineList> createState() => _WeeklyRoutineListState();
 }
 
-// top performing routines (avg. of routines across all weeks)
+// top performing routines (avg. of routines across a week)
 class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
   late List<DayRoutine> _weeklyAvgCompletionRate;
   dynamic _routines = [const FetchingData()];
 
   @override
   void initState() {
-    DatabaseService.getWeeklyAverageCompletionRate()
+    super.initState();
+
+    DatabaseService.getWeeklyAverageCompletionRate(widget.date)
         .then((weeklyAvgCompletionRate) {
       SchedulerBinding.instance.addPostFrameCallback((timestamp) {
         setState(() {
@@ -72,17 +76,20 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
 
           if (_weeklyAvgCompletionRate.isEmpty) {
             _routines = [
-              Text("No routines available.\nBuild more routines to see this!",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: GoogleFonts.lexendDeca().fontFamily))
+              const NoFetchedData(),
             ];
           }
         });
       });
     });
+  }
 
-    super.initState();
+  // Prevents setState() called after dispose()
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override

@@ -2,14 +2,16 @@ import 'package:cmsc128_lab/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
+import 'package:cmsc128_lab/widgets/no_fetched_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:developer' show log;
 
 class WeeklyRoutineChart extends StatefulWidget {
-  const WeeklyRoutineChart({super.key});
+  const WeeklyRoutineChart({super.key, required this.date});
+
+  final DateTime date;
 
   @override
   State<WeeklyRoutineChart> createState() => _WeeklyRoutineChartState();
@@ -30,11 +32,23 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
                 fontWeight: FontWeight.w600,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
-          FutureBuilder<List<DailyAverage>>(
-              future: DatabaseService.getDailyAvgCompletionRate(),
+          FutureBuilder<List<RoutineAverage>>(
+              future: DatabaseService.getDailyAvgCompletionRate(widget.date),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const FetchingData();
+                  bool isEmpty = false;
+                  int duration = 50000;
+
+                  // After 5 seconds if there are still no data, then stop loading screen
+                  Future.delayed(Duration(milliseconds: duration), () {
+                    isEmpty = true;
+                  });
+
+                  return AnimatedSwitcher(
+                      duration: Duration(milliseconds: duration),
+                      child: isEmpty
+                          ? const FetchingData()
+                          : const NoFetchedData());
                 }
 
                 return Container(
@@ -51,9 +65,6 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
                         textStyle: TextStyle(
                             fontSize: 12,
                             fontFamily: GoogleFonts.lexendDeca().fontFamily)),
-                    // legend: Legend(
-                    //   isVisible: false,
-                    // ),
                     primaryXAxis: CategoryAxis(
                       labelStyle: TextStyle(
                         color: Colors.black54,
@@ -69,7 +80,7 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
                         fontFamily: GoogleFonts.lexendDeca().fontFamily,
                       ),
                     ),
-                    palette: <Color>[
+                    palette: const <Color>[
                       StyleColor.primary,
                       StyleColor.accentYellow,
                       StyleColor.accentBlue,
@@ -77,10 +88,10 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
                       StyleColor.accentPink,
                     ],
                     series: <CartesianSeries>[
-                      ColumnSeries<DailyAverage, String>(
+                      ColumnSeries<RoutineAverage, String>(
                         dataSource: snapshot.data,
-                        xValueMapper: (DailyAverage data, _) => data.day,
-                        yValueMapper: (DailyAverage data, _) =>
+                        xValueMapper: (RoutineAverage data, _) => data.name,
+                        yValueMapper: (RoutineAverage data, _) =>
                             data.completionRate,
                         width: 0.2,
                         borderRadius:

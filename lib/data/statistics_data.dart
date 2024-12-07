@@ -105,10 +105,10 @@ List<String> weekdays = ["Sn", "M", "T", "W", "Th", "F", "S"];
 
 DateTime currMonth = DateTime.now();
 DateTime prevMonth = currMonth.subtract(const Duration(days: 31));
-DateTime thirdMonth = prevMonth.subtract(const Duration(days: 31));
+DateTime prevPrevMonth = prevMonth.subtract(const Duration(days: 31));
 
 List<String> months = [
-  DateFormat.LLLL().format(thirdMonth),
+  DateFormat.LLLL().format(prevPrevMonth),
   DateFormat.LLLL().format(prevMonth),
   DateFormat.LLLL().format(currMonth),
 ];
