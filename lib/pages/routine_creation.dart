@@ -1,8 +1,10 @@
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/models/routine.dart';
 
 class RoutineCreation extends StatefulWidget {
   const RoutineCreation({super.key});
@@ -17,6 +19,9 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
     with TickerProviderStateMixin {
   int actCount = 1;
   List activityBlocks = [ActivityBlock()];
+  IconData icon = Icons.add;
+  String routineName = "Routine Name";
+  FirestoreUtils dbService = FirestoreUtils();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +44,25 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               },
               child: Text('Add Task Block')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
-            onPressed: () {},
-            child:Text("Create Routine",
-                    style: TextStyle(color: Colors.white),
-          )),
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
+              onPressed: () {
+                Routine routine = Routine(
+                    color: 128390830,
+                    icon: icon.toString(),
+                    name: routineName,
+                    numActivities: actCount,
+                    repeatDaysCount: 1,
+                    repeatWeeksCount: 1);
+                dbService.addRoutine(routine);
+                print('Routine Added');
+                Navigator.pop(context);
+              },
+
+              child: Text(
+                "Create Routine",
+                style: TextStyle(color: Colors.white),
+              )),
         ]),
         appBar: AppBar(
           leading: IconButton(

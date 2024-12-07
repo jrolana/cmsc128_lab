@@ -1,9 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/models/routine.dart';
+
+const String ROUTINE_COLLECTION_REF = "routines";
 
 class FirestoreUtils {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
+  late final CollectionReference _routineRef;
   // Get user ID
   static String uid = '8ESa4lmztTB5VUhaJo7r'; // This one is temporary
+  FirestoreUtils() {
+    _routineRef = db
+        .collection('users')
+        .doc(uid)
+        .collection(ROUTINE_COLLECTION_REF)
+        .withConverter<Routine>(
+            fromFirestore: (snapshots, _) =>
+                Routine.fromJson(snapshots.data()!),
+            toFirestore: (routine, _) => routine.toJson());
+  }
 
   static Future<void> addTask(Map<String, dynamic> task) async {
     try {
@@ -66,5 +80,10 @@ class FirestoreUtils {
     } catch (e) {
       print('Error updating task field: $e');
     }
+  }
+
+  void addRoutine(Routine routine) async {
+    _routineRef.add(routine);
+
   }
 }
