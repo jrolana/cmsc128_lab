@@ -2,7 +2,8 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class RCreationActivityName extends StatelessWidget{
-  const RCreationActivityName({super.key});
+  String name;
+  RCreationActivityName(this.name,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,8 @@ class RCreationActivityName extends StatelessWidget{
        padding: EdgeInsets.symmetric(horizontal: 50,vertical: 20),
        
         child: Column(
-          children: const[
-            Text("Long Title of Your Routine",style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white),),
+          children:[
+            Text(name,style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white),),
             Text("Routine Name", style: TextStyle(fontWeight: FontWeight.w100,color:Colors.white),),
           ],
         )

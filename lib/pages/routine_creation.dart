@@ -5,6 +5,7 @@ import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/models/routine.dart';
+import 'package:cmsc128_lab/models/activity.dart';
 
 class RoutineCreation extends StatefulWidget {
   const RoutineCreation({super.key});
@@ -28,7 +29,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
     return MaterialApp(
       home: Scaffold(
         floatingActionButton:
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           IconButton(
               onPressed: () {
                 addActivity();
@@ -45,7 +46,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               child: Text('Add Task Block')),
           ElevatedButton(
               style:
-                  ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
+              ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
               onPressed: () {
                 Routine routine = Routine(
                     color: 128390830,
@@ -54,9 +55,13 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                     numActivities: actCount,
                     repeatDaysCount: 1,
                     repeatWeeksCount: 1);
-                dbService.addRoutine(routine);
-                print('Routine Added');
-                Navigator.pop(context);
+                List<Activity> activities = [];
+                for (var member in activityBlocks) {
+                  activities.add(
+                        Activity(name: member.getName(), icon: member.getIcon(), duration: member.getDuration()));
+                }
+
+               dbService.addRoutine(routine, activities);
               },
 
               child: Text(
@@ -76,7 +81,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         ),
         body: Column(
           children: [
-            RCreationActivityName(),
+            RCreationActivityName(routineName),
             SizedBox(height: 20),
             Expanded(
                 child: ListView.separated(
