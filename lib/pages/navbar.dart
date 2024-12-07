@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';
@@ -46,10 +47,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: 30,
-        ),
         tooltip: 'Add Task/Routine', // Gonna have to fix this para specific
         foregroundColor: Colors.white,
         backgroundColor: Color.fromRGBO(95, 51, 225, 1),
@@ -59,8 +56,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
             borderRadius: BorderRadius.circular(100)),
         elevation: 5.0,
         onPressed: () {
-          showAddTaskDialog();
+          //showAddTaskDialog();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RoutineCreation()),
+          );
         },
+        child: Icon(
+          Icons.add,
+          size: 30,
+        ),
       ),
       extendBody: true,
       bottomNavigationBar: BottomAppBar(

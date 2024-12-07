@@ -57,9 +57,10 @@ class _TaskListState extends State<TaskList> {
   void initState() {
     super.initState();
     // Listen to Firestore changes
+    String userID = FirestoreUtils.uid;
     FirebaseFirestore.instance
         .collection('users')
-        .doc('8ESa4lmztTB5VUhaJo7r') // Temporary userID
+        .doc(userID) // Temporary userID
         .collection('tasks')
         .snapshots()
         .listen((snapshot) {

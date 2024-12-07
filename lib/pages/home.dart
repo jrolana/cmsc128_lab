@@ -1,4 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:cmsc128_lab/pages/dynamic_routine_screen.dart';
 import 'package:cmsc128_lab/pages/routine_screen.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Expanded(
                 child: TabBarView(
                     controller: _tcontroller,
-                    children: [RoutineScreen(), TaskScreen()]),
+                    children: [DynamicHomeRoutine(), TaskScreen()]),
               ),
             ],
           ),
