@@ -1,5 +1,5 @@
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
+import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineCreation/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

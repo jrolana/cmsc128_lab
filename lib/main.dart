@@ -1,5 +1,6 @@
 import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
+import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc128_lab/pages/home.dart';
@@ -7,7 +8,7 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/pages/routine_session.dart';
+import 'package:cmsc128_lab/pages/routine_session_landing.dart';
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
         ),
-        home: RoutineSession('243411411'),
+        home:BottomNavBar()//RoutineSession('2345'),
       ),
     );
   }
