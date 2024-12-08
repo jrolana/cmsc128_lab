@@ -36,12 +36,10 @@ class _RoutineSessionListState extends State<RoutineSessionList>{
           height: 10,
         );
       },
-
     );
   }
 
   List getActivities(){
-
     return [];
   }
 
