@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 
@@ -42,7 +43,11 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                 return const Text("Connection error");
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text('Loading ...');
+                return Column(children: [
+                  CircularProgressIndicator(),
+                  Text("Loading")
+                  ],
+                );
               }
 
               var docs = snapshot.data!.docs;
@@ -54,7 +59,7 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                   itemCount: docs.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: Icon(Icons.cases_sharp,
+                      leading: Icon(IconlyBold.bag_2,
                           size: 30,
                           color: const Color.fromARGB(255, 25, 36, 108)),
                       title: Text(docs[index]['name'],
