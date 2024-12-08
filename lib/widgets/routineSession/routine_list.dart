@@ -17,7 +17,6 @@ class _RoutineSessionListState extends State<RoutineSessionList>{
 
   @override
   void initState() {
-    // TODO: implement initState
     activityIDs = getActivities();
     super.initState();
   }
