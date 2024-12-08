@@ -7,13 +7,13 @@ class RoutineCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.numActivities,
-    required this.avgCompletionRate,
+    required this.completionRate,
     required this.color,
   });
 
   final String name;
   final int numActivities;
-  final double avgCompletionRate;
+  final double completionRate;
   final Color color;
 
   @override
@@ -25,14 +25,14 @@ class RoutineCard extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Text(
-              "${(avgCompletionRate * 100).toStringAsFixed(0)}%",
+              "${(completionRate).toStringAsFixed(0)}%",
               style: TextStyle(
                 fontSize: 12,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily,
               ),
             ),
             CircularProgressIndicator(
-              value: avgCompletionRate,
+              value: completionRate,
               valueColor: AlwaysStoppedAnimation(color),
               backgroundColor: Colors.white60,
             ),
