@@ -5,6 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
 
 class TaskBlock extends StatefulWidget {
+  final String type = 'taskBlock';
   const TaskBlock({super.key});
 
   @override
