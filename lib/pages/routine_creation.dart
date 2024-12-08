@@ -3,6 +3,7 @@ import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_blo
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
+import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/models/routine.dart';
 import 'package:cmsc128_lab/models/activity.dart';
@@ -21,8 +22,10 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   int actCount = 1;
   List activityBlocks = [ActivityBlock()];
   IconData icon = Icons.add;
-  String routineName = "Routine Name";
+  String routineName = "Click to set routine name";
+  List repeatDays = [];
   FirestoreUtils dbService = FirestoreUtils();
+
 
   Widget titleText() {
     return TextButton(
@@ -38,7 +41,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                 Text(
                   routineName,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                      fontWeight: FontWeight.w300, color: Colors.white,fontSize: 20),
                 ),
                 Text(
                   "Routine Name",
@@ -168,23 +171,51 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
           ],
         ),
       );
+  final List<DayInWeek> _days = [
+    DayInWeek("Mo", dayKey: "monday"),
+    DayInWeek("Tu", dayKey: "tuesday"),
+    DayInWeek("We", dayKey: "wednesday"),
+    DayInWeek("Th", dayKey: "thursday"),
+    DayInWeek("Fr", dayKey: "friday"),
+    DayInWeek("Sa", dayKey: "saturday"),
+    DayInWeek("Su", dayKey: "sunday"),
+  ];
 
   Future createRoutineDialog() => showDialog(
       context: context,
       builder: (context) => AlertDialog(
             title: Text('Create the Routine'),
-            content: Row(
+            content: Column(
               children: [
+                Text('Routine Name: $routineName', style: TextStyle(
+                  fontSize: 20,
 
+                ),),
+                SizedBox(height: 10),
+                SelectWeekDays(
+                  onSelect: (values) {
+                    print(values);
+                    repeatDays = values;
+                  },
+                  days: _days,
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  boxDecoration: BoxDecoration(
+                    color: StyleColor.primary,
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(onPressed: (){
-                //createRoutineDB();
-              }, child: Text('SUBMIT'))
+              TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
+              TextButton(
+                  onPressed: () {
+                    createRoutineDB();
+                    Navigator.pop(context);
+                  },
+                  child: Text('SUBMIT'))
             ],
-          )
-  );
+          ));
 
   void createRoutineDB() {
     Routine routine = Routine(
@@ -192,9 +223,9 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         icon: icon.toString(),
         name: routineName,
         numActivities: actCount,
-        repeatDaysCount: 1,
-        repeatWeeksCount: 1,
-        daysOfWeek: [1,2,3]);
+        repeatDaysCount: repeatDays.length,
+        repeatWeeksCount: 0,
+        daysOfWeek: repeatDays);
     List<Activity> activities = [];
     for (var member in activityBlocks) {
       activities.add(Activity(
@@ -202,7 +233,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
           icon: member.getIcon(),
           duration: member.getDuration()));
     }
-
     dbService.addRoutine(routine, activities);
   }
 }
