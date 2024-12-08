@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Routine {
   int color;
   String icon;

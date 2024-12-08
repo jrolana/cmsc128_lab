@@ -1,5 +1,7 @@
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/models/routine.dart';
@@ -64,7 +66,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               )),
           ElevatedButton(
               onPressed: () {
-                print('Add Task Block');
+                addTaskBlock();
               },
               child: Text('Add Task Block')),
           ElevatedButton(
@@ -122,6 +124,14 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   void addActivity() {
     setState(() {
       activityBlocks.add(ActivityBlock());
+      actCount += 1;
+    });
+  }
+
+  void addTaskBlock() {
+    setState(() {
+      // activityBlocks.add(TaskSelectBlock(category: "School")); // For Selection of Task Sample
+      activityBlocks.add(TaskBlock());
       actCount += 1;
     });
   }
