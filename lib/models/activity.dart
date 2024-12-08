@@ -1,6 +1,3 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
 class Activity {
   String name;
   int icon;

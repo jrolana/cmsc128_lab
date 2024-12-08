@@ -50,7 +50,10 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
     double height = MediaQuery.of(context).size.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.white,
+          shadowColor: Colors.black,
+          elevation: 2.0
         ),
         onPressed: () {},
         child: Row(
