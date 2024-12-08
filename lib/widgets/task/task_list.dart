@@ -79,7 +79,7 @@ class _TaskListState extends State<TaskList> {
     String userID = FirestoreUtils.uid;
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userID) // Temporary userID
+        .doc(userID)
         .collection('tasks')
         .snapshots()
         .listen((snapshot) {
@@ -116,9 +116,9 @@ class _TaskListState extends State<TaskList> {
           child: Center(
               child: Column(
         children: [
-          const Icon(IconlyLight.activity),
+          const Icon(IconlyBold.danger),
           const SizedBox(height: 10),
-          Text('You have no tasks for this category yet!',
+          Text('No tasks found!',
               style: TextStyle(
                   fontFamily: GoogleFonts.lexendDeca().fontFamily,
                   fontSize: 14,
