@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 
 class ActivityBlock extends StatefulWidget {
-  final String type = 'taskBlock';
+  final String type = 'activity';
   _DefaultActivityBlock _state = _DefaultActivityBlock();
 
   String getName(){

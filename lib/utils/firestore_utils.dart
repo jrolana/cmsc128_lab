@@ -129,4 +129,7 @@ class FirestoreUtils {
       activityRef.add(member);
     }
   }
+  //Stream<QuerySnapshot> getActivities(){
+
+  //}
 }

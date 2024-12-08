@@ -23,16 +23,25 @@ class _RoutineSessionListState extends State<RoutineSessionList>{
 
   @override
   Widget build(BuildContext context){
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      children:[
+    return ListView.separated(
+      itemCount: activityIDs.length,
+      itemBuilder: (context,index){
+        return ListTile(
+          title: ActivityBlock()
 
-      ],
+        );
+      },
+      separatorBuilder: (context,index){
+        return const SizedBox(
+          height: 10,
+        );
+      },
+
     );
   }
 
   List getActivities(){
-    // TODO: Insert Query for activities in routine
+
     return [];
   }
 
