@@ -1,7 +1,7 @@
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
+import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_task_block.dart';
+import 'package:cmsc128_lab/widgets/routineCreation/task_selection_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +54,8 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
         floatingActionButton:
@@ -109,12 +111,12 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                                 actCount -= 1;
                               });
                             },
-                            icon: Icon(Icons.delete)),
+                            icon: Icon(Icons.delete, size: width*0.06,)),
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 10,
+                      return SizedBox(
+                        height: height*0.0001,
                       );
                     },
                     itemCount: actCount))
@@ -188,7 +190,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
             content: Column(
               children: [
                 Text('Routine Name: $routineName', style: TextStyle(
-                  fontSize: 20,
+                    fontSize: MediaQuery.of(context).size.width*0.04,
 
                 ),),
                 SizedBox(height: 10),
@@ -220,7 +222,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   void createRoutineDB() {
     Routine routine = Routine(
         color: 128390830,
-        icon: icon.toString(),
         name: routineName,
         numActivities: actCount,
         repeatDaysCount: repeatDays.length,
