@@ -43,13 +43,6 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
             title: const Text(
               "Routine Statistics",
             ),
-            leading: IconButton(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              icon: const Icon(IconlyBold.arrow_left),
-              onPressed: () {
-                print("Pressed back");
-              },
-            ),
           ),
           body: Column(
             children: <Widget>[
