@@ -84,24 +84,21 @@ class FirestoreUtils {
     }
   }
 
-
-
   void addRoutine(Routine routine, List activities) async {
-    String id='id';
+    String id = 'id';
     String activityCol = 'activities';
     late final CollectionReference activityRef;
-    await _routineRef.add(routine).then((DocumentReference doc){
+    await _routineRef.add(routine).then((DocumentReference doc) {
       id = doc.id;
-      print(id);
     });
-    print(id);
+
     activityRef = _routineRef
         .doc(id)
         .collection(activityCol)
         .withConverter<Activity>(
-        fromFirestore: (snapshots, _) =>
-            Activity.fromJson(snapshots.data()!),
-        toFirestore: (activity, _) => activity.toJson());
+            fromFirestore: (snapshots, _) =>
+                Activity.fromJson(snapshots.data()!),
+            toFirestore: (activity, _) => activity.toJson());
     // Iterate through activity blocks
     for (Activity member in activities) {
       activityRef.add(member);
