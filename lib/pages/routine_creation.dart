@@ -1,9 +1,7 @@
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_title.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/models/routine.dart';
 import 'package:cmsc128_lab/models/activity.dart';
 
@@ -24,12 +22,37 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   String routineName = "Routine Name";
   FirestoreUtils dbService = FirestoreUtils();
 
+  Widget titleText() {
+    return TextButton(
+        onPressed: () {
+          openDialog();
+        },
+        child: Container(
+            alignment: FractionalOffset.center,
+            decoration: myBoxDecoration(),
+            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            child: Column(
+              children: [
+                Text(
+                  routineName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                Text(
+                  "Routine Name",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w100, color: Colors.white),
+                ),
+              ],
+            )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         floatingActionButton:
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           IconButton(
               onPressed: () {
                 addActivity();
@@ -46,24 +69,10 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               child: Text('Add Task Block')),
           ElevatedButton(
               style:
-              ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
+                  ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
               onPressed: () {
-                Routine routine = Routine(
-                    color: 128390830,
-                    icon: icon.toString(),
-                    name: routineName,
-                    numActivities: actCount,
-                    repeatDaysCount: 1,
-                    repeatWeeksCount: 1);
-                List<Activity> activities = [];
-                for (var member in activityBlocks) {
-                  activities.add(
-                        Activity(name: member.getName(), icon: member.getIcon(), duration: member.getDuration()));
-                }
-
-               dbService.addRoutine(routine, activities);
+                createRoutineDialog();
               },
-
               child: Text(
                 "Create Routine",
                 style: TextStyle(color: Colors.white),
@@ -81,7 +90,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         ),
         body: Column(
           children: [
-            RCreationActivityName(routineName),
+            titleText(),
             SizedBox(height: 20),
             Expanded(
                 child: ListView.separated(
@@ -110,12 +119,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
     );
   }
 
-  Widget makeList() {
-    return ListView(
-      children: [ActivityBlock()],
-    );
-  }
-
   void addActivity() {
     setState(() {
       activityBlocks.add(ActivityBlock());
@@ -123,32 +126,73 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
     });
   }
 
-// TODO figure out reorderable list view if possible
-// Widget makeList() {
-//   return ReorderableListView(
-//     proxyDecorator: (child,index,animation) =>
-//         Material(
-//             borderRadius: BorderRadius.circular(100),
-//             child:child
-//         ),
-//     shrinkWrap: true,
-//     children: [
-//       for (int index = 0; index < actCount; index += 1)
-//         Padding(
-//           padding: EdgeInsets.symmetric(vertical: 2.0),
-//           key: Key('$index'),
-//           child:ActivityBlock(),
-//         )
-//     ],
-//     onReorder: (int oldIndex, int newIndex) {
-//       setState(() {
-//         if (oldIndex < newIndex) {
-//           newIndex -= 1;
-//         }
-//         final int item = _items.removeAt(oldIndex);
-//         _items.insert(newIndex, item);
-//       });
-//     },
-//   );
-// }
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      border: Border.all(color: StyleColor.tertiary),
+      color: StyleColor.primary,
+      borderRadius: BorderRadius.circular(8.0),
+    );
+  }
+
+  TextEditingController inputController = TextEditingController();
+
+  Future openDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Enter Routine Name'),
+          content: TextField(
+            controller: inputController,
+            autofocus: true,
+            decoration: InputDecoration(hintText: "Enter routine name"),
+          ),
+          actions: [
+            TextButton(
+              child: Text('SUBMIT'),
+              onPressed: () {
+                setState(() {
+                  routineName = inputController.text;
+                  Navigator.of(context).pop();
+                });
+              },
+            )
+          ],
+        ),
+      );
+
+  Future createRoutineDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text('Create the Routine'),
+            content: Row(
+              children: [
+
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: (){
+                //createRoutineDB();
+              }, child: Text('SUBMIT'))
+            ],
+          )
+  );
+
+  void createRoutineDB() {
+    Routine routine = Routine(
+        color: 128390830,
+        icon: icon.toString(),
+        name: routineName,
+        numActivities: actCount,
+        repeatDaysCount: 1,
+        repeatWeeksCount: 1,
+        daysOfWeek: [1,2,3]);
+    List<Activity> activities = [];
+    for (var member in activityBlocks) {
+      activities.add(Activity(
+          name: member.getName(),
+          icon: member.getIcon(),
+          duration: member.getDuration()));
+    }
+
+    dbService.addRoutine(routine, activities);
+  }
 }

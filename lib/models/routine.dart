@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Routine {
@@ -7,6 +9,7 @@ class Routine {
   int numActivities;
   int repeatDaysCount;
   int repeatWeeksCount;
+  List daysOfWeek;
 
   Routine({
     required this.color,
@@ -14,7 +17,8 @@ class Routine {
     required this.name,
     required this.numActivities,
     required this.repeatDaysCount,
-    required this.repeatWeeksCount});
+    required this.repeatWeeksCount,
+    required this.daysOfWeek});
 
   Routine.fromJson(Map<String, Object?> json) :
         this(
@@ -23,7 +27,8 @@ class Routine {
           name: json['name']! as String,
           numActivities: json['numActivities']! as int,
           repeatDaysCount: json['repeatDaysCount']! as int,
-          repeatWeeksCount: json['repeatWeeksCount']! as int
+          repeatWeeksCount: json['repeatWeeksCount']! as int,
+          daysOfWeek: json['daysOfWeek']! as List
       );
 
   Routine copyWith({
@@ -33,6 +38,7 @@ class Routine {
     int? numActivities,
     int? repeatDaysCount,
     int? repeatWeeksCount,
+    List? daysOfWeek
   }) {
     return Routine(
         color: this.color,
@@ -40,7 +46,8 @@ class Routine {
         name: this.name,
         numActivities: this.numActivities,
         repeatDaysCount: this.repeatDaysCount,
-        repeatWeeksCount: this.repeatWeeksCount
+        repeatWeeksCount: this.repeatWeeksCount,
+        daysOfWeek: this.daysOfWeek
     );
   }
   Map<String, Object> toJson(){
@@ -50,7 +57,8 @@ class Routine {
       'name': name,
       'numActivities': numActivities,
       'repeatDaysCount': repeatDaysCount,
-      'repeatWeeksCount': repeatWeeksCount
+      'repeatWeeksCount': repeatWeeksCount,
+      'daysOfWeek': daysOfWeek
     };
   }
 }
