@@ -16,6 +16,8 @@ class TaskScreen extends StatefulWidget {
 class TaskScreenState extends State<TaskScreen>
     with AutomaticKeepAliveClientMixin {
   List<String> _selectedCategories = [];
+  String _searchQuery = '';
+  bool displayCategory = true;
 
   @override
   bool get wantKeepAlive => true;
@@ -29,6 +31,7 @@ class TaskScreenState extends State<TaskScreen>
             onApply: (List<String> categories) {
               setState(() {
                 _selectedCategories = categories;
+                displayCategory = true;
               });
             });
       },
@@ -43,7 +46,12 @@ class TaskScreenState extends State<TaskScreen>
         padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
-            const SearchBox(),
+            SearchBox(onSearch: (query) {
+              setState(() {
+                _searchQuery = query;
+                displayCategory = query.isEmpty;
+              });
+            }),
             Container(
               padding: const EdgeInsets.all(10),
               child: Row(
@@ -59,12 +67,17 @@ class TaskScreenState extends State<TaskScreen>
                       iconSize: 25,
                       color: StyleColor.primary,
                       onPressed: () {
+                        displayCategory = true;
                         showFilterDialog();
                       }),
                 ],
               ),
             ),
-            TaskList(filterCategories: _selectedCategories),
+            displayCategory
+                ? TaskList(filterCategories: _selectedCategories)
+                : TaskList(
+                    filterCategories: _selectedCategories,
+                    searchQuery: _searchQuery),
           ],
         ),
       ),
