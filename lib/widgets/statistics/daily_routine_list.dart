@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
@@ -16,7 +16,7 @@ class DailyRoutineList extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.all(20),
         child: StreamBuilder<List<DayRoutine>>(
-            stream: DatabaseService.getDayRoutines(),
+            stream: DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
             builder: (context, snapshot) {
               int routineLen = 0;
               dynamic routineCards;
@@ -30,7 +30,7 @@ class DailyRoutineList extends StatelessWidget {
 
                   return RoutineCard(
                     name: entry.name,
-                    numActivities: entry.numActivities!,
+                    numActivities: entry.numActivities,
                     completionRate: entry.completionRate!,
                     color: entry.color,
                   );

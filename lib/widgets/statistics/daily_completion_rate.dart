@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +29,7 @@ class DailyCompletionRate extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: StreamBuilder<List<DayRoutine>>(
-                stream: DatabaseService.getDayRoutines(),
+                stream: DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const FetchingData();

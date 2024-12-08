@@ -1,8 +1,7 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
-import 'package:cmsc128_lab/widgets/no_fetched_data.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,19 +35,7 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
               future: DatabaseService.getDailyAvgCompletionRate(widget.date),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  bool isEmpty = false;
-                  int duration = 50000;
-
-                  // After 5 seconds if there are still no data, then stop loading screen
-                  Future.delayed(Duration(milliseconds: duration), () {
-                    isEmpty = true;
-                  });
-
-                  return AnimatedSwitcher(
-                      duration: Duration(milliseconds: duration),
-                      child: isEmpty
-                          ? const FetchingData()
-                          : const NoFetchedData());
+                  return const FetchingData();
                 }
 
                 return Container(

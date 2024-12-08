@@ -1,11 +1,9 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
-import 'package:cmsc128_lab/widgets/fetching_data.dart';
-import 'package:cmsc128_lab/utils/time.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/data/statistics_data.dart';
+import 'package:intl/intl.dart';
 
 class MonthlyCompletionRate extends StatefulWidget {
   const MonthlyCompletionRate({super.key});
@@ -18,6 +16,7 @@ class _MonthlyCompletionRateState extends State<MonthlyCompletionRate> {
   List<RoutineAverage> currMonthData = [];
   List<RoutineAverage> prevMonthData = [];
   List<RoutineAverage> prevPrevMonthData = [];
+  List<String> months = [];
 
   @override
   void initState() {
@@ -45,6 +44,12 @@ class _MonthlyCompletionRateState extends State<MonthlyCompletionRate> {
         prevPrevMonthData = data;
       });
     });
+
+    months = [
+      DateFormat.LLLL().format(prevPrevMonth),
+      DateFormat.LLLL().format(prevMonth),
+      DateFormat.LLLL().format(currMonth),
+    ];
   }
 
   // Prevents setState() called after dispose()

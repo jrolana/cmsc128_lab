@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

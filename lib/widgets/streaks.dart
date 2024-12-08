@@ -1,4 +1,4 @@
-import 'package:cmsc128_lab/database_service.dart';
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
