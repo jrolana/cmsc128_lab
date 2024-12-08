@@ -1,9 +1,13 @@
+import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc128_lab/pages/home.dart';
+import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
