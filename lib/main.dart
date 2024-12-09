@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/profile_screen.dart';
 import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/pages/welcome_screen.dart';
+import 'package:cmsc128_lab/pages/profile_screen.dart';
 
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';

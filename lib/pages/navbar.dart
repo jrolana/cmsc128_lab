@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';
+import 'profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomePage(),
     Statistics(),
     //Text('Account'),
-    HomePage() //For now cuz Empty pa ung account page
+    ProfileScreen() //For now cuz Empty pa ung account page
   ];
 
   //Function to select on List
