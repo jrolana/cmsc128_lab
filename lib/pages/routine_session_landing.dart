@@ -1,11 +1,9 @@
 import 'package:cmsc128_lab/pages/routine_session_ongoing.dart';
-import 'package:cmsc128_lab/pages/routine_session_timer.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/routineSession/routine_list.dart';
 import 'package:flutter/material.dart';
 
-import '../models/activity.dart';
 import '../models/routine.dart';
 
 class RoutineSessionLanding extends StatefulWidget {

@@ -1,13 +1,12 @@
-import 'package:cmsc128_lab/pages/routine_session_landing.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/activity.dart';
 import '../../utils/firestore_utils.dart';
 
 class RoutineSessionList extends StatefulWidget {
-  String routineID;
+  final String routineID;
 
-  RoutineSessionList(this.routineID, {super.key});
+  const RoutineSessionList(this.routineID, {super.key});
 
   @override
   State<RoutineSessionList> createState() =>
@@ -45,7 +44,6 @@ class _RoutineSessionListState extends State<RoutineSessionList> {
                   itemBuilder: (context,index){
                     //print(activities[index]);
                     Activity activity = activities[index].data();
-                    String activityID = activities[index].id;
                     return ElevatedButton(
                         onPressed: (){},
                         child:ListTile(
