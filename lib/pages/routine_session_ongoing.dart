@@ -4,11 +4,11 @@ import '../models/activity.dart';
 import '../models/routine.dart';
 import '../utils/firestore_utils.dart';
 
-
 class RoutineSessionOngoing extends StatefulWidget {
   final String routineID;
+  final int actNum;
 
-  const RoutineSessionOngoing(this.routineID, {super.key});
+  const RoutineSessionOngoing(this.routineID, this.actNum, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -19,32 +19,58 @@ class RoutineSessionOngoing extends StatefulWidget {
 
 class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   FirestoreUtils db = FirestoreUtils();
+  PageController _pageViewController = PageController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back),
-            tooltip: 'Back',
-          ),
-          title: const Text('Routine Session'),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+          tooltip: 'Back',
         ),
-        body: pages(),
+        title: const Text('Routine Session'),
+      ),
+      body: StreamBuilder(
+          stream: db.getActivities(widget.routineID).snapshots(),
+          builder: (context, snapshot) {
+            List activities = snapshot.data?.docs ?? [];
+            return PageView.builder(
+              itemBuilder: (context, index) {
+                Activity act = activities[index].data();
+                return RoutineSessionTimer(
+                    act.name, act.duration, act.icon, index, _navigatePage);
+              },
+              controller: _pageViewController,
+              onPageChanged: _handlePageChange,
+              physics: const NeverScrollableScrollPhysics(),
+            );
+          }),
     );
   }
-  Widget pages() {
-    return StreamBuilder(
-        stream: db.getActivities(widget.routineID).snapshots(),
-        builder:(context,snapshot){
-          List activities = snapshot.data?.docs ?? [];
-          return PageView.builder(itemBuilder:(context,index){
-            Activity act = activities[index].data();
-            return RoutineSessionTimer(act.name, act.duration, act.icon);
-          });
-        } );
+
+  void _handlePageChange(int currentPageIndex) {
+    print('page changed');
+  }
+
+  void _navigatePage(int index) {
+    if (index == widget.actNum) {
+      // TODO session complete
+    } else {
+      _pageViewController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutExpo,
+      );
+    }
   }
 }

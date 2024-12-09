@@ -45,7 +45,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
           onPressed: (){
             Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID)),
+            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities)),
             );
           },
           style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
@@ -65,16 +65,5 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
     });
   }
 
-  Widget pages() {
-    return StreamBuilder(
-        stream: db.getActivities(widget.routineID).snapshots(),
-        builder:(context,snapshot){
-          List activities = snapshot.data?.docs ?? [];
-          return PageView.builder(itemBuilder:(context,index){
-            Activity act = activities[index].data();
-            return RoutineSessionTimer(act.name, act.duration, act.icon);
-          });
-        } );
-  }
 
 }
