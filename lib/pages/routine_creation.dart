@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_task_block.dart';
@@ -232,7 +233,11 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               TextButton(
                   onPressed: () {
                     createRoutineDB();
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavBar()),
+                    );
                   },
                   child: Text('SUBMIT'))
             ],

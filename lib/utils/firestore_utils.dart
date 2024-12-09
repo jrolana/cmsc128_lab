@@ -110,7 +110,9 @@ class FirestoreUtils {
       return [];
     }
   }
-
+  DocumentReference<Object?> getRoutine(routineId){
+    return _routineRef.doc(routineId);
+  }
   void addRoutine(Routine routine, List activities) async {
     String id = 'id';
     String activityCol = 'activities';
@@ -132,12 +134,12 @@ class FirestoreUtils {
     }
   }
 
-  Stream<QuerySnapshot> getActivities(routineID) {
+  CollectionReference<Object?> getActivities(routineID) {
     CollectionReference activityRef =
         _routineRef.doc(routineID).collection('activities').withConverter<
             Activity>(fromFirestore: (snapshots, _) =>
             Activity.fromJson(snapshots.data()!),
             toFirestore: (activity,_)=>activity.toJson());
-    return activityRef.snapshots();
+    return activityRef;
   }
 }
