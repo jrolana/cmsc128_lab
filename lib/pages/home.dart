@@ -1,4 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:cmsc128_lab/pages/dynamic_routine_screen.dart';
 import 'package:cmsc128_lab/pages/routine_screen.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
@@ -14,15 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tcontroller;
+  final ValueNotifier<String> currentTab = ValueNotifier<String>("Routines");
 
   @override
   void initState() {
     _tcontroller = TabController(length: 2, vsync: this);
-    _tcontroller.addListener(_changeAppBarText);
+    _tcontroller.addListener(() {
+      currentTab.value = _tcontroller.index == 0 ? "Routines" : "Tasks";
+    });
     super.initState();
   }
-
-  void _changeAppBarText() => setState(() {});
 
   static const List<Tab> tabs = [
     Tab(
@@ -35,14 +37,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    String currentTitle;
-
-    if (_tcontroller.index == 0) {
-      currentTitle = 'Routines';
-    } else {
-      currentTitle = 'Tasks';
-    }
-
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -54,8 +48,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
-            title: Text(
-              "Your $currentTitle",
+            title: ValueListenableBuilder<String>(
+              valueListenable: currentTab,
+              builder: (_, value, __) => Text("Your $value"),
             ),
           ),
           body: Column(
@@ -78,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Expanded(
                 child: TabBarView(
                     controller: _tcontroller,
-                    children: [RoutineScreen(), TaskScreen()]),
+                    children: [DynamicHomeRoutine(), TaskScreen()]),
               ),
             ],
           ),

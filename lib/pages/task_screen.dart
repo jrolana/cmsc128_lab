@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/data/task_data.dart';
-import 'package:intl/intl.dart';
 import 'package:cmsc128_lab/widgets/searchbox.dart';
+import 'package:cmsc128_lab/widgets/task/task_list.dart';
+import 'package:cmsc128_lab/widgets/task/filter_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -15,8 +15,25 @@ class TaskScreen extends StatefulWidget {
 
 class TaskScreenState extends State<TaskScreen>
     with AutomaticKeepAliveClientMixin {
+  List<String> _selectedCategories = [];
+
   @override
   bool get wantKeepAlive => true;
+
+  void showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return FilterDialog(
+            selectedCategories: _selectedCategories,
+            onApply: (List<String> categories) {
+              setState(() {
+                _selectedCategories = categories;
+              });
+            });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,93 +45,26 @@ class TaskScreenState extends State<TaskScreen>
           children: [
             const SearchBox(),
             Container(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Tasks',
-                        style: TextStyle(
-                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    IconButton(
-                        icon: const Icon(IconlyBold.filter_2),
-                        iconSize: 25,
-                        color: StyleColor.primary,
-                        onPressed: () {
-                          print("Filter Task"); // Used to test delete button
-                        }),
-                  ],
-                )),
-            Expanded(
-                child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 10,
-                );
-              },
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                final task = tasks[index];
-                return ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  leading: Checkbox(
-                      value: task['isDone'],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          task['isDone'] = value!;
-                        });
-                      }),
-                  tileColor: Colors.white,
-                  title: Text(
-                    task['name'].toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: GoogleFonts.lexendDeca().fontFamily),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${task['category']}',
-                        style: TextStyle(
-                            fontSize: 11,
-                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                            color: Colors.black.withOpacity(0.5)),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          Icon(
-                            IconlyLight.time_circle,
-                            size: 15,
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          Text(
-                              '${DateFormat('EEEE, MMMM d').format(task['date'])}',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontFamily:
-                                      GoogleFonts.lexendDeca().fontFamily,
-                                  color: Colors.black.withOpacity(0.5)))
-                        ],
-                      )
-                    ],
-                  ),
-                  trailing: IconButton(
-                      icon: const Icon(IconlyBold.delete),
-                      iconSize: 20,
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Tasks',
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  IconButton(
+                      icon: const Icon(IconlyBold.filter_2),
+                      iconSize: 25,
+                      color: StyleColor.primary,
                       onPressed: () {
-                        print("Delete Task"); // Used to test delete button
+                        showFilterDialog();
                       }),
-                  isThreeLine: true,
-                );
-              },
-            )),
+                ],
+              ),
+            ),
+            TaskList(filterCategories: _selectedCategories),
           ],
         ),
       ),
