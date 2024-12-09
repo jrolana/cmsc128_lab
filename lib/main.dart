@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
         ),
-        home:RoutineSessionLanding('EdxAeNVLM6A957PmEgQS'),
+        home:BottomNavBar() ,
       ),
     );
   }
