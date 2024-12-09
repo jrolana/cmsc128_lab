@@ -8,8 +8,10 @@ class RoutineSessionTimer extends StatefulWidget {
   int icon;
   String name;
   int duration;
+  int index;
+  Function changeActivity;
 
-  RoutineSessionTimer(this.name, this.duration, this.icon,{super.key});
+  RoutineSessionTimer(this.name, this.duration, this.icon,this.index,this.changeActivity,{super.key});
 
   @override
   State<RoutineSessionTimer> createState() {
@@ -21,9 +23,9 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
   int icon = 0;
   String name = "";
   int duration = 0;
-  int timeFactor = 30;
+  int timeFactor = 10;
   double iconScaleFactor = 0.25;
-  bool isActive = false;
+  bool isActive = true;
   int timeAdded = 0;
   Timer? timer;
   late double sizeQuery;
@@ -71,6 +73,9 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
     if (isActive) {
       setState(() {
         duration--;
+        if(duration == 0){
+          widget.changeActivity(widget.index+1);
+        }
       });
     }
   }
@@ -83,7 +88,9 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
         IconButton(
           iconSize: size,
           icon: const Icon(Icons.skip_previous_rounded),
-          onPressed: () {},
+          onPressed: () {
+            widget.changeActivity(widget.index-1);
+          },
         ),
         IconButton(
           iconSize: size,
@@ -98,8 +105,7 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
           iconSize: size,
           icon: const Icon(Icons.skip_next_rounded),
           onPressed: () {
-            setState(() {
-            });
+            widget.changeActivity(widget.index+1);
           },
         ),
       ],
