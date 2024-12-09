@@ -11,16 +11,13 @@ class RoutineSessionList extends StatefulWidget {
 
   @override
   State<RoutineSessionList> createState() =>
-      _RoutineSessionListState(routineID);
+      _RoutineSessionListState();
 
 }
 
 class _RoutineSessionListState extends State<RoutineSessionList> {
-  String routineID;
   late List activityIDs;
   FirestoreUtils dbService = FirestoreUtils();
-
-  _RoutineSessionListState(this.routineID);
 
   @override
   void initState() {
@@ -41,7 +38,7 @@ class _RoutineSessionListState extends State<RoutineSessionList> {
             .sizeOf(context)
             .width,
         child: StreamBuilder(
-            stream: dbService.getActivities('s2g1kv6mLOWOijrzRdAj'),
+            stream: dbService.getActivities(widget.routineID).snapshots(),
             builder: (context, snapshot) {
               List activities = snapshot.data?.docs ?? [];
               return ListView.separated(

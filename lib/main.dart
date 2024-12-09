@@ -7,6 +7,7 @@ import 'package:cmsc128_lab/pages/statistics.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/pages/routine_session_landing.dart';
+
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
           ),
         ),
-        home:BottomNavBar()//RoutineSession('2345'),
+        home:RoutineSessionLanding('EdxAeNVLM6A957PmEgQS'),
       ),
     );
   }
