@@ -1,6 +1,7 @@
 import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
+import 'package:cmsc128_lab/widgets/no_fetched_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -29,9 +30,14 @@ class DailyCompletionRate extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: StreamBuilder<List<DayRoutine>>(
-                stream: DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
+                stream:
+                    DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
+                  if (snapshot.hasError) {
+                    return const NoFetchedData();
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const FetchingData();
                   }
 

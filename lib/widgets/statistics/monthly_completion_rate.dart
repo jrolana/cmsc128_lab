@@ -76,6 +76,7 @@ class _MonthlyCompletionRateState extends State<MonthlyCompletionRate> {
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            height: 500,
             decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20))),

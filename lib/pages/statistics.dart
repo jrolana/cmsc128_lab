@@ -5,7 +5,6 @@ import 'package:cmsc128_lab/pages/statistics_weekly.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconly/iconly.dart';
 
 class Statistics extends StatefulWidget {
   const Statistics({super.key});
