@@ -6,7 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'task_screen.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final ValueChanged<String> onTabChanged;
+  const HomePage({super.key, this.onTabChanged = _defaultTabChanged});
+
+  static void _defaultTabChanged(String tab) {}
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +23,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     _tcontroller = TabController(length: 2, vsync: this);
     _tcontroller.addListener(() {
-      currentTab.value = _tcontroller.index == 0 ? "Routines" : "Tasks";
+      String selectedTab = _tcontroller.index == 0 ? "Routines" : "Tasks";
+      widget.onTabChanged(selectedTab);
+      currentTab.value = selectedTab;
     });
     super.initState();
   }

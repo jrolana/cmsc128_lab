@@ -1,8 +1,8 @@
-import 'package:cmsc128_lab/widgets/routineCreation/complete_today_block.dart';
-import 'package:cmsc128_lab/widgets/routineCreation/upcoming_today_block';
+import 'package:cmsc128_lab/widgets/routineWidgets/complete_today_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/upcoming_today_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/widgets/routineCreation/other_routine_block';
+import 'package:cmsc128_lab/widgets/routineWidgets/other_routine_block.dart';
 
 class DynamicHomeRoutine extends StatefulWidget {
   const DynamicHomeRoutine({super.key});
@@ -12,7 +12,6 @@ class DynamicHomeRoutine extends StatefulWidget {
 }
 
 class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,46 +23,59 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
             child: Column(
               children: [
                 //Completed Today
-                  Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Completed Today", style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
-                      ),
-                      const CompleteTodayBlock(),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Completed Today",
+                          style: GoogleFonts.lexend(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))),
+                    ),
+                    const CompleteTodayBlock(),
+                  ],
+                ),
                 //Upcoming Today
-                  Column(
-                    children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Upcoming Today",style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
-                        ),
-                      const UpcomingTodayBlock(),   
-                      const UpcomingTodayBlock()                 
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Upcoming Today",
+                          style: GoogleFonts.lexend(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))),
+                    ),
+                    const UpcomingTodayBlock(),
+                    const UpcomingTodayBlock()
+                  ],
+                ),
                 //Other Routines
-                  Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Other Routines", style: GoogleFonts.lexend(textStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize:18,))),
-                        ),
-                      const OtherRoutines(),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Other Routines",
+                          style: GoogleFonts.lexend(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))),
+                    ),
+                    const OtherRoutines(),
+                  ],
+                ),
               ],
             ),
           ),
-          
-          
         ),
       ),
     );
   }
-  
+
   // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(

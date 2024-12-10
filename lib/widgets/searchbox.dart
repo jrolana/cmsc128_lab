@@ -4,13 +4,14 @@ import 'package:iconly/iconly.dart';
 import '../utils/styles.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({super.key});
+  final Function(String) onSearch;
+
+  const SearchBox({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: 10), // Only horizontal padding
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -25,6 +26,7 @@ class SearchBox extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onChanged: onSearch,
         decoration: InputDecoration(
           prefixIcon: const Icon(
             IconlyLight.search,

@@ -1,8 +1,8 @@
 import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
-import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_activity_block.dart';
-import 'package:cmsc128_lab/widgets/routineCreation/routine_creation_task_block.dart';
-import 'package:cmsc128_lab/widgets/routineCreation/task_selection_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
