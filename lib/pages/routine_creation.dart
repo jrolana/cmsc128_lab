@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
@@ -26,7 +27,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   List repeatDays = [];
   FirestoreUtils dbService = FirestoreUtils();
 
-
   Widget titleText() {
     return TextButton(
         onPressed: () {
@@ -41,7 +41,9 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                 Text(
                   routineName,
                   style: TextStyle(
-                      fontWeight: FontWeight.w300, color: Colors.white,fontSize: 20),
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                      fontSize: 20),
                 ),
                 Text(
                   "Routine Name",
@@ -54,6 +56,8 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
         floatingActionButton:
@@ -109,12 +113,15 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                                 actCount -= 1;
                               });
                             },
-                            icon: Icon(Icons.delete)),
+                            icon: Icon(
+                              Icons.delete,
+                              size: width * 0.06,
+                            )),
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 10,
+                      return SizedBox(
+                        height: height * 0.0001,
                       );
                     },
                     itemCount: actCount))
@@ -144,6 +151,14 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
       border: Border.all(color: StyleColor.tertiary),
       color: StyleColor.primary,
       borderRadius: BorderRadius.circular(8.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2), // Shadow color
+          spreadRadius: 2, // How much the shadow spreads
+          blurRadius: 5, // How blurry the shadow is
+          offset: Offset(0, 4), // The shadow's position (x, y)
+        ),
+      ],
     );
   }
 
@@ -184,34 +199,45 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   Future createRoutineDialog() => showDialog(
       context: context,
       builder: (context) => AlertDialog(
-            title: Text('Create the Routine'),
+            title: Text('Finalize Routine'),
             content: Column(
               children: [
-                Text('Routine Name: $routineName', style: TextStyle(
-                  fontSize: 20,
-
-                ),),
+                Text(
+                  routineName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                ),
                 SizedBox(height: 10),
                 SelectWeekDays(
                   onSelect: (values) {
-                    print(values);
                     repeatDays = values;
                   },
                   days: _days,
-                  width: MediaQuery.of(context).size.width / 1.4,
+                  width: MediaQuery.of(context).size.width,
                   boxDecoration: BoxDecoration(
                     color: StyleColor.primary,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
+                  fontSize: MediaQuery.of(context).size.width * 0.025,
                 ),
               ],
             ),
             actions: [
-              TextButton(onPressed: (){Navigator.pop(context);}, child: Text('CANCEL')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('CANCEL')),
               TextButton(
                   onPressed: () {
                     createRoutineDB();
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavBar()),
+                    );
                   },
                   child: Text('SUBMIT'))
             ],
@@ -220,7 +246,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   void createRoutineDB() {
     Routine routine = Routine(
         color: 128390830,
-        icon: icon.toString(),
         name: routineName,
         numActivities: actCount,
         repeatDaysCount: repeatDays.length,

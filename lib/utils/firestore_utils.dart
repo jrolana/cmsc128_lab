@@ -16,9 +16,9 @@ class FirestoreUtils {
         .doc(uid)
         .collection(ROUTINE_COLLECTION_REF)
         .withConverter<Routine>(
-            fromFirestore: (snapshots, _) =>
-                Routine.fromJson(snapshots.data()!),
-            toFirestore: (routine, _) => routine.toJson());
+        fromFirestore: (snapshots, _) =>
+            Routine.fromJson(snapshots.data()!),
+        toFirestore: (routine, _) => routine.toJson());
   }
 
   static Future<void> addTask(Map<String, dynamic> task) async {
@@ -48,13 +48,14 @@ class FirestoreUtils {
       {List<String>? filterCategories}) async {
     try {
       QuerySnapshot querySnapshot =
-          await db.collection('users').doc(uid).collection('tasks').get();
+      await db.collection('users').doc(uid).collection('tasks').get();
 
       List<Map<String, dynamic>> tasks = querySnapshot.docs
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
+          .map((doc) =>
+      {
+        ...doc.data() as Map<String, dynamic>,
+        'id': doc.id,
+      })
           .toList();
 
       if ((filterCategories != null) && (filterCategories.isNotEmpty)) {
@@ -70,8 +71,8 @@ class FirestoreUtils {
     }
   }
 
-  static Future<void> updateTaskField(
-      String taskId, String field, dynamic value) async {
+  static Future<void> updateTaskField(String taskId, String field,
+      dynamic value) async {
     try {
       await db
           .collection('users')
@@ -95,10 +96,11 @@ class FirestoreUtils {
           .get();
 
       List<Map<String, dynamic>> tasks = querySnapshot.docs
-          .map((doc) => {
-                ...doc.data() as Map<String, dynamic>,
-                'id': doc.id,
-              })
+          .map((doc) =>
+      {
+        ...doc.data() as Map<String, dynamic>,
+        'id': doc.id,
+      })
           .toList();
 
       tasks = tasks.where((task) => task['isDone'] == false).toList();
@@ -108,7 +110,9 @@ class FirestoreUtils {
       return [];
     }
   }
-
+  DocumentReference<Object?> getRoutine(routineId){
+    return _routineRef.doc(routineId);
+  }
   void addRoutine(Routine routine, List activities) async {
     String id = 'id';
     String activityCol = 'activities';
@@ -121,12 +125,21 @@ class FirestoreUtils {
         .doc(id)
         .collection(activityCol)
         .withConverter<Activity>(
-            fromFirestore: (snapshots, _) =>
-                Activity.fromJson(snapshots.data()!),
-            toFirestore: (activity, _) => activity.toJson());
+        fromFirestore: (snapshots, _) =>
+            Activity.fromJson(snapshots.data()!),
+        toFirestore: (activity, _) => activity.toJson());
     // Iterate through activity blocks
     for (Activity member in activities) {
       activityRef.add(member);
     }
+  }
+
+  CollectionReference<Object?> getActivities(routineID) {
+    CollectionReference activityRef =
+        _routineRef.doc(routineID).collection('activities').withConverter<
+            Activity>(fromFirestore: (snapshots, _) =>
+            Activity.fromJson(snapshots.data()!),
+            toFirestore: (activity,_)=>activity.toJson());
+    return activityRef;
   }
 }
