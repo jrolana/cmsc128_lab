@@ -84,6 +84,20 @@ class DatabaseService {
       dailyAvgCompletionRate.add(RoutineAverage(weekdays[i], completionRate));
     }
 
+    double totalRates = 0;
+    double rate;
+
+    for (final day in dailyAvgCompletionRate) {
+      rate = day.completionRate;
+      if (rate != 0) {
+        totalRates += rate;
+      }
+    }
+
+    if (totalRates == 0) {
+      return [];
+    }
+
     return dailyAvgCompletionRate;
   }
 
@@ -119,6 +133,20 @@ class DatabaseService {
             numActivities: routine.numActivities,
             completionRate: completionRate),
       );
+    }
+
+    double totalRates = 0;
+    double rate;
+
+    for (final routine in weeklyAvgCompletionRate) {
+      rate = routine.completionRate as double;
+      if (rate != 0) {
+        totalRates += rate;
+      }
+    }
+
+    if (totalRates == 0) {
+      return [];
     }
 
     return weeklyAvgCompletionRate;
