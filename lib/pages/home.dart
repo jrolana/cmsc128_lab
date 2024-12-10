@@ -1,6 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:cmsc128_lab/pages/dynamic_routine_screen.dart';
-import 'package:cmsc128_lab/pages/routine_screen.dart';
 import 'package:flutter/material.dart';
 import '../utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
