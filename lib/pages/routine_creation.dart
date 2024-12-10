@@ -1,4 +1,6 @@
+import 'package:cmsc128_lab/models/task_block.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
+import 'package:cmsc128_lab/pages/routine_session_landing.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_activity_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_creation_task_block.dart';
@@ -179,7 +181,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               onPressed: () {
                 setState(() {
                   routineName = inputController.text;
-                  Navigator.of(context).pop();
                 });
               },
             )
@@ -251,13 +252,29 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         repeatDaysCount: repeatDays.length,
         repeatWeeksCount: 0,
         daysOfWeek: repeatDays);
-    List<Activity> activities = [];
+    List activities = [];
+
     for (var member in activityBlocks) {
-      activities.add(Activity(
-          name: member.getName(),
-          icon: member.getIcon(),
-          duration: member.getDuration()));
+      if (member.type == 'activity') {
+        activities.add(Activity(
+            order:activityBlocks.indexOf(member),
+            name: member.getName(),
+            icon: member.getIcon(),
+            duration: member.getDuration(), type: 'activity', category: "none"),);
+      }else{
+        activities.add(
+          Activity(
+              order:activityBlocks.indexOf(member),
+              name: "none",
+              icon: 0,
+              duration: member.getDuration(), type: 'taskblock', category: member.getCategory())
+        );
+      }
     }
-    dbService.addRoutine(routine, activities);
+    dbService.addRoutine(routine, activities).then((result){
+      Navigator.push(context,
+      MaterialPageRoute(builder: (context)=> RoutineSessionLanding(result))
+      );
+    });
   }
 }

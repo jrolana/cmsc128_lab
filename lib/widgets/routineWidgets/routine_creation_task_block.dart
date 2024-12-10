@@ -5,11 +5,23 @@ import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
 
 class TaskBlock extends StatefulWidget {
-  final String type = 'taskBlock';
-  const TaskBlock({super.key});
+  final String type = 'taskblock';
+  _TaskBlockState _state = _TaskBlockState();
+
+  String? getCategory(){
+    return _state.selectedCategory;
+  }
+  int getDuration(){
+    return _state.duration.inSeconds;
+  }
+
+  TaskBlock({super.key});
 
   @override
-  State<TaskBlock> createState() => _TaskBlockState();
+  State<TaskBlock> createState() {
+    _state = _TaskBlockState();
+    return _state;
+  }
 }
 
 class _TaskBlockState extends State<TaskBlock> {
