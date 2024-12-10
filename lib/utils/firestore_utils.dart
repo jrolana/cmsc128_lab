@@ -11,7 +11,7 @@ class FirestoreUtils {
   late final CollectionReference _routineRef;
 
   // Get user ID
-  static String uid = '8ESa4lmztTB5VUhaJo7r'; // This one is temporary
+  static String uid = 'user1'; // This one is temporary
   FirestoreUtils() {
     _routineRef = db
         .collection('users')

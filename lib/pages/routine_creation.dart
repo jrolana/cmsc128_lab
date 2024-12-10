@@ -180,6 +180,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               child: Text('SUBMIT'),
               onPressed: () {
                 setState(() {
+                  Navigator.pop(context);
                   routineName = inputController.text;
                 });
               },
@@ -249,7 +250,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         color: 128390830,
         name: routineName,
         numActivities: actCount,
-        repeatDaysCount: repeatDays.length,
+        repeatDaysCount:0,
         repeatWeeksCount: 0,
         daysOfWeek: repeatDays);
     List activities = [];
