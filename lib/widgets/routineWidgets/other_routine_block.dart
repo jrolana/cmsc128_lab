@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 
-class CompleteTodayBlock extends StatefulWidget {
-  const CompleteTodayBlock({super.key});
+class OtherRoutines extends StatefulWidget {
+  const OtherRoutines({super.key});
 
   @override
-  State<CompleteTodayBlock> createState() => _CompleteTodayBlock();
+  State<OtherRoutines> createState() => _OtherRoutines();
 }
 
-class _CompleteTodayBlock extends State<CompleteTodayBlock> {
+class _OtherRoutines extends State<OtherRoutines> {
   String userID = FirestoreUtils.uid;
   late Stream<QuerySnapshot> routine_stream;
 
@@ -23,7 +24,7 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
         .collection('users')
         .doc(userID)
         .collection('routines')
-        .where('routineType', isEqualTo: 'completedtoday')
+        .where('routineType', isEqualTo: 'otherroutines')
         .snapshots();
   }
 

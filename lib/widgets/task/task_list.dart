@@ -8,8 +8,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskList extends StatefulWidget {
   final List<String> filterCategories;
+  final String? searchQuery;
 
-  const TaskList({super.key, required this.filterCategories});
+  const TaskList({
+    super.key,
+    required this.filterCategories,
+    this.searchQuery,
+  });
 
   @override
   State<TaskList> createState() => _TaskListState();
@@ -18,6 +23,20 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   List<Map<String, dynamic>> tasks = [];
   bool isLoading = true;
+
+  List<Map<String, dynamic>> get filteredTasks {
+    return tasks.where((task) {
+      final matchesCategory = widget.filterCategories.isEmpty ||
+          widget.filterCategories.contains(task['category']);
+      final matchesQuery = widget.searchQuery == null ||
+          widget.searchQuery!.isEmpty ||
+          task['name']
+              .toString()
+              .toLowerCase()
+              .contains(widget.searchQuery!.toLowerCase());
+      return matchesCategory && matchesQuery;
+    }).toList();
+  }
 
   Future<void> fetchTasks({List<String>? filterCategories}) async {
     setState(() {
@@ -60,7 +79,7 @@ class _TaskListState extends State<TaskList> {
     String userID = FirestoreUtils.uid;
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userID) // Temporary userID
+        .doc(userID)
         .collection('tasks')
         .snapshots()
         .listen((snapshot) {
@@ -90,14 +109,16 @@ class _TaskListState extends State<TaskList> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    final tasks = filteredTasks;
+
     if (tasks.isEmpty) {
       return Expanded(
           child: Center(
               child: Column(
         children: [
-          const Icon(IconlyLight.activity),
+          const Icon(IconlyBold.danger),
           const SizedBox(height: 10),
-          Text('You have no tasks for this category yet!',
+          Text('No tasks found!',
               style: TextStyle(
                   fontFamily: GoogleFonts.lexendDeca().fontFamily,
                   fontSize: 14,
