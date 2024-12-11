@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/model/routine.dart';
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/complete_today_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/upcoming_today_block.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +37,7 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                             fontSize: 18,
                           ))),
                     ),
-                    const CompleteTodayBlock(),
+                    CompleteTodayBlock(),
                   ],
                 ),
                 //Upcoming Today
@@ -50,7 +53,6 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                           ))),
                     ),
                     const UpcomingTodayBlock(),
-                    const UpcomingTodayBlock()
                   ],
                 ),
                 //Other Routines

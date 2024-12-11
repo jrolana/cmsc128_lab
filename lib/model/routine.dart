@@ -14,7 +14,7 @@ class Routine {
     this.docRef,
     required this.name,
     required this.icon,
-    required this.color,
+    required this.color,  
     required this.numActivities,
     this.repeatWeeksCount,
     this.repeatDaysCount,
