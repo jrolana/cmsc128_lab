@@ -23,7 +23,7 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
   int icon = 0;
   String name = "";
   int duration = 0;
-  int timeFactor = 10;
+  int timeFactor = 100;
   double iconScaleFactor = 0.25;
   bool isActive = true;
   int timeAdded = 0;
@@ -73,7 +73,7 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
     if (isActive) {
       setState(() {
         duration--;
-        if(duration == 0){
+        if(duration < 0){
           widget.changeActivity(widget.index+1);
         }
       });
