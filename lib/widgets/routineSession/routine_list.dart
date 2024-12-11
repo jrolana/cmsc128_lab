@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/widgets/routineWidgets/task_selection_block.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/activity.dart';
@@ -37,20 +38,25 @@ class _RoutineSessionListState extends State<RoutineSessionList> {
             .sizeOf(context)
             .width,
         child: StreamBuilder(
-            stream: dbService.getActivities(widget.routineID).snapshots(),
+            stream: dbService.getActivities(widget.routineID).orderBy("order",descending: false).snapshots(),
             builder: (context, snapshot) {
               List activities = snapshot.data?.docs ?? [];
               return ListView.separated(
                   itemBuilder: (context,index){
                     //print(activities[index]);
-                    Activity activity = activities[index].data();
-                    return ElevatedButton(
-                        onPressed: (){},
-                        child:ListTile(
-                      leading: Icon(IconData(activity.icon,fontFamily: 'MaterialIcons')) ,
-                      title: Text(activity.name),
-                          trailing: Text(_printDuration(Duration(seconds: activity.duration))),
-                    ));
+                    var activity = activities[index].data();
+                    if(activity.type == "activity"){
+                      return ElevatedButton(
+                          onPressed: (){},
+                          child:ListTile(
+                            leading: Icon(IconData(activity.icon,fontFamily: 'MaterialIcons')) ,
+                            title: Text(activity.name),
+                            trailing: Text(_printDuration(Duration(seconds: activity.duration))),
+                          ));
+                    }else{
+                      return TaskSelectBlock(category: activity.category);
+                    }
+
                   },
                   separatorBuilder: (context, index) {
                      return const SizedBox(

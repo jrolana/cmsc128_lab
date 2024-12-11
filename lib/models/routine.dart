@@ -2,8 +2,8 @@ class Routine {
   int color;
   String name;
   int numActivities;
-  int repeatDaysCount;
-  int repeatWeeksCount;
+  double repeatDaysCount;
+  double repeatWeeksCount;
   List daysOfWeek;
 
   Routine({
@@ -19,8 +19,8 @@ class Routine {
           color: json['color']! as int,
           name: json['name']! as String,
           numActivities: json['numActivities']! as int,
-          repeatDaysCount: json['repeatDaysCount']! as int,
-          repeatWeeksCount: json['repeatWeeksCount']! as int,
+          repeatDaysCount: json['repeatDaysCount']! as double,
+          repeatWeeksCount: json['repeatWeeksCount']! as double,
           daysOfWeek: json['daysOfWeek']! as List
       );
 
@@ -28,8 +28,8 @@ class Routine {
     int? color,
     String? name,
     int? numActivities,
-    int? repeatDaysCount,
-    int? repeatWeeksCount,
+    double? repeatDaysCount,
+    double? repeatWeeksCount,
     List? daysOfWeek
   }) {
     return Routine(

@@ -5,6 +5,7 @@ import 'package:cmsc128_lab/widgets/routineSession/routine_list.dart';
 import 'package:flutter/material.dart';
 
 import '../models/routine.dart';
+import 'navbar.dart';
 
 class RoutineSessionLanding extends StatefulWidget {
   final String routineID;
@@ -35,7 +36,10 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
       appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>BottomNavBar()),
+                );
               },
               icon: const Icon(Icons.arrow_back)),
           title: Text(name)),
