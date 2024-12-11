@@ -10,7 +10,6 @@ import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/models/routine.dart';
 import 'package:cmsc128_lab/models/activity.dart';
-import 'package:cmsc128_lab/data/task_data.dart';
 
 class RoutineCreation extends StatefulWidget {
   const RoutineCreation({super.key});
@@ -331,7 +330,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
             icon: 0,
             duration: member.getDuration(),
             type: 'taskblock',
-            category: member.getCategory()));
+            category: member.selectedCategory));
       }
     }
     dbService.addRoutine(routine, activities).then((result) {
