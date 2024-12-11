@@ -10,6 +10,7 @@ import 'package:day_picker/day_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/models/routine.dart';
 import 'package:cmsc128_lab/models/activity.dart';
+import 'package:cmsc128_lab/data/task_data.dart';
 
 class RoutineCreation extends StatefulWidget {
   const RoutineCreation({super.key});
@@ -28,6 +29,17 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   String routineName = "Click to set routine name";
   List repeatDays = [];
   FirestoreUtils dbService = FirestoreUtils();
+  String selectedCategory = '';
+  List<String> selectedCategories = [];
+  List<String?> remainingCategories = [
+    "Personal",
+    "School",
+    "Work",
+    "Home",
+    "Health",
+    "Social",
+    "Financial"
+  ];
 
   Widget titleText() {
     return TextButton(
@@ -106,13 +118,26 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
             Expanded(
                 child: ListView.separated(
                     itemBuilder: (context, index) {
+                      var block = activityBlocks[index];
                       return ListTile(
-                        title: activityBlocks[index],
+                        title: block,
                         trailing: IconButton(
                             onPressed: () {
                               setState(() {
-                                activityBlocks.removeAt(index);
-                                actCount -= 1;
+                                if (block is TaskBlock) {
+                                  String? category =
+                                      block.getSelectedCategory();
+
+                                  remainingCategories.add(category);
+                                  selectedCategories.remove(category);
+                                  activityBlocks.removeAt(index);
+                                  actCount -= 1;
+                                  print(
+                                      'Remaining categories after remove: $remainingCategories');
+                                } else {
+                                  activityBlocks.removeAt(index);
+                                  actCount -= 1;
+                                }
                               });
                             },
                             icon: Icon(
@@ -141,10 +166,43 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
   }
 
   void addTaskBlock() {
-    setState(() {
-      // activityBlocks.add(TaskSelectBlock(category: "School")); // For Selection of Task Sample
-      activityBlocks.add(TaskBlock());
-      actCount += 1;
+    if (remainingCategories.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("All categories are already added.")),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Select a category for this task block:'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: remainingCategories.map((category) {
+                return ListTile(
+                  title: Text(category!),
+                  onTap: () {
+                    selectedCategory = category;
+                    Navigator.pop(context, category);
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    ).then((selectedCategory) {
+      if (selectedCategory != null) {
+        setState(() {
+          activityBlocks.add(TaskBlock(selectedCategory: selectedCategory));
+          remainingCategories.remove(selectedCategory);
+          selectedCategories.add(selectedCategory);
+          print('Remaining categories before dialog: $remainingCategories');
+          actCount += 1;
+        });
+      }
     });
   }
 
@@ -250,32 +308,37 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         color: 128390830,
         name: routineName,
         numActivities: actCount,
-        repeatDaysCount:0,
+        repeatDaysCount: 0,
         repeatWeeksCount: 0,
         daysOfWeek: repeatDays);
     List activities = [];
 
     for (var member in activityBlocks) {
       if (member.type == 'activity') {
-        activities.add(Activity(
-            order:activityBlocks.indexOf(member),
-            name: member.getName(),
-            icon: member.getIcon(),
-            duration: member.getDuration(), type: 'activity', category: "none"),);
-      }else{
         activities.add(
           Activity(
-              order:activityBlocks.indexOf(member),
-              name: "none",
-              icon: 0,
-              duration: member.getDuration(), type: 'taskblock', category: member.getCategory())
+              order: activityBlocks.indexOf(member),
+              name: member.getName(),
+              icon: member.getIcon(),
+              duration: member.getDuration(),
+              type: 'activity',
+              category: "none"),
         );
+      } else {
+        activities.add(Activity(
+            order: activityBlocks.indexOf(member),
+            name: "none",
+            icon: 0,
+            duration: member.getDuration(),
+            type: 'taskblock',
+            category: member.getCategory()));
       }
     }
-    dbService.addRoutine(routine, activities).then((result){
-      Navigator.push(context,
-      MaterialPageRoute(builder: (context)=> RoutineSessionLanding(result))
-      );
+    dbService.addRoutine(routine, activities).then((result) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RoutineSessionLanding(result)));
     });
   }
 }
