@@ -41,7 +41,7 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [completionStatistics()],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ElevatedButton(
           onPressed: () {
             DatabaseService.updateStreak();
             Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavBar()));
@@ -51,7 +51,8 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
               Icon(Icons.check_circle_outline_rounded),
               Text('Finish Routine')
             ],
-          )),
+          ),
+      ),
     );
   }
 
