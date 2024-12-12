@@ -47,6 +47,17 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
           routineDB.getRoutine(widget.routineID).collection('completedActivities').add(data);
           }
 
+        for(var x in activities){
+          Activity act = x.data() as Activity;
+          if (act.type == 'activity'){
+          Map<String,dynamic> data = {
+            "date":Timestamp.fromDate(DateTime.now()).toString(),
+            "actId": act.name
+          };
+          print(act);
+          routineDB.getRoutine(widget.routineID).collection('completedActivities').add(data);
+          }
+
 
         }
         Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
