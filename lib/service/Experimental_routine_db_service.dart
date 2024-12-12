@@ -12,7 +12,8 @@ class DBroutineService {
   User? currentUser = FirebaseAuth.instance.currentUser;
 
   // Get user ID
-  static String routineid = FirebaseAuth.instance.currentUser!.uid;
+  // static String routineid = FirebaseAuth.instance.currentUser!.uid;
+  static String routineid = 'user1';
 
   final DateTime now = DateTime.now().toLocal();
 
