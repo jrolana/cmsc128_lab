@@ -2,6 +2,7 @@ import 'package:cmsc128_lab/pages/routine_creation.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'statistics.dart';
+import 'profile_screen.dart';
 import 'package:cmsc128_lab/widgets/task/add_task_dialog.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -50,9 +51,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       }),
       Statistics(),
       //Text('Account'),
-      HomePage(onTabChanged: (tab) {
-        updateCurrentTab(tab);
-      }),
+      ProfileScreen(),
     ];
   }
 
