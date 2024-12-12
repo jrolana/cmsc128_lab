@@ -51,9 +51,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       }),
       Statistics(),
       //Text('Account'),
-      HomePage(onTabChanged: (tab) {
-        updateCurrentTab(tab);
-      }),
+      ProfileScreen(),
     ];
   }
 
