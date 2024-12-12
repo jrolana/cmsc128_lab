@@ -61,9 +61,8 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
 
         }
         Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
-        //DatabaseService.updateStreak();
-        }},
-        child: Icon(Icons.done)),
+        DatabaseService.updateStreak();
+      }},child: Icon(Icons.done),),
       body: Column(
         children: [
           congratulations()
