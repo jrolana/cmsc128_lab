@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/models/activity.dart';
 import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:confetti/confetti.dart';
@@ -8,6 +10,7 @@ import 'package:iconly/iconly.dart';
 
 import '../models/routine.dart';
 import '../utils/styles.dart';
+import 'navbar.dart';
 
 class RoutineSessionComplete extends StatefulWidget {
   final String routineID;
@@ -20,17 +23,33 @@ class RoutineSessionComplete extends StatefulWidget {
 class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
   FirestoreUtils routineDB = FirestoreUtils();
   late Routine routine;
+  List activities = [];
   @override
   void initState() {
     // TODO: implement initState
     getRoutine();
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
+        
+        for(var x in activities){
+          Activity act = x.data() as Activity;
+          if (act.type == 'activity'){
+          Map<String,dynamic> data = {
+            "date":Timestamp.fromDate(DateTime.now()).toString(),
+            "actId": act.name
+          };
+          print(act);
+          routineDB.getRoutine(widget.routineID).collection('completedActivities').add(data);
+          }
 
+
+        }
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
         DatabaseService.updateStreak();
       },child: Icon(Icons.done),),
       body: Column(
@@ -110,9 +129,8 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
 
     var snap = await routineDB.getRoutine(widget.routineID).get();
     routine  = snap.data() as Routine;
-    setState(() {
-
-    });
+    var snap2 = await routineDB.getActivities(widget.routineID).get();
+    activities = snap2.docs;
   }
 
 }
