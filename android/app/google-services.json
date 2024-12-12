@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "308136893321",
+    "firebase_url": "https://cmsc128-rabbithole-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "cmsc128-rabbithole",
-    "storage_bucket": "cmsc128-rabbithole.appspot.com"
+    "storage_bucket": "cmsc128-rabbithole.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +13,12 @@
           "package_name": "com.rabbithole.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "308136893321-35vps91vqqgagv1hj6iubajjdn42i63j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAP216IeuSqcOufXqDIn-pibmOo93MVr6E"
@@ -20,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308136893321-35vps91vqqgagv1hj6iubajjdn42i63j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "308136893321-2jrhe2fb7uhskm5grdi3pr0qu9ic1via.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cmsc128Lab"
+              }
+            }
+          ]
         }
       }
     }
