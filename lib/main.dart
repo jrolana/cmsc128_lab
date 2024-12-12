@@ -1,6 +1,8 @@
 import 'package:cmsc128_lab/pages/profile_screen.dart';
+import 'package:cmsc128_lab/pages/welcome_screen.dart';
 import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/pages/navbar.dart';
+import 'package:cmsc128_lab/widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc128_lab/pages/home.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
         // home: WelcomeScreen(),
-        home: const BottomNavBar(),
+        home: const WelcomeScreen(),
       ),
     );
   }

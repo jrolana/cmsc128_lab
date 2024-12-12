@@ -44,6 +44,7 @@ dependencies:
   confetti: ^0.8.0
   flutter_iconpicker:
   day_picker: 2.3.0
+  sign_in_button: ^3.2.0
 
 dev_dependencies:
   flutter_test:

@@ -19,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomePage(),
     Statistics(),
     //Text('Account'),
-    ProfileScreen() //For now cuz Empty pa ung account page
+    ProfileScreen()
   ];
 
   //Function to select on List
