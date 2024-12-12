@@ -2,6 +2,7 @@ import 'package:cmsc128_lab/service/database_service.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/fetching_data.dart';
+import 'package:cmsc128_lab/widgets/no_fetched_data.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,8 +35,16 @@ class _WeeklyRoutineChartState extends State<WeeklyRoutineChart> {
           FutureBuilder<List<RoutineAverage>>(
               future: DatabaseService.getDailyAvgCompletionRate(widget.date),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.hasError) {
+                  return const NoFetchedData();
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const FetchingData();
+                }
+
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const NoFetchedData();
                 }
 
                 return Container(

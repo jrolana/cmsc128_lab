@@ -1,36 +1,49 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
 class Activity {
+  String type ;
   String name;
-  String icon;
-  int duration; // in seconds
+  int icon;
+  int duration;
+  String category;
+  int order;// in seconds
+
 
   Activity({
+    required this.type,
     required this.name,
     required this.icon,
-    required this.duration
+    required this.duration,
+    required this.category,
+    required this.order
   });
 
   Activity.fromJson(Map<String, Object?> json) :
         this(
+          type: json['type']! as String,
           name: json['name']! as String,
-          icon: json['icon']! as String,
-          duration: json['duration']! as int
+          icon: json['icon']! as int,
+          duration: json['duration']! as int,
+          category: json['category']! as String,
+          order: json['order'] as int
       );
 
   Activity copyWith({
+    String? type,
     String? name,
-    String? icon,
+    int? icon,
     int? duration,
+    String? category,
+    int? order
   }) {
-    return Activity(name: this.name, icon: this.icon, duration: this.duration);
+    return Activity(order:this.order,type:this.type,name: this.name, icon: this.icon, duration: this.duration, category: this.category);
   }
   Map<String,Object> toJson(){
     return{
+      'order':order,
+      'type': type,
       'name': name,
       'icon': icon,
-      'duration': duration
+      'duration': duration,
+      'category': category
     };
   }
 }

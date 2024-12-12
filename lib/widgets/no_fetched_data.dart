@@ -15,7 +15,7 @@ class NoFetchedData extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Center(
         child: Text(
-            "No routines available.\nBuild more routines to see this!🌱",
+            "No progress available.\nComplete routines to track your progress!🌱",
             style: TextStyle(
                 fontSize: 12, fontFamily: GoogleFonts.lexendDeca().fontFamily)),
       ),

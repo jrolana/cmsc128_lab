@@ -14,13 +14,15 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
+  String _currentTab = "Routines";
 
-  List<Widget> widgetOptions = <Widget>[
-    HomePage(),
-    Statistics(),
-    //Text('Account'),
-    ProfileScreen()
-  ];
+  late List<Widget> widgetOptions;
+
+  void updateCurrentTab(String tab) {
+    setState(() {
+      _currentTab = tab; // Update the current tab when HomePage notifies
+    });
+  }
 
   //Function to select on List
   void _onItemTap(int index) {
@@ -41,6 +43,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    widgetOptions = <Widget>[
+      HomePage(onTabChanged: (tab) {
+        updateCurrentTab(tab);
+      }),
+      Statistics(),
+      //Text('Account'),
+      HomePage(onTabChanged: (tab) {
+        updateCurrentTab(tab);
+      }),
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -57,11 +74,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
             borderRadius: BorderRadius.circular(100)),
         elevation: 5.0,
         onPressed: () {
-          //showAddTaskDialog();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const RoutineCreation()),
-          );
+          if (_currentTab == "Routines") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RoutineCreation()),
+            );
+          } else if (_currentTab == "Tasks") {
+            showAddTaskDialog();
+          }
         },
         child: Icon(
           Icons.add,

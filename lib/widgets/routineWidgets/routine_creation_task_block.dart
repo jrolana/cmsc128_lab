@@ -5,11 +5,29 @@ import 'package:iconly/iconly.dart';
 import 'package:cmsc128_lab/data/task_data.dart';
 
 class TaskBlock extends StatefulWidget {
-  final String type = 'taskBlock';
-  const TaskBlock({super.key});
+  final String type = 'taskblock';
+  final String selectedCategory;
+  _TaskBlockState _state = _TaskBlockState();
+
+  String? getCategory() {
+    return _state.selectedCategory;
+  }
+
+  int getDuration() {
+    return _state.duration.inSeconds;
+  }
+
+  String getSelectedCategory() {
+    return selectedCategory;
+  }
+
+  TaskBlock({super.key, required this.selectedCategory});
 
   @override
-  State<TaskBlock> createState() => _TaskBlockState();
+  State<TaskBlock> createState() {
+    _state = _TaskBlockState();
+    return _state;
+  }
 }
 
 class _TaskBlockState extends State<TaskBlock> {
@@ -25,28 +43,28 @@ class _TaskBlockState extends State<TaskBlock> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2), // Shadow color
-            spreadRadius: 2, // How much the shadow spreads
-            blurRadius: 5, // How blurry the shadow is
-            offset: Offset(0, 4), // The shadow's position (x, y)
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 4),
           ),
         ],
       ),
       child: SizedBox(
-          height: 300,
+          height: 120,
           child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 children: [
                   Text(
-                    "Task Block:",
+                    "Task Block: ${widget.selectedCategory}",
                     style: TextStyle(
                         fontSize: 13,
                         fontFamily: GoogleFonts.lexendDeca().fontFamily,
                         color: Colors.black),
                   ),
                   Text(
-                    "Select a category for your task",
+                    "Set a time for this task",
                     style: TextStyle(
                         fontSize: 11,
                         fontFamily: GoogleFonts.lexendDeca().fontFamily,
@@ -74,34 +92,6 @@ class _TaskBlockState extends State<TaskBlock> {
                         ],
                       )),
                   const SizedBox(height: 5),
-                  isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : Expanded(
-                          child: ListView(
-                            children: categories.map((category) {
-                              return Row(
-                                children: [
-                                  Checkbox(
-                                    value: selectedCategory == category,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        selectedCategory =
-                                            value == true ? category : null;
-                                      });
-                                    },
-                                  ),
-                                  Text(
-                                    category,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ),
                 ],
               ))),
     );

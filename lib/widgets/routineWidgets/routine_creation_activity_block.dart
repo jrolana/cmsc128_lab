@@ -3,24 +3,28 @@ import 'package:flutter/material.dart';
 
 // import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ActivityBlock extends StatefulWidget {
-  final String type = 'taskBlock';
+  final String type = 'activity';
   _DefaultActivityBlock _state = _DefaultActivityBlock();
 
-  String getName(){
+  String getName() {
     return _state.actName;
   }
-  String getIcon(){
-    return _state.actIcon.toString();
+
+  int? getIcon() {
+    return _state.actIcon.icon?.codePoint;
   }
-  int getDuration(){
+
+  int getDuration() {
     return _state.duration.inSeconds;
   }
+
   ActivityBlock({super.key});
 
   @override
-  State<ActivityBlock> createState(){
+  State<ActivityBlock> createState() {
     _state = _DefaultActivityBlock();
     return _state;
   }
@@ -29,26 +33,10 @@ class ActivityBlock extends StatefulWidget {
 class _DefaultActivityBlock extends State<ActivityBlock> {
   bool showTextField = false;
   String actName = 'Enter an activity name';
-  Icon actIcon = Icon(Icons.square_rounded);
+  Icon actIcon = Icon(Icons.square_rounded, size: 12);
   TextEditingController actController = TextEditingController();
   String defActVal = 'Enter an activity name';
   Duration duration = Duration(minutes: 1);
-
-  List getData() {
-    return [actName, actIcon, duration];
-  }
-
-  String getName() {
-    return actName;
-  }
-
-  String getIcon() {
-    return actIcon.toString();
-  }
-
-  int getDuration() {
-    return duration.inSeconds;
-  }
 
   @override
   void dispose() {
@@ -58,67 +46,79 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            backgroundColor: Colors.white,
+            shadowColor: Colors.black,
+            elevation: 2.0),
         onPressed: () {},
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      _pickIcon();
-                    },
-                    icon: actIcon),
-                Expanded(
-                  child: showTextField
-                      ? activityInputField()
-                      : activityInputButton(),
-                ),
-                TextButton(
-                  onPressed: () => _showDialog(CupertinoTimerPicker(
-                    mode: CupertinoTimerPickerMode.hms,
-                    initialTimerDuration: duration,
-                    // This is called when the user changes the timer's
-                    // duration.
-                    onTimerDurationChanged: (Duration newDuration) {
-                      setState(() => duration = newDuration);
-                    },
-                  )),
-                  child: Text(_printDuration(duration)),
-                )
-              ],
-            )));
+        child: Row(
+          children: [
+            IconButton(
+                style: IconButton.styleFrom(padding: EdgeInsets.zero),
+                onPressed: () {
+                  _pickIcon();
+                },
+                icon: actIcon),
+            Expanded(
+              child:
+                  showTextField ? activityInputField() : activityInputButton(),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.zero,
+              ),
+              onPressed: () => _showDialog(CupertinoTimerPicker(
+                mode: CupertinoTimerPickerMode.hms,
+                initialTimerDuration: duration,
+                // This is called when the user changes the timer's
+                // duration.
+                onTimerDurationChanged: (Duration newDuration) {
+                  setState(() => duration = newDuration);
+                },
+              )),
+              child: Text(_printDuration(duration),
+                  style: TextStyle(
+                      fontSize: 8,
+                      fontFamily: GoogleFonts.lexendDeca().fontFamily)),
+            )
+          ],
+        ));
   }
-
-  get name => actName;
-
-  get icon => actIcon;
-
-  get dur => duration;
 
   Widget activityInputField() {
     return TextField(
-      controller: actController,
-      autofocus: true,
-      onTapOutside: (event) {
-        setState(() {
-          actName = actController.text;
-          showTextField = false;
-        });
-      },
-      onSubmitted: (String value) {
-        setState(() {
-          showTextField = false;
-          actName = value.isEmpty ? defActVal : value;
-        });
-      },
-      textAlign: TextAlign.left,
-    );
+        maxLength: 20,
+        controller: actController,
+        autofocus: true,
+        onTapOutside: (event) {
+          setState(() {
+            actName =
+                actController.text.isEmpty ? defActVal : actController.text;
+            showTextField = false;
+          });
+        },
+        onSubmitted: (String value) {
+          setState(() {
+            showTextField = false;
+            actName = value.isEmpty ? defActVal : value;
+          });
+        },
+        textAlign: TextAlign.left,
+        style: TextStyle(
+            fontSize: 12, fontFamily: GoogleFonts.lexendDeca().fontFamily));
   }
 
   Widget activityInputButton() {
     return TextButton(
-        style: ButtonStyle(alignment: Alignment.centerLeft),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
+        ),
         onPressed: () {
           setState(() {
             actController.text = actName == defActVal ? '' : actName;
@@ -128,22 +128,28 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
         child: Text(
           actName,
           textAlign: TextAlign.left,
+          style: TextStyle(
+              fontSize: 12, fontFamily: GoogleFonts.lexendDeca().fontFamily),
         ));
   }
 
   _pickIcon() async {
     IconPickerIcon? iconPicked = await showIconPicker(context);
-    actIcon = Icon(iconPicked?.data);
-    setState(() {});
+    IconData iconData =
+        iconPicked!.name.isEmpty ? Icons.access_time_outlined : iconPicked.data;
+
+    setState(() {
+      actIcon = Icon(iconData, size: MediaQuery.of(context).size.width * 0.06);
+    });
   }
 
   String _printDuration(Duration duration) {
     String twoDigitMinutes = duration.inMinutes.remainder(60).abs().toString();
     String twoDigitSeconds = duration.inSeconds.remainder(60).abs().toString();
     if (duration.inHours == 0) {
-      return "$twoDigitMinutes min $twoDigitSeconds sec";
+      return "${twoDigitMinutes} min ${twoDigitSeconds} sec";
     } else {
-      return "${duration.inHours} hr $twoDigitMinutes min";
+      return "${duration.inHours} hr ${twoDigitMinutes} min";
     }
   }
 

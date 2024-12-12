@@ -26,12 +26,10 @@ class DailyRoutineList extends StatelessWidget {
                 routineLen = routines.length;
 
                 routineCards = routines.map((entry) {
-                  log(entry.name);
-
                   return RoutineCard(
                     name: entry.name,
                     numActivities: entry.numActivities,
-                    completionRate: entry.completionRate!,
+                    completionRate: entry.completionRate! / 100,
                     color: entry.color,
                   );
                 }).toList();

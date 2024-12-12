@@ -25,7 +25,7 @@ class RoutineCard extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Text(
-              "${(completionRate).toStringAsFixed(0)}%",
+              "${(completionRate * 100).toStringAsFixed(0)}%",
               style: TextStyle(
                 fontSize: 12,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily,

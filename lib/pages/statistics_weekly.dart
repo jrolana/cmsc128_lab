@@ -40,30 +40,34 @@ class _StatisticsWeeklyState extends State<StatisticsWeekly> {
     _draftTime = Time.subtractDays(_startDate, duration);
 
     if (_draftTime.isAfter(_timeConstraint)) {
-      _startDate = Time.getWeekStart(_draftTime);
-      _endDate = Time.addDays(_startDate, duration);
+      setState(() {
+        _startDate = Time.getWeekStart(_draftTime);
+        _endDate = Time.addDays(_startDate, duration);
+      });
     }
   }
 
-  // NOTE: Still has bug will roll a fix asap
   void _goNextWeek() {
     _timeConstraint = Time.addDays(Time.getWeekStart(now), duration * 3);
-    _draftTime = Time.addDays(_startDate, duration);
+    _draftTime = Time.addDays(_startDate, duration + 1);
 
     if (_draftTime.isBefore(_timeConstraint)) {
-      _startDate = Time.getWeekStart(_draftTime);
-      _endDate = Time.addDays(_startDate, duration);
+      setState(() {
+        _startDate = Time.getWeekStart(_draftTime);
+        _endDate = Time.addDays(_startDate, duration);
+      });
     }
   }
 
   void _updateTimeframe() {
-    _timeframe =
-        "${DateFormat('MMM d').format(_startDate)} - ${DateFormat('MMM d').format(_endDate)}";
+    setState(() {
+      _timeframe =
+          "${DateFormat('MMM d').format(_startDate)} - ${DateFormat('MMM d').format(_endDate)}";
 
-    if (_startDate == _endDate) {
-      _timeframe = DateFormat('MMM d').format(_startDate);
-    }
-    log(_timeframe);
+      if (_startDate == _endDate) {
+        _timeframe = DateFormat('MMM d').format(_startDate);
+      }
+    });
   }
 
   @override
@@ -78,10 +82,8 @@ class _StatisticsWeeklyState extends State<StatisticsWeekly> {
             children: [
               IconButton(
                   onPressed: () {
-                    setState(() {
-                      _goPrevWeek();
-                      _updateTimeframe();
-                    });
+                    _goPrevWeek();
+                    _updateTimeframe();
                   },
                   icon: const Icon(
                     IconlyBold.arrow_left_2,
@@ -97,10 +99,8 @@ class _StatisticsWeeklyState extends State<StatisticsWeekly> {
               ),
               IconButton(
                   onPressed: () {
-                    setState(() {
-                      _goNextWeek();
-                      _updateTimeframe();
-                    });
+                    _goNextWeek();
+                    _updateTimeframe();
                   },
                   icon: const Icon(
                     IconlyBold.arrow_right_2,
