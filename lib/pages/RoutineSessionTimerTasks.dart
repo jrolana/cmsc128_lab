@@ -54,7 +54,8 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
   @override
   void initState() {
     // TODO: implement initState
-    duration = widget.duration;
+    duration = widget.duration;''
+    FirestoreUtils
     super.initState();
   }
 
