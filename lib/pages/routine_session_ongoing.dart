@@ -70,7 +70,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   }
 
   void _navigatePage(int index) {
-    if (index > widget.actNum) {
+    if (index >= widget.actNum) {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutineSessionComplete(widget.routineID)));
       // TODO session complete
     } else {
