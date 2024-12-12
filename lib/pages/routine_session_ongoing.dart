@@ -9,8 +9,10 @@ import 'RoutineSessionTimerTasks.dart';
 class RoutineSessionOngoing extends StatefulWidget {
   final String routineID;
   final int actNum;
+  Map<String, List> tasks;
 
-  const RoutineSessionOngoing(this.routineID, this.actNum, {super.key});
+
+  RoutineSessionOngoing(this.routineID, this.actNum, this.tasks, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -60,7 +62,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
                   return RoutineSessionTimer(
                       act.name, act.duration, act.icon, index, _navigatePage);
                 }else{
-                  return RoutineSessionTimerTasks(act.duration, index, _navigatePage,_handleTaskList);
+                  return RoutineSessionTimerTasks(act.duration, index, _navigatePage,_handleTaskList,widget.tasks[act.category]);
                 }
               },
               controller: _pageViewController,

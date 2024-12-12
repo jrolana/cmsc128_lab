@@ -12,9 +12,9 @@ class RoutineSessionTimerTasks extends StatefulWidget {
   int index;
   Function changeActivity;
   Function sendTaskID;
-
+  List task;
   RoutineSessionTimerTasks(this.duration, this.index, this.changeActivity,
-      this.sendTaskID);
+      this.sendTaskID, this.task);
 
   @override
   State<RoutineSessionTimerTasks> createState() {
@@ -54,7 +54,8 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
   @override
   void initState() {
     // TODO: implement initState
-    duration = widget.duration;
+    duration = widget.duration;''
+    FirestoreUtils
     super.initState();
   }
 
