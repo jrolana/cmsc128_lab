@@ -334,6 +334,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
       }
     }
     dbService.addRoutine(routine, activities).then((result) {
+      routine.docID = result;
       Navigator.push(
           context,
           MaterialPageRoute(

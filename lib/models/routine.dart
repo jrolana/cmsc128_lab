@@ -1,4 +1,5 @@
 class Routine {
+  String docID;
   int color;
   String name;
   int numActivities;
@@ -7,15 +8,17 @@ class Routine {
   List daysOfWeek;
 
   Routine({
+    this.docID = "",
     required this.color,
     required this.name,
     required this.numActivities,
     required this.repeatDaysCount,
     required this.repeatWeeksCount,
-    required this.daysOfWeek});
+    required this.daysOfWeek,});
 
   Routine.fromJson(Map<String, Object?> json) :
         this(
+          docID: json['docID']! as String,
           color: json['color']! as int,
           name: json['name']! as String,
           numActivities: json['numActivities']! as int,
@@ -25,6 +28,7 @@ class Routine {
       );
 
   Routine copyWith({
+    String? docID,
     int? color,
     String? name,
     int? numActivities,
@@ -33,6 +37,7 @@ class Routine {
     List? daysOfWeek
   }) {
     return Routine(
+        docID: this.docID,
         color: this.color,
         name: this.name,
         numActivities: this.numActivities,
@@ -43,6 +48,7 @@ class Routine {
   }
   Map<String, Object> toJson(){
     return {
+      'docID': docID,
       'color': color,
       'name': name,
       'numActivities': numActivities,

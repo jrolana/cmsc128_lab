@@ -119,7 +119,6 @@ class FirestoreUtils {
     String id = 'id';
     String activityCol = 'activities';
     late final CollectionReference activityRef;
-    late final CollectionReference taskblockRef;
     await _routineRef.add(routine).then((DocumentReference doc) {
       id = doc.id;
     });
@@ -131,21 +130,9 @@ class FirestoreUtils {
             fromFirestore: (snapshots, _) =>
                 Activity.fromJson(snapshots.data()!),
             toFirestore: (activity, _) => activity.toJson());
-    taskblockRef = _routineRef
-        .doc(id)
-        .collection(activityCol)
-        .withConverter<TaskBlockModel>(
-            fromFirestore: (snapshots, _) =>
-                TaskBlockModel.fromJson(snapshots.data()!),
-            toFirestore: (activity, _) => activity.toJson());
     // Iterate through activity blocks
     for (var member in activities) {
       activityRef.add(member);
-      //if (member.runtimeType == Activity){
-      //activityRef.add(member);
-      //}else{
-      //activityRef.add(member);
-      //}
     }
     return id;
   }
