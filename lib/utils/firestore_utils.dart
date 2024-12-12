@@ -149,4 +149,28 @@ class FirestoreUtils {
             toFirestore: (activity, _) => activity.toJson());
     return activityRef;
   }
+
+  static Future<Map<String, dynamic>?> getTask(String taskID) async {
+    try {
+      DocumentSnapshot doc = await db
+          .collection('users')
+          .doc(uid)
+          .collection('tasks')
+          .doc(taskID)
+          .get();
+
+      if (doc.exists) {
+        return {
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id,
+        };
+      } else {
+        print("Task not found");
+        return null;
+      }
+    } catch (e) {
+      print("Failed to fetch task: $e");
+      return null;
+    }
+  }
 }

@@ -25,6 +25,7 @@ class RoutineSessionTimerTasks extends StatefulWidget {
 
 class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
   List<Map<String, dynamic>> tasks = [];
+  List taskIDs = [];
   bool isLoading = true;
   List<int> selectedTasks = [];
   int icon = 0;
@@ -41,11 +42,10 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       isLoading = true;
     });
 
-    List<Map<String, dynamic>> fetchedTasks =
-    await FirestoreUtils.getTasksForRoutine(category);
+
 
     setState(() {
-      tasks = fetchedTasks;
+      taskIDs = widget.task;
       isLoading = false;
     });
   }
