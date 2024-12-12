@@ -4,8 +4,9 @@ import 'package:cmsc128_lab/utils/firestore_utils.dart';
 
 class TaskSelectBlock extends StatefulWidget {
   final String category;
+  Function getTaskList;
 
-  const TaskSelectBlock({super.key, required this.category});
+  TaskSelectBlock(this.getTaskList,{super.key, required this.category});
 
   @override
   State<TaskSelectBlock> createState() => _TaskSelectBlockState();
@@ -98,6 +99,7 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
                                     onChanged: (bool? value) {
                                       // Add other functions to change data in database here!!!
                                       setState(() {
+                                        widget.getTaskList(selectedTasks,widget.category);
                                         if (value == true) {
                                           selectedTasks.add(index);
                                         } else {

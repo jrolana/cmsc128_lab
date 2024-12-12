@@ -20,14 +20,13 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   FirestoreUtils db = FirestoreUtils();
   String name = "";
   late Routine routine;
-  late Widget currentScreen;
   late Widget routineList;
+  Map<String,List> tasks = {};
 
   @override
   void initState() {
     // TODO: implement initState
-    currentScreen = RoutineSessionList(widget.routineID);
-    routineList =  RoutineSessionList(widget.routineID);
+    routineList =  RoutineSessionList(widget.routineID,_getTasks);
     getRoutine();
     super.initState();
   }
@@ -50,7 +49,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
 
             Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities)),
+            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities,tasks)),
             );
           },
           style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
@@ -68,6 +67,11 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
     setState(() {
       name = routine.name;
     });
+  }
+  void _getTasks(List taskIDs,String category){
+    if(taskIDs != []){
+      tasks[category] = taskIDs;
+    }
   }
 
 
