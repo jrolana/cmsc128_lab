@@ -3,15 +3,17 @@ import 'package:cmsc128_lab/models/routine.dart';
 import 'package:cmsc128_lab/models/activity.dart';
 import 'package:cmsc128_lab/models/task_block.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 const String ROUTINE_COLLECTION_REF = "routines";
 
 class FirestoreUtils {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
   late final CollectionReference _routineRef;
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   // Get user ID
-  static String uid = '8ESa4lmztTB5VUhaJo7r'; // This one is temporary
+  static String uid = FirebaseAuth.instance.currentUser!.uid;
   FirestoreUtils() {
     _routineRef = db
         .collection('users')

@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:cmsc128_lab/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsc128_lab/pages/login_screen.dart';
-import 'package:cmsc128_lab/pages/home.dart';
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -28,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        await signUpFireStore(namecontroller.text.trim(), mailcontroller.text.trim(), passwordcontroller.text.trim());
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
           "You have registered successfully!",
@@ -35,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         )));
         // ignore: use_build_context_synchronously
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -55,6 +57,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     }
   }
+
+  Future<void> signUpFireStore(String nickname, String email, String password) async {
+    User? currentUser = FirebaseAuth.instance.currentUser; // Get the current user's UID
+    if (currentUser != null) {
+      await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).set({
+        'nickname': nickname,
+        'email': email,
+        'signupDate': Timestamp.now(), // Save current timestamp
+      });
+    } else {
+      print("No current user found.");
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,13 +131,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -146,13 +165,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -180,13 +201,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: StyleColor.secondary, // Default border color
+                              color:
+                                  StyleColor.secondary, // Default border color
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -216,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               //         'There seems to be a problem with your credentials, make sure that you entered a valid and existing email and try again.'),
                               //   ),
                               // );
-                            } 
+                            }
                             registration();
                           },
                           child: const Text('Sign up'),
