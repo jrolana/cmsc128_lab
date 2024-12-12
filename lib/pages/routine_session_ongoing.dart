@@ -25,6 +25,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   @override
   void initState() {
     // TODO: implement initState
+    isLoading = false;
     super.initState();
   }
 
@@ -52,9 +53,6 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
             return PageView.builder(
               itemBuilder: (context, index) {
                 Activity act = activities[index].data();
-                setState(() {
-                  isLoading == false;
-                });
                 return RoutineSessionTimer(
                     act.name, act.duration, act.icon, index, _navigatePage);
               },

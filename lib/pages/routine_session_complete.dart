@@ -1,10 +1,12 @@
 import 'package:cmsc128_lab/service/database_service.dart';
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
+import '../models/routine.dart';
 import '../utils/styles.dart';
 
 class RoutineSessionComplete extends StatefulWidget {
@@ -16,6 +18,14 @@ class RoutineSessionComplete extends StatefulWidget {
 }
 
 class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
+  FirestoreUtils routineDB = FirestoreUtils();
+  late Routine routine;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getRoutine();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,4 +106,13 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
       ),
     );
   }
+  void getRoutine() async {
+
+    var snap = await routineDB.getRoutine(widget.routineID).get();
+    routine  = snap.data() as Routine;
+    setState(() {
+
+    });
+  }
+
 }

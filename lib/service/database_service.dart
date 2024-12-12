@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/model/routine.dart';
 import 'package:cmsc128_lab/utils/time.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:developer' show log;
 
@@ -8,7 +9,7 @@ class DatabaseService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Dummy data for demo purpose
-  static const String _user = "user1";
+  static final String _user = FirebaseAuth.instance.currentUser!.uid;//"user1";
 
   static List<String> weekdays = ["Sn", "M", "T", "W", "Th", "F", "S"];
   static const weekdaysLen = 7;
