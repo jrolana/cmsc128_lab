@@ -72,6 +72,7 @@ class _StatisticsWeeklyState extends State<StatisticsWeekly> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       padding: const EdgeInsets.all(8),
       children: <Widget>[
         Container(

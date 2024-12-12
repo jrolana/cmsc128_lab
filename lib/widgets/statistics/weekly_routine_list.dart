@@ -31,8 +31,7 @@ class WeeklyRoutineList extends StatefulWidget {
 
 // top performing routines (avg. of routines across a week)
 class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
-  late List<DayRoutine> _weeklyAvgCompletionRate;
-  List<Widget> _routines = [const FetchingData()];
+  dynamic _routines = [const FetchingData()];
 
   @override
   void initState() {
@@ -53,26 +52,20 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
 
     DatabaseService.getWeeklyAverageCompletionRate(widget.date)
         .then((weeklyAvgCompletionRate) {
-      SchedulerBinding.instance.addPostFrameCallback((timestamp) {
-        updateRoutineList(weeklyAvgCompletionRate);
-      });
+      updateRoutineList(weeklyAvgCompletionRate);
+      // SchedulerBinding.instance.addPostFrameCallback((timestamp) {
+      // });
     });
   }
 
-  void updateRoutineList(List<DayRoutine> weeklyAvgCompletionRate) {
-    setState(() {
-      _weeklyAvgCompletionRate = weeklyAvgCompletionRate;
+  List<Widget> getUpdatedRoutineList(List<DayRoutine> weeklyAvgCompletionRate) {
+    List<DayRoutine> weeklyRates = weeklyAvgCompletionRate;
+    List<Widget> routineList = [const NoFetchedData()];
 
-      if (_weeklyAvgCompletionRate.isEmpty) {
-        _routines = [
-          const NoFetchedData(),
-        ];
-        return;
-      }
-
-      _weeklyAvgCompletionRate.sort((a, b) =>
+    if (weeklyRates.isNotEmpty) {
+      weeklyRates.sort((a, b) =>
           (b.completionRate as num).compareTo(a.completionRate as num));
-      int dataLen = _weeklyAvgCompletionRate.length;
+      int dataLen = weeklyRates.length;
       int baseLen = 3;
 
       // Bottom 3 Routines
@@ -91,7 +84,7 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
       }
 
       if ((n - start) > 0) {
-        _routines = _weeklyAvgCompletionRate.sublist(start, n).map((entry) {
+        routineList = weeklyRates.sublist(start, n).map((entry) {
           return RoutineCard(
             name: entry.name,
             numActivities: entry.numActivities,
@@ -100,6 +93,18 @@ class _WeeklyRoutineListState extends State<WeeklyRoutineList> {
           );
         }).toList();
       }
+
+      if (routineList.isEmpty) {
+        routineList = [const NoFetchedData()];
+      }
+    }
+
+    return routineList;
+  }
+
+  void updateRoutineList(List<DayRoutine> weeklyAvgCompletionRate) {
+    setState(() {
+      _routines = getUpdatedRoutineList(weeklyAvgCompletionRate);
     });
   }
 
