@@ -16,8 +16,7 @@ class StatisticsWeekly extends StatefulWidget {
 }
 
 class _StatisticsWeeklyState extends State<StatisticsWeekly> {
-  // Dummy data for demo purpose
-  final DateTime now = DateTime.utc(2024, 11, 23);
+  final DateTime now = DateTime.now();
 
   final int duration = 6;
   late DateTime _startDate;

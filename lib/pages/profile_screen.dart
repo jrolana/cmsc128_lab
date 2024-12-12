@@ -6,7 +6,6 @@ import 'package:cmsc128_lab/pages/welcome_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -35,18 +34,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         print("Current User UID: ${currentUser.uid}");
 
         // Fetch the user's document based on their UID
+        // DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        //     .collection('users')
+        //     .doc(currentUser.uid)
+        //     .get();
+
         DocumentSnapshot userDoc = await FirebaseFirestore.instance
             .collection('users')
-            .doc(currentUser.uid)
+            .doc("user1")
             .get();
 
         if (userDoc.exists) {
           setState(() {
             nickname = userDoc['nickname'] ?? "User Nickname";
             email = userDoc['email'] ?? "My email";
-            Timestamp timestamp = userDoc['signupDate'] ?? Timestamp.now();
-            DateTime date = timestamp.toDate();
-            joinedDate = "${date.month}/${date.day}/${date.year}";
+            // Timestamp timestamp = userDoc['signupDate'] ?? Timestamp.now();
+            // DateTime date = timestamp.toDate();
+            // joinedDate = "${date.month}/${date.day}/${date.year}";
           });
         } else {
           print("User document not found!");
@@ -58,8 +62,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       print("Error fetching user data: $e");
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -109,15 +111,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    "Joined last $joinedDate", // Display fetched date
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: StyleColor.secondary,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                    ),
-                  ),
+                  // Text(
+                  //   "Joined last $joinedDate", // Display fetched date
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     color: StyleColor.secondary,
+                  //     fontWeight: FontWeight.w600,
+                  //     fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                  //   ),
+                  // ),
                   const SizedBox(height: 24),
                   // Profile Details Section
                   Container(

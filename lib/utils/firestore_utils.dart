@@ -14,7 +14,7 @@ class FirestoreUtils {
 
   // Get user ID
   // static String uid = FirebaseAuth.instance.currentUser!.uid;
-  static String uid = 'user1';
+  static String uid = "user1";
 
   FirestoreUtils() {
     _routineRef = db

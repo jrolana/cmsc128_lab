@@ -146,6 +146,10 @@ class DatabaseService {
       }
     }
 
+    log("=================================================");
+    log("weeklyAvgCompletionRate: $weeklyAvgCompletionRate");
+    log("=================================================");
+
     if (totalRates == 0) {
       return [];
     }

@@ -16,7 +16,7 @@ class DailyRoutineList extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.all(20),
         child: StreamBuilder<List<DayRoutine>>(
-            stream: DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
+            stream: DatabaseService.getDayRoutines(DateTime.now()),
             builder: (context, snapshot) {
               int routineLen = 0;
               dynamic routineCards;

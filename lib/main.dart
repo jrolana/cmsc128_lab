@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: GoogleFonts.lexendDeca().fontFamily),
             )),
-        // home: WelcomeScreen(),
-        home: const WelcomeScreen(),
+        // home: const WelcomeScreen(),
+        home: BottomNavBar(),
       ),
     );
   }

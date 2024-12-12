@@ -30,8 +30,7 @@ class DailyCompletionRate extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: StreamBuilder<List<DayRoutine>>(
-                stream:
-                    DatabaseService.getDayRoutines(DateTime.utc(2024, 11, 23)),
+                stream: DatabaseService.getDayRoutines(DateTime.now()),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return const NoFetchedData();
