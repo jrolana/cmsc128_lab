@@ -51,7 +51,7 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
           Activity act = x.data() as Activity;
           if (act.type == 'activity'){
           Map<String,dynamic> data = {
-            "date":Timestamp.fromDate(DateTime.now()).toString(),
+            "date":DateTime.now().toString(),
             "actId": act.name
           };
           print(act);
@@ -61,8 +61,9 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
 
         }
         Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
-        DatabaseService.updateStreak();
-      },child: Icon(Icons.done),),
+        //DatabaseService.updateStreak();
+        }},
+        child: Icon(Icons.done)),
       body: Column(
         children: [
           congratulations()
