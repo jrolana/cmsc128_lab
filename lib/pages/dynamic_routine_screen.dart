@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmsc128_lab/model/routine.dart';
+import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/complete_today_block.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/upcoming_today_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/other_routine_block.dart';
+import 'package:cmsc128_lab/widgets/routineWidgets/all_routines_block.dart';
 
 class DynamicHomeRoutine extends StatefulWidget {
   const DynamicHomeRoutine({super.key});
@@ -22,6 +26,20 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
             margin: const EdgeInsets.only(bottom: 70),
             child: Column(
               children: [
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("All Routines",
+                          style: GoogleFonts.lexend(
+                              textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))),
+                    ),
+                    const AllRoutines(),
+                  ],
+                ),
                 //Completed Today
                 Column(
                   children: [
@@ -50,7 +68,6 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                           ))),
                     ),
                     const UpcomingTodayBlock(),
-                    const UpcomingTodayBlock()
                   ],
                 ),
                 //Other Routines

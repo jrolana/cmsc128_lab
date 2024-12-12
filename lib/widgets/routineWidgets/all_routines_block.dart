@@ -1,31 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
+import 'package:cmsc128_lab/models/routine.dart';
+import 'package:cmsc128_lab/pages/dynamic_routine_screen.dart';
+import 'package:cmsc128_lab/service/Experimental_routine_db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
+import 'package:cmsc128_lab/utils/styles.dart';
 
-import '../../models/routine.dart';
-import '../../service/Experimental_routine_db_service.dart';
-import '../../utils/styles.dart';
-
-class OtherRoutines extends StatefulWidget {
-  const OtherRoutines({super.key});
+class AllRoutines extends StatefulWidget {
+  const AllRoutines({super.key});
 
   @override
-  State<OtherRoutines> createState() => _OtherRoutines();
+  State<AllRoutines> createState() => _AllRoutines();
 }
 
-class _OtherRoutines extends State<OtherRoutines> {
+class _AllRoutines extends State<AllRoutines> {
   final DBroutineService _databaseService = DBroutineService();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   routine_stream = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userID)
+  //       .collection('routines')
+  //       .where('routineType', isEqualTo: 'completedtoday')
+  //       .snapshots();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
       child: StreamBuilder(
-          stream: _databaseService.getOthers(),
+          stream: _databaseService.getRoutine(),
           builder: (context, snapshot) {
             List routines = snapshot.data?.docs ?? [];
             if (snapshot.hasError) {
@@ -44,7 +53,7 @@ class _OtherRoutines extends State<OtherRoutines> {
                 children: [
                   const Icon(IconlyBold.work),
                   const SizedBox(height: 10),
-                  Text('No other routines yet!',
+                  Text('No routines completed yet!',
                       style: TextStyle(
                           fontFamily: GoogleFonts.lexendDeca().fontFamily,
                           fontSize: 14,
@@ -54,7 +63,6 @@ class _OtherRoutines extends State<OtherRoutines> {
                 ],
               )));
             }
-
             return ListView.builder(
                 padding: EdgeInsets.all(0.0),
                 shrinkWrap: true,
