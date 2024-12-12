@@ -24,7 +24,7 @@ class _OtherRoutines extends State<OtherRoutines> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
         child: StreamBuilder(
-            stream: _databaseService.getRoutine(),
+            stream: _databaseService.getOthers(),
             builder: (context, snapshot) {
               List routines = snapshot.data?.docs ?? [];
               if (snapshot.hasError) {

@@ -17,13 +17,23 @@ class CompleteTodayBlock extends StatefulWidget {
 
 class _CompleteTodayBlock extends State<CompleteTodayBlock> {
   final DBroutineService _databaseService = DBroutineService();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   routine_stream = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userID)
+  //       .collection('routines')
+  //       .where('routineType', isEqualTo: 'completedtoday')
+  //       .snapshots();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
         child: StreamBuilder(
-            stream: _databaseService.getRoutine(),
+            stream: _databaseService.getUpcoming(),
             builder: (context, snapshot) {
               List routines = snapshot.data?.docs ?? [];
               if (snapshot.hasError) {
@@ -36,7 +46,6 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                   ],
                 );
               }
-
               return ListView.builder(
                   padding: EdgeInsets.all(0.0),
                   shrinkWrap: true,
@@ -62,16 +71,15 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                               fontSize: 14,
                             ))),
                         // subtitle: Text(
-                        //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
-                        //     ),
-                      ),
-                    );
+                          //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
+                            //     ),
+                          ),
+                        );
                   });
             }),
     );
   }
 }
-
 BoxDecoration myBoxDecoration() {
   return BoxDecoration(
     border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/models/routine.dart';
+import 'package:intl/intl.dart';
 
 //FOR HOME ROUTINE 
 
@@ -21,5 +22,29 @@ class DBroutineService{
 
   Stream<QuerySnapshot> getRoutine(){
     return _collection_ref.snapshots();
+  }
+
+  Stream<QuerySnapshot> getUpcoming(){
+    late final _upcoming = FirebaseFirestore.instance
+    .collection('users')
+    .doc(routineid)
+    .collection('routines').withConverter<Routine>(
+      fromFirestore: (snapshots, _) => Routine.fromJson(
+        snapshots.data()!,
+        ), 
+        toFirestore: (routine,_) => routine.toJson()).where('daysOfWeek', arrayContains: DateFormat('EEEE').format(now).toLowerCase());
+    return _upcoming.snapshots();
+  }
+
+  Stream<QuerySnapshot> getOthers(){
+    late final _others = FirebaseFirestore.instance
+    .collection('users')
+    .doc(routineid)
+    .collection('routines').withConverter<Routine>(
+      fromFirestore: (snapshots, _) => Routine.fromJson(
+        snapshots.data()!,
+        ), 
+        toFirestore: (routine,_) => routine.toJson()).where('daysOfWeek', whereNotIn: [DateFormat('EEEE').format(now).toLowerCase()]);
+    return _others.snapshots();
   }
 }

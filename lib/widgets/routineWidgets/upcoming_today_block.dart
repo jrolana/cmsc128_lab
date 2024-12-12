@@ -17,15 +17,14 @@ class UpcomingTodayBlock extends StatefulWidget {
 
 class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
   final DBroutineService _databaseService = DBroutineService();
-
   final DateTime now = DateTime.now().toLocal();
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
         child: StreamBuilder(
-            stream: _databaseService.getRoutine(),
+            stream: _databaseService.getUpcoming(),
             builder: (context, snapshot) {
               List routines = snapshot.data?.docs ?? [];
               if (snapshot.hasError) {
@@ -38,7 +37,6 @@ class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
                   ],
                 );
               }
-
               return ListView.builder(
                   padding: EdgeInsets.all(0.0),
                   shrinkWrap: true,
@@ -64,10 +62,10 @@ class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
                               fontSize: 14,
                             ))),
                         // subtitle: Text(
-                        //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
-                        //     ),
-                      ),
-                    );
+                          //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
+                            //     ),
+                          ),
+                        );
                   });
             }),
     );
