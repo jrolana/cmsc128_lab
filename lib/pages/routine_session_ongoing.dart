@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/routine_session_complete.dart';
 import 'package:cmsc128_lab/pages/routine_session_timer.dart';
 import 'package:flutter/material.dart';
 import '../models/activity.dart';
@@ -20,6 +21,7 @@ class RoutineSessionOngoing extends StatefulWidget {
 class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   FirestoreUtils db = FirestoreUtils();
   PageController _pageViewController = PageController();
+  bool isLoading = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +30,9 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +52,9 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
             return PageView.builder(
               itemBuilder: (context, index) {
                 Activity act = activities[index].data();
+                setState(() {
+                  isLoading == false;
+                });
                 return RoutineSessionTimer(
                     act.name, act.duration, act.icon, index, _navigatePage);
               },
@@ -54,6 +62,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
               onPageChanged: _handlePageChange,
               physics: const NeverScrollableScrollPhysics(),
             );
+
           }),
     );
   }
@@ -63,7 +72,8 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   }
 
   void _navigatePage(int index) {
-    if (index == widget.actNum) {
+    if (index > widget.actNum) {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutineSessionComplete(widget.routineID)));
       // TODO session complete
     } else {
       _pageViewController.animateToPage(
