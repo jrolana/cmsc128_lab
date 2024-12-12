@@ -95,7 +95,7 @@ class _LogInScreenState extends State<LogInScreen> {
       child: Column(
         children: [
           const Expanded(
-            flex: 1,
+            flex: 2,
             child: SizedBox(
               height: 10,
             ),
