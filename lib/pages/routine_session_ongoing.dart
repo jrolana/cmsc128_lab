@@ -62,7 +62,8 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
                   return RoutineSessionTimer(
                       act.name, act.duration, act.icon, index, _navigatePage);
                 }else{
-                  return RoutineSessionTimerTasks(act.duration, index, _navigatePage,_handleTaskList,widget.tasks[act.category]);
+                  List? list = widget.tasks[act.category];
+                  return RoutineSessionTimerTasks(act.duration, index, _navigatePage,_handleTaskList,list!);
                 }
               },
               controller: _pageViewController,
