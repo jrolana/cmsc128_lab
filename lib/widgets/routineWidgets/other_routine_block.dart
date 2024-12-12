@@ -47,27 +47,30 @@ class _OtherRoutines extends State<OtherRoutines> {
                     Routine routine = routines[index].data();
                     //ID
                     String routineID = routines[index].id;
-                    return Container(
-                      
-                      alignment: FractionalOffset.center,
-                      decoration: myBoxDecoration(),
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: ListTile(
-                        leading: Icon(IconlyBold.bag_2,
-                            size: 30,
-                            color: Color(routine.color)),
-                        title: Text(routine.name,
-                            style: GoogleFonts.lexendDeca(
-                                textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ))),
-                        subtitle: Text('Activites: ${routine.numActivities.toString()}',
-                            style: TextStyle(
-                            fontSize: 11,
-                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                            color: Colors.black.withOpacity(0.5))),
+                    return InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      onTap: (){
+                        print("Tapped");
+                      },
+                      child: Ink(
+                        decoration: myBoxDecoration(),
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        child: ListTile(
+                          leading: Icon(IconlyBold.bag_2,
+                              size: 30,
+                              color: Color(routine.color)),
+                          title: Text(routine.name,
+                              style: GoogleFonts.lexendDeca(
+                                  textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ))),
+                          subtitle: Text('Activites: ${routine.numActivities.toString()}',
+                              style: TextStyle(
+                              fontSize: 11,
+                              fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                              color: Colors.black.withOpacity(0.5))),
+                        ),
                       ),
                     );
                   });
