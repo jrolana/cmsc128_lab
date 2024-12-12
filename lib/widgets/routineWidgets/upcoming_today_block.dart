@@ -61,9 +61,11 @@ class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ))),
-                        // subtitle: Text(
-                          //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
-                            //     ),
+                        subtitle: Text('Activites: ${routine.numActivities.toString()}',
+                            style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                            color: Colors.black.withOpacity(0.5))),
                           ),
                         );
                   });

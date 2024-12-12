@@ -48,6 +48,7 @@ class _OtherRoutines extends State<OtherRoutines> {
                     //ID
                     String routineID = routines[index].id;
                     return Container(
+                      
                       alignment: FractionalOffset.center,
                       decoration: myBoxDecoration(),
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -62,9 +63,11 @@ class _OtherRoutines extends State<OtherRoutines> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ))),
-                        // subtitle: Text(
-                        //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
-                        //     ),
+                        subtitle: Text('Activites: ${routine.numActivities.toString()}',
+                            style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                            color: Colors.black.withOpacity(0.5))),
                       ),
                     );
                   });

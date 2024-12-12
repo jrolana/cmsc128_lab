@@ -37,7 +37,7 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                             fontSize: 18,
                           ))),
                     ),
-                    CompleteTodayBlock(),
+                    const CompleteTodayBlock(),
                   ],
                 ),
                 //Upcoming Today

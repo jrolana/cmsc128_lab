@@ -33,7 +33,7 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
         child: StreamBuilder(
-            stream: _databaseService.getUpcoming(),
+            stream: _databaseService.getCompleted(),
             builder: (context, snapshot) {
               List routines = snapshot.data?.docs ?? [];
               if (snapshot.hasError) {
@@ -70,9 +70,11 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ))),
-                        // subtitle: Text(
-                          //     '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'
-                            //     ),
+                        subtitle: Text('Activites: ${routine.numActivities.toString()}',
+                            style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                            color: Colors.black.withOpacity(0.5))),
                           ),
                         );
                   });

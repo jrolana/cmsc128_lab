@@ -47,4 +47,16 @@ class DBroutineService{
         toFirestore: (routine,_) => routine.toJson()).where('daysOfWeek', whereNotIn: [DateFormat('EEEE').format(now).toLowerCase()]);
     return _others.snapshots();
   }
+
+  Stream<QuerySnapshot> getCompleted(){
+    late final _completed = FirebaseFirestore.instance
+    .collection('users')
+    .doc(routineid)
+    .collection('routines').withConverter<Routine>(
+      fromFirestore: (snapshots, _) => Routine.fromJson(
+        snapshots.data()!,
+        ), 
+        toFirestore: (routine,_) => routine.toJson()).where('numActivities', isEqualTo: 0);
+    return _completed.snapshots();
+  }
 }
