@@ -35,7 +35,7 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
-        
+
         for(var x in activities){
           Activity act = x.data() as Activity;
           if (act.type == 'activity'){
