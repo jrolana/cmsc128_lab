@@ -50,18 +50,15 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
     double height = MediaQuery.of(context).size.height;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          backgroundColor: Colors.white,
-          shadowColor: Colors.black,
-          elevation: 2.0
-        ),
+            padding: EdgeInsets.zero,
+            backgroundColor: Colors.white,
+            shadowColor: Colors.black,
+            elevation: 2.0),
         onPressed: () {},
         child: Row(
           children: [
             IconButton(
-                style: IconButton.styleFrom(
-                  padding: EdgeInsets.zero
-                ),
+                style: IconButton.styleFrom(padding: EdgeInsets.zero),
                 onPressed: () {
                   _pickIcon();
                 },
@@ -71,10 +68,10 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
                   showTextField ? activityInputField() : activityInputButton(),
             ),
             TextButton(
-              style:TextButton.styleFrom(
+              style: TextButton.styleFrom(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.zero,
-                ),
+              ),
               onPressed: () => _showDialog(CupertinoTimerPicker(
                 mode: CupertinoTimerPickerMode.hms,
                 initialTimerDuration: duration,
@@ -90,8 +87,7 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
                       fontFamily: GoogleFonts.lexendDeca().fontFamily)),
             )
           ],
-        )
-    );
+        ));
   }
 
   Widget activityInputField() {
@@ -101,7 +97,8 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
         autofocus: true,
         onTapOutside: (event) {
           setState(() {
-            actName = actController.text.isEmpty? defActVal:actController.text;
+            actName =
+                actController.text.isEmpty ? defActVal : actController.text;
             showTextField = false;
           });
         },
@@ -138,11 +135,11 @@ class _DefaultActivityBlock extends State<ActivityBlock> {
 
   _pickIcon() async {
     IconPickerIcon? iconPicked = await showIconPicker(context);
-    IconData iconData = iconPicked!.name.isEmpty? Icons.access_time_outlined : iconPicked.data;
+    IconData iconData =
+        iconPicked!.name.isEmpty ? Icons.access_time_outlined : iconPicked.data;
 
     setState(() {
-      actIcon =
-          Icon(iconData, size: MediaQuery.of(context).size.width * 0.06);
+      actIcon = Icon(iconData, size: MediaQuery.of(context).size.width * 0.06);
     });
   }
 

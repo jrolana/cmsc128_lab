@@ -11,7 +11,7 @@ class FirestoreUtils {
   late final CollectionReference _routineRef;
 
   // Get user ID
-  static String uid = 'user1'; // This one is temporary
+  static String uid = '8ESa4lmztTB5VUhaJo7r'; // This one is temporary
   FirestoreUtils() {
     _routineRef = db
         .collection('users')
@@ -135,16 +135,16 @@ class FirestoreUtils {
         .doc(id)
         .collection(activityCol)
         .withConverter<TaskBlockModel>(
-        fromFirestore: (snapshots, _) =>
-            TaskBlockModel.fromJson(snapshots.data()!),
-        toFirestore: (activity, _) => activity.toJson());
+            fromFirestore: (snapshots, _) =>
+                TaskBlockModel.fromJson(snapshots.data()!),
+            toFirestore: (activity, _) => activity.toJson());
     // Iterate through activity blocks
     for (var member in activities) {
       activityRef.add(member);
       //if (member.runtimeType == Activity){
-        //activityRef.add(member);
+      //activityRef.add(member);
       //}else{
-        //activityRef.add(member);
+      //activityRef.add(member);
       //}
     }
     return id;

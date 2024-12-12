@@ -14,7 +14,7 @@ class TaskSelectBlock extends StatefulWidget {
 class _TaskSelectBlockState extends State<TaskSelectBlock> {
   List<Map<String, dynamic>> tasks = [];
   bool isLoading = true;
-  int? selectedTask;
+  List<int> selectedTasks = [];
 
   Future<void> fetchTasks({String? category}) async {
     setState(() {
@@ -74,7 +74,7 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
                         color: Colors.black),
                   ),
                   Text(
-                    "Choose a task to add to your routine",
+                    "Choose tasks to add to your routine",
                     style: TextStyle(
                         fontSize: 11,
                         fontFamily: GoogleFonts.lexendDeca().fontFamily,
@@ -94,12 +94,15 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
                               return Row(
                                 children: [
                                   Checkbox(
-                                    value: selectedTask == index,
+                                    value: selectedTasks.contains(index),
                                     onChanged: (bool? value) {
                                       // Add other functions to change data in database here!!!
                                       setState(() {
-                                        selectedTask =
-                                            value == true ? index : null;
+                                        if (value == true) {
+                                          selectedTasks.add(index);
+                                        } else {
+                                          selectedTasks.remove(index);
+                                        }
                                       });
                                     },
                                   ),
