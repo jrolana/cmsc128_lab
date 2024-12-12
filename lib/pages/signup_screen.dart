@@ -79,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Column(
         children: [
           const Expanded(
-            flex: 1,
+            flex: 2,
             child: SizedBox(
               height: 10,
             ),
