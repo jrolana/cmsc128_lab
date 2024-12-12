@@ -21,11 +21,13 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   String name = "";
   late Routine routine;
   late Widget currentScreen;
+  late Widget routineList;
 
   @override
   void initState() {
     // TODO: implement initState
     currentScreen = RoutineSessionList(widget.routineID);
+    routineList =  RoutineSessionList(widget.routineID);
     getRoutine();
     super.initState();
   }
@@ -45,6 +47,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
           title: Text(name)),
       floatingActionButton: TextButton(
           onPressed: (){
+
             Navigator.push(
             context,
             MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities)),
@@ -55,7 +58,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
             'Start Routine',
             style: TextStyle(color: Colors.white),
           )),
-      body:  RoutineSessionList(widget.routineID),
+      body: routineList,
     );
   }
 

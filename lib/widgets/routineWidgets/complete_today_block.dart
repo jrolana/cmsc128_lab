@@ -23,7 +23,6 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
         .collection('users')
         .doc(userID)
         .collection('routines')
-        .where('routineType', isEqualTo: 'completedtoday')
         .snapshots();
   }
 
@@ -68,8 +67,8 @@ class _CompleteTodayBlock extends State<CompleteTodayBlock> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ))),
-                      subtitle: Text(
-                          '${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'),
+                      subtitle: Text(docs[index]['daysOfWeek'].toString()),
+                          //'${DateFormat.jm().format(docs[index]['startTime'].toDate())} - ${DateFormat.jm().format(docs[index]['endTime'].toDate())}'),
                     );
                   });
             }),

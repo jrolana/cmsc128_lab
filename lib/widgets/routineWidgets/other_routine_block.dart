@@ -24,7 +24,6 @@ class _OtherRoutines extends State<OtherRoutines> {
         .collection('users')
         .doc(userID)
         .collection('routines')
-        .where('routineType', isEqualTo: 'otherroutines')
         .snapshots();
   }
 
