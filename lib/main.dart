@@ -1,11 +1,12 @@
-import 'package:cmsc128_lab/pages/navbar.dart';
+import 'package:cmsc128_lab/pages/profile_screen.dart';
 import 'package:cmsc128_lab/pages/welcome_screen.dart';
+import 'package:cmsc128_lab/pages/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cmsc128_lab/pages/routine_session_landing.dart';
+import 'package:provider/provider.dart';
 
 //Firebase packages
 import 'package:firebase_core/firebase_core.dart';
@@ -31,18 +32,18 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Rabbit Hole',
         theme: ThemeData(
-          useMaterial3: true,
-          textTheme: GoogleFonts.lexendDecaTextTheme(),
-          appBarTheme: AppBarTheme(
-            centerTitle: true,
-            titleTextStyle: TextStyle(
-                color: StyleColor.primaryText,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                fontFamily: GoogleFonts.lexendDeca().fontFamily),
-          ),
-        ),
-        home:BottomNavBar() ,
+            useMaterial3: true,
+            textTheme: GoogleFonts.lexendDecaTextTheme(),
+            appBarTheme: AppBarTheme(
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                  color: StyleColor.primaryText,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: GoogleFonts.lexendDeca().fontFamily),
+            )),
+        // home: WelcomeScreen(),
+        home: const WelcomeScreen(),
       ),
     );
   }
