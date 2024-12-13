@@ -6,7 +6,8 @@ import 'package:cmsc128_lab/utils/firestore_utils.dart';
 class TaskSelectBlock extends StatefulWidget {
   final String category;
   final Function updateSelected;
-  const TaskSelectBlock(this.updateSelected,{super.key, required this.category});
+  const TaskSelectBlock(this.updateSelected,
+      {super.key, required this.category});
 
   @override
   State<TaskSelectBlock> createState() => _TaskSelectBlockState();
@@ -63,7 +64,7 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
         ],
       ),
       child: SizedBox(
-          height: 300,
+          height: 200,
           child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
@@ -101,13 +102,16 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
                                       // Add other functions to change data in database here!!!
                                       setState(() {
                                         if (value == true) {
-                                          selectedTaskID.add(tasks[index]['id']);
+                                          selectedTaskID
+                                              .add(tasks[index]['id']);
                                           selectedTasks.add(index);
                                         } else {
-                                          selectedTaskID.remove(tasks[index]['id']);
+                                          selectedTaskID
+                                              .remove(tasks[index]['id']);
                                           selectedTasks.remove(index);
                                         }
-                                        widget.updateSelected(widget.category,selectedTaskID);
+                                        widget.updateSelected(
+                                            widget.category, selectedTaskID);
                                       });
                                     },
                                   ),

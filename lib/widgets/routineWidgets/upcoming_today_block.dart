@@ -69,8 +69,10 @@ class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
                     child: InkWell(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true).pushReplacement(MaterialPageRoute(builder: (context) =>  RoutineSessionLanding(routineID)));
-                        print("Tapped");
+                        Navigator.of(context, rootNavigator: true)
+                            .pushReplacement(MaterialPageRoute(
+                                builder: (context) =>
+                                    RoutineSessionLanding(routineID)));
                       },
                       child: Ink(
                         decoration: myBoxDecoration(),
