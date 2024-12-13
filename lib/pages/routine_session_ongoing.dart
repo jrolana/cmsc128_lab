@@ -50,7 +50,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
                 Activity act = activities[index].data();
                 if(act.type == "taskblock"){
                   return RoutineSessionTimer(
-                      "Task Block:\n${act.category}", act.duration, act.icon, index, _navigatePage);
+                      "Task Block:  \n${act.category}", act.duration, act.icon, index, _navigatePage);
                 }
                 return RoutineSessionTimer(
                     act.name, act.duration, act.icon, index, _navigatePage);
