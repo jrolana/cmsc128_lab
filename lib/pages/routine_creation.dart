@@ -307,8 +307,8 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
         color: 128390830,
         name: routineName,
         numActivities: actCount,
-        repeatDaysCount: 0,
-        repeatWeeksCount: 0,
+        repeatDaysCount: repeatDays.isEmpty? 1:repeatDays.length.toDouble(),
+        repeatWeeksCount: 1,
         daysOfWeek: repeatDays);
     List activities = [];
 

@@ -82,7 +82,7 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                             fontSize: 18,
                           ))),
                     ),
-                    const OtherRoutines(),
+                    const AllRoutines(),
                   ],
                 ),
               ],
