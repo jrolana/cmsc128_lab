@@ -50,89 +50,93 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: SizedBox(
-          height: 200,
-          child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Column(
-                children: [
-                  Text(
-                    "${widget.category} Task:",
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                        color: Colors.black),
-                  ),
-                  Text(
-                    "Choose tasks to add to your routine",
-                    style: TextStyle(
-                        fontSize: 11,
-                        fontFamily: GoogleFonts.lexendDeca().fontFamily,
-                        color: Colors.black.withOpacity(0.5)),
-                  ),
-                  const SizedBox(height: 5),
-                  isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : Flexible(
-                          child: ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 5),
-                            itemCount: tasks.length,
-                            itemBuilder: (context, index) {
-                              final task = tasks[index];
-                              return Row(
-                                children: [
-                                  Checkbox(
-                                    value: selectedTasks.contains(index),
-                                    onChanged: (bool? value) {
-                                      // Add other functions to change data in database here!!!
-                                      setState(() {
-                                        if (value == true) {
-                                          selectedTaskID
-                                              .add(tasks[index]['id']);
-                                          selectedTasks.add(index);
-                                        } else {
-                                          selectedTaskID
-                                              .remove(tasks[index]['id']);
-                                          selectedTasks.remove(index);
-                                        }
-                                        widget.updateSelected(
-                                            widget.category, selectedTaskID);
-                                      });
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      task['name'],
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            GoogleFonts.lexendDeca().fontFamily,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: SizedBox(
+            height: 200,
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Column(
+                  children: [
+                    Text(
+                      "${widget.category} Task:",
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          color: Colors.black),
+                    ),
+                    Text(
+                      "Choose tasks to add to your routine",
+                      style: TextStyle(
+                          fontSize: 11,
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          color: Colors.black.withOpacity(0.5)),
+                    ),
+                    const SizedBox(height: 5),
+                    isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : Flexible(
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 5),
+                              itemCount: tasks.length,
+                              itemBuilder: (context, index) {
+                                final task = tasks[index];
+                                return Row(
+                                  children: [
+                                    Checkbox(
+                                      value: selectedTasks.contains(index),
+                                      onChanged: (bool? value) {
+                                        // Add other functions to change data in database here!!!
+                                        setState(() {
+                                          if (value == true) {
+                                            selectedTaskID
+                                                .add(tasks[index]['id']);
+                                            selectedTasks.add(index);
+                                          } else {
+                                            selectedTaskID
+                                                .remove(tasks[index]['id']);
+                                            selectedTasks.remove(index);
+                                          }
+                                          widget.updateSelected(
+                                              widget.category, selectedTaskID);
+                                        });
+                                      },
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        task['name'],
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontFamily: GoogleFonts.lexendDeca()
+                                              .fontFamily,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
+                                  ],
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                ],
-              ))),
+                  ],
+                ))),
+      ),
     );
   }
 }
