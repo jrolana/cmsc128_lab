@@ -73,9 +73,11 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
     if (isActive) {
       setState(() {
         duration--;
-        if(duration == 0){
+        if(duration <= 0){
+          isActive = false;
           widget.changeActivity(widget.index+1);
         }
+
       });
     }
   }
@@ -93,6 +95,7 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
           },
         ),
         IconButton(
+
           iconSize: size,
           icon: Icon(isActive? Icons.pause_rounded : Icons.play_arrow_rounded),
           onPressed: () {
@@ -105,6 +108,7 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
           iconSize: size,
           icon: const Icon(Icons.skip_next_rounded),
           onPressed: () {
+            if(duration <= 0){return;}
             widget.changeActivity(widget.index+1);
           },
         ),
@@ -132,7 +136,11 @@ class _StateRoutineSessionTimer extends State<RoutineSessionTimer> {
             onPressed: () {
               setState(() {
                 timeAdded-=timeFactor;
+
                 duration = duration - timeFactor;
+                if(duration < 0){
+                  duration = 0;
+                }
               });
             },
             icon: const Icon(Icons.remove_rounded)),
