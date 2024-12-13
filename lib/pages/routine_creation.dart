@@ -73,33 +73,46 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
-        floatingActionButton:
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          IconButton(
-              onPressed: () {
-                addActivity();
-              },
-              style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
-              icon: Icon(
-                Icons.playlist_add_rounded,
-                color: Colors.white,
-              )),
-          ElevatedButton(
-              onPressed: () {
-                addTaskBlock();
-              },
-              child: Text('Add Task Block')),
-          ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: StyleColor.primary),
-              onPressed: () {
-                createRoutineDialog();
-              },
-              child: Text(
-                "Create Routine",
-                style: TextStyle(color: Colors.white),
-              )),
-        ]),
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(bottom: 16),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          addActivity();
+                        },
+                        style: TextButton.styleFrom(
+                            backgroundColor: StyleColor.primary),
+                        icon: Icon(
+                          Icons.playlist_add_rounded,
+                          color: Colors.white,
+                        )),
+                    ElevatedButton(
+                        onPressed: () {
+                          addTaskBlock();
+                        },
+                        child: Text('Add Task Block')),
+                  ],
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: StyleColor.primary),
+                    onPressed: () {
+                      createRoutineDialog();
+                    },
+                    child: Text(
+                      "Create Routine",
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
+            ),
+          ]),
+        ),
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),

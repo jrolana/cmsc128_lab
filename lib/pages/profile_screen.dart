@@ -77,13 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontWeight: FontWeight.w600,
                 fontFamily: GoogleFonts.lexendDeca().fontFamily),
             title: const Text("Your Profile"),
-            leading: IconButton(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              icon: const Icon(IconlyBold.arrow_left),
-              onPressed: () {
-                print("Pressed back");
-              },
-            ),
           ),
           body: SingleChildScrollView(
             child: Padding(
