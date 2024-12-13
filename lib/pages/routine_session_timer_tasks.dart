@@ -73,13 +73,11 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       children: [
         taskList(),
         Text(
-          name,
+          "Task Block: ${widget.category}",
           textAlign: TextAlign.center,
           textScaler:
           TextScaler.linear(sizeQuery * 0.0065),
         ),
-        Icon(IconData(icon, fontFamily: "MaterialIcons"),
-          size: sizeQuery * iconScaleFactor * 1.5, color: StyleColor.primary,),
         activityTimer(),
         controlButtons(),
         SizedBox(height: MediaQuery
@@ -195,7 +193,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
         itemCount: tasks.length);
   }
   Widget taskList(){
-    return ListView.separated(
+    return (ListView.separated(
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       separatorBuilder: (context, index) {
@@ -262,7 +260,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
           isThreeLine: true,
         );
       },
-    );
+    ));
   }
   Widget taskCheckbox() {
     return SizedBox(
