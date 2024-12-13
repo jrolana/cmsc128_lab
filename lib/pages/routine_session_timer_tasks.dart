@@ -46,7 +46,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
     // TODO: implement initState
     duration = widget.duration;
     getTasks();
-    print(widget.tasks);
+    isLoading = false;
     super.initState();
   }
 
@@ -71,13 +71,13 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        taskList(),
         Text(
           "Task Block: ${widget.category}",
           textAlign: TextAlign.center,
           textScaler:
           TextScaler.linear(sizeQuery * 0.0065),
         ),
+        isLoading ? Center(child: CircularProgressIndicator()):taskList(),
         activityTimer(),
         controlButtons(),
         SizedBox(height: MediaQuery
@@ -175,25 +175,11 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       ],
     );
   }
-  Widget tasksChecklist(){
-    return ListView.separated(
-    shrinkWrap: true,
 
-    itemBuilder: (context,index){
-
-      return ListTile(
-        title: Text("Test"),
-      );
-    },
-        separatorBuilder: (context,index){
-          return SizedBox(
-            height: 10,
-          );
-        },
-        itemCount: tasks.length);
-  }
   Widget taskList(){
-    return (ListView.separated(
+    return SizedBox (
+        width: MediaQuery.of(context).size.width*0.9,
+        child:ListView.separated(
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       separatorBuilder: (context, index) {
@@ -248,7 +234,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
                     color: Colors.black.withOpacity(0.5),
                   ),
                   Text(
-                      '${DateFormat('EEEE, MMMM d').format(DateTime.parse(task['date']))}',
+                      DateFormat('EEEE, MMMM d').format(DateTime.parse(task['date'])),
                       style: TextStyle(
                           fontSize: 10,
                           fontFamily: GoogleFonts.lexendDeca().fontFamily,
@@ -262,94 +248,16 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       },
     ));
   }
-  Widget taskCheckbox() {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height *0.1,
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Column(
-              children: [
-                Text(
-                  "Tasks:",
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontFamily: GoogleFonts
-                          .lexendDeca()
-                          .fontFamily,
-                      color: Colors.black),
-                ),
-                Text(
-                  "Your chosen tasks for the routine.",
-                  style: TextStyle(
-                      fontSize: 11,
-                      fontFamily: GoogleFonts
-                          .lexendDeca()
-                          .fontFamily,
-                      color: Colors.black.withOpacity(0.5)),
-                ),
-                const SizedBox(height: 5),
-                isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : Flexible(
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    separatorBuilder: (context, index) =>
-                    const SizedBox(height: 1),
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      final task = tasks[index];
-                      return Row(
-                        children: [
-                          Checkbox(
-                            value: selectedTasks.contains(index),
-                            onChanged: (bool? value) {
-                              // Add other functions to change data in database here!!!
-                              setState(() {
-                                if (value == true) {
-                                  selectedTasks.add(index);
-                                  FirestoreUtils.updateTaskField(task['id'], 'isDone', value);
-                                } else {
-                                  selectedTasks.remove(index);
-                                  FirestoreUtils.updateTaskField(task['id'], 'isDone', value);
-                                }
-                              });
-                            },
-                          ),
-                          Expanded(
-                            child: Text(
-                              task['name'],
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontFamily:
-                                GoogleFonts
-                                    .lexendDeca()
-                                    .fontFamily,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            )));
-  }
-
-  void getTasks() async{
+  void getTasks(){
     List taskIDList = widget.tasks;
 
     for (String x in taskIDList){
         var task = FirestoreUtils.getTask(x);
-        print(task);
         task.then((snap){
           if(snap != null){
-            print(snap);
             tasks.add(snap);
           }
         });
-      isLoading = false;
     }
   }
 }
