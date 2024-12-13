@@ -49,15 +49,14 @@ class DBroutineService {
   }
 
   Stream<QuerySnapshot> getOthers() {
-    late final _others = FirebaseFirestore.instance
+    late final _others = _firestore
         .collection('users')
         .doc(routineid)
-        .collection('routines')
+        .collection("routines")
         .withConverter<Routine>(
-            fromFirestore: (snapshots, _) => Routine.fromJson(
-                  snapshots.data()!,
-                ),
-            toFirestore: (routine, _) => routine.toJson())
+        fromFirestore: (snapshots, _) =>
+            Routine.fromJson(snapshots.data()!),
+        toFirestore: (routine, _) => routine.toJson())
         .where('daysOfWeek',
             whereNotIn: [DateFormat('EEEE').format(now).toLowerCase()]);
     return _others.snapshots();
@@ -73,7 +72,7 @@ class DBroutineService {
                   snapshots.data()!,
                 ),
             toFirestore: (routine, _) => routine.toJson())
-        .where('numActivities', isEqualTo: 0);
+        .where('completed', isEqualTo: true);
     return _completed.snapshots();
   }
 }

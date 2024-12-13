@@ -6,6 +6,7 @@ class Routine {
   double repeatWeeksCount;
   List daysOfWeek;
 
+
   Routine({
     required this.color,
     required this.name,

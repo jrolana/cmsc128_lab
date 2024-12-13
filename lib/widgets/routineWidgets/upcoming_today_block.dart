@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsc128_lab/models/routine.dart';
+import 'package:cmsc128_lab/pages/routine_session_landing.dart';
 import 'package:cmsc128_lab/service/Experimental_routine_db_service.dart';
 import 'package:cmsc128_lab/widgets/routineWidgets/routine_home_routine_block.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,10 @@ class _UpcomingTodayBlock extends State<UpcomingTodayBlock> {
                     child: InkWell(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       onTap: () {
-                        print("Tapped");
+                        Navigator.of(context, rootNavigator: true)
+                            .pushReplacement(MaterialPageRoute(
+                                builder: (context) =>
+                                    RoutineSessionLanding(routineID)));
                       },
                       child: Ink(
                         decoration: myBoxDecoration(),

@@ -12,11 +12,12 @@ class _ActivityBlockState extends State<ActivityBlock> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {},
-        child: ListTile(
-          leading: Icon(Icons.add),
-          title: Text('Activity Name'),
-          trailing: Text('duration'),
-        ));
+      onPressed: () {},
+      child: ListTile(
+        leading: Icon(Icons.add),
+        title: Text('Activity Name'),
+        trailing: Text('duration'),
+      ),
+    );
   }
 }

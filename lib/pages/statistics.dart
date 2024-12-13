@@ -64,7 +64,7 @@ class _StatisticsState extends State<Statistics> with TickerProviderStateMixin {
                   StatisticsWeekly(),
                   StatisticsMonthly(),
                 ]),
-              ),
+              ),                  SizedBox(height: 60,)
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/pages/routine_session_ongoing.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/utils/styles.dart';
@@ -21,13 +22,13 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   String name = "";
   late Routine routine;
   late Widget currentScreen;
+  Map<String, dynamic> selectedTasksID = {};
 
   @override
   void initState() {
-    // TODO: implement initState
-    currentScreen = RoutineSessionList(widget.routineID);
-    getRoutine();
     super.initState();
+    currentScreen = RoutineSessionList(widget.routineID, _updateSelected);
+    getRoutine();
   }
 
   @override
@@ -38,24 +39,43 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>BottomNavBar()),
+                  MaterialPageRoute(builder: (context) => BottomNavBar()),
                 );
               },
               icon: const Icon(Icons.arrow_back)),
           title: Text(name)),
-      floatingActionButton: TextButton(
-          onPressed: (){
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities)),
-            );
-          },
-          style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
-          child: const Text(
-            'Start Routine',
-            style: TextStyle(color: Colors.white),
-          )),
-      body:  RoutineSessionList(widget.routineID),
+      floatingActionButton: Row(children: [
+        Spacer(),
+        TextButton(
+            onPressed: () {
+              deleteDialog();
+            },
+            style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+            child: const Text(
+              'Delete Routine',
+              style: TextStyle(color: Colors.white),
+            )),
+        Spacer(),
+        TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RoutineSessionOngoing(
+                        widget.routineID,
+                        routine.numActivities,
+                        selectedTasksID)),
+              );
+            },
+            style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+            child: const Text(
+              'Start Routine',
+              style: TextStyle(color: Colors.white),
+            )),
+        Spacer()
+      ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: currentScreen,
     );
   }
 
@@ -67,5 +87,39 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
     });
   }
 
+  void _updateSelected(String category, List taskID) {
+    if (selectedTasksID.containsKey(category) && taskID.isEmpty) {
+      selectedTasksID.remove(category);
+    } else {
+      selectedTasksID[category] = taskID;
+    }
+  }
 
+  void deleteRoutine() async {
+    FirestoreUtils.DeleteRoutine(widget.routineID);
+  }
+
+  Future deleteDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text('Delete Routine?'),
+            content: Text("This cannot be reversed."),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('CANCEL')),
+              TextButton(
+                  onPressed: () {
+                    deleteRoutine();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavBar()),
+                    );
+                  },
+                  child: Text('SUBMIT'))
+            ],
+          ));
 }

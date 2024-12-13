@@ -56,20 +56,20 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                   ],
                 ),
                 //Upcoming Today
-                Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Upcoming Today",
-                          style: GoogleFonts.lexend(
-                              textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ))),
-                    ),
-                    const UpcomingTodayBlock(),
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     Align(
+                //       alignment: Alignment.centerLeft,
+                //       child: Text("Upcoming Today",
+                //           style: GoogleFonts.lexend(
+                //               textStyle: const TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 18,
+                //           ))),
+                //     ),
+                //     const UpcomingTodayBlock(),
+                //   ],
+                // ),
                 //Other Routines
                 Column(
                   children: [
@@ -82,7 +82,7 @@ class _DynamicHomeRoutineState extends State<DynamicHomeRoutine> {
                             fontSize: 18,
                           ))),
                     ),
-                    const OtherRoutines(),
+                    const AllRoutines(),
                   ],
                 ),
               ],

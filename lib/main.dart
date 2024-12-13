@@ -16,6 +16,7 @@ Future<void> main() async {
   // Firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: "rabbit-hole",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
