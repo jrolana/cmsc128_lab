@@ -174,4 +174,7 @@ class FirestoreUtils {
             toFirestore: (activity, _) => activity.toJson());
     return activityRef;
   }
+  static void UpdateRoutine(routineID){
+    db.collection('users').doc(uid).collection('routines').doc(routineID).update({"completed":true});
+}
 }

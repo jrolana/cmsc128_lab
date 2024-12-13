@@ -37,6 +37,7 @@ class _StateRoutineSessionComplete extends State<RoutineSessionComplete> {
       floatingActionButton: FloatingActionButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
           DatabaseService.updateStreak();
+          FirestoreUtils.UpdateRoutine(widget.routineID);
         },child: Icon(Icons.done),),
       body: Column(
         children: [

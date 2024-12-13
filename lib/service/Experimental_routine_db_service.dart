@@ -72,7 +72,7 @@ class DBroutineService {
                   snapshots.data()!,
                 ),
             toFirestore: (routine, _) => routine.toJson())
-        .where('numActivities', isEqualTo: 0);
+        .where('completed', isEqualTo: true);
     return _completed.snapshots();
   }
 }
