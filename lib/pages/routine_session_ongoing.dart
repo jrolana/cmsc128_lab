@@ -25,9 +25,22 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   @override
   void initState() {
     // TODO: implement initState
+    getNumAct();
     super.initState();
   }
-
+  void getNumAct() async {
+    await db.getActivities(widget.routineID).get().then((snap){
+      var acts = snap.docs;
+      for(var x in acts){
+        Activity data = x.data() as Activity;
+        if(data.type == "taskblock"){
+          if(!widget.taskIDs.containsKey(data.category)){
+            widget.actNum -=1;
+          }
+        }
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -58,11 +71,8 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
                     if(widget.taskIDs.isNotEmpty){
                     return RoutineSessionTimerTasks(
                         act.category, act.duration, index, _navigatePage,
-                        widget.taskIDs[act.category]);}else{
-                      widget.actNum -=1;
+                        widget.taskIDs[act.category]);}
                     }
-
-                }
                   ,
                   controller: _pageViewController,
                   onPageChanged: _handlePageChange,
@@ -81,6 +91,8 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   }
 
   void _navigatePage(int index) {
+    print(widget.actNum);
+    print(index);
     if (index == widget.actNum) {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutineSessionComplete(widget.routineID)));
       // TODO session complete
