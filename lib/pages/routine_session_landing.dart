@@ -27,7 +27,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   @override
   void initState() {
     super.initState();
-    currentScreen = RoutineSessionList(widget.routineID,_updateSelected);
+    currentScreen = RoutineSessionList(widget.routineID, _updateSelected);
     getRoutine();
   }
 
@@ -39,24 +39,42 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>BottomNavBar()),
+                  MaterialPageRoute(builder: (context) => BottomNavBar()),
                 );
               },
               icon: const Icon(Icons.arrow_back)),
           title: Text(name)),
-      floatingActionButton: TextButton(
-          onPressed: (){
-            print(selectedTasksID);
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities,selectedTasksID)),
-            );
-          },
-          style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
-          child: const Text(
-            'Start Routine',
-            style: TextStyle(color: Colors.white),
-          )),
+      floatingActionButton: Row(children: [
+        Spacer(),
+        TextButton(
+            onPressed: () {
+              deleteDialog();
+            },
+            style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+            child: const Text(
+              'Delete Routine',
+              style: TextStyle(color: Colors.white),
+            )),
+        Spacer(),
+        TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RoutineSessionOngoing(
+                        widget.routineID,
+                        routine.numActivities,
+                        selectedTasksID)),
+              );
+            },
+            style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
+            child: const Text(
+              'Start Routine',
+              style: TextStyle(color: Colors.white),
+            )),
+        Spacer()
+      ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: currentScreen,
     );
   }
@@ -69,16 +87,39 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
     });
   }
 
-  void _updateSelected(String category, List taskID){
-    if(selectedTasksID.containsKey(category) && taskID.isEmpty) {
+  void _updateSelected(String category, List taskID) {
+    if (selectedTasksID.containsKey(category) && taskID.isEmpty) {
       selectedTasksID.remove(category);
-    }else{
+    } else {
       selectedTasksID[category] = taskID;
     }
-      print(selectedTasksID);
   }
 
+  void deleteRoutine() async {
+    FirestoreUtils.DeleteRoutine(widget.routineID);
+  }
+
+  Future deleteDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text('Delete Routine?'),
+            content: Text("This cannot be reversed."),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('CANCEL')),
+              TextButton(
+                  onPressed: () {
+                    deleteRoutine();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavBar()),
+                    );
+                  },
+                  child: Text('SUBMIT'))
+            ],
+          ));
 }
-
-
-
