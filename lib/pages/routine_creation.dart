@@ -103,7 +103,10 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                     style: ElevatedButton.styleFrom(
                         backgroundColor: StyleColor.primary),
                     onPressed: () {
-                      createRoutineDialog();
+                      if( routineName == "Click to set routine name"){
+                        setNameDialog();
+                      }else{
+                      createRoutineDialog();}
                     },
                     child: Text(
                       "Create Routine",
@@ -144,8 +147,6 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
                                   selectedCategories.remove(category);
                                   activityBlocks.removeAt(index);
                                   actCount -= 1;
-                                  print(
-                                      'Remaining categories after remove: $remainingCategories');
                                 } else {
                                   activityBlocks.removeAt(index);
                                   actCount -= 1;
@@ -249,6 +250,9 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
             TextButton(
               child: Text('SUBMIT'),
               onPressed: () {
+                if (inputController.text.isEmpty){
+                  inputController.text = "Click to set routine name";
+                }
                 setState(() {
                   Navigator.pop(context);
                   routineName = inputController.text;
@@ -258,6 +262,31 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
           ],
         ),
       );
+  Future setNameDialog() => showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('Enter Routine Name First'),
+      content: TextField(
+        controller: inputController,
+        autofocus: true,
+        decoration: InputDecoration(hintText: "Enter routine name"),
+      ),
+      actions: [
+        TextButton(
+          child: Text('SUBMIT'),
+          onPressed: () {
+            if (inputController.text.isEmpty){
+              inputController.text = "Click to set routine name";
+            }
+            setState(() {
+              Navigator.pop(context);
+              routineName = inputController.text;
+            });
+          },
+        )
+      ],
+    ),
+  );
   final List<DayInWeek> _days = [
     DayInWeek("Mo", dayKey: "monday"),
     DayInWeek("Tu", dayKey: "tuesday"),
@@ -353,4 +382,7 @@ class _RoutineCreationDefaultState extends State<RoutineCreation>
               builder: (context) => RoutineSessionLanding(result)));
     });
   }
+
+
+
 }
