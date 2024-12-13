@@ -11,7 +11,7 @@ class RoutineSessionOngoing extends StatefulWidget {
   int actNum;
   final Map<String,dynamic> taskIDs;
   RoutineSessionOngoing(this.routineID, this.actNum, this.taskIDs,{super.key});
-
+  int skipped = 0;
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -91,18 +91,31 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   }
 
   void _navigatePage(int index) {
-    print(widget.actNum);
+    print( _pageViewController.page!.round());
     print(index);
+    if(_pageViewController.page != null){
+      print("Here 1");
+      if( index > _pageViewController.page!.round()){
+        print("Here 2");
+        _pageViewController.nextPage( duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutExpo,);
+      }else{
+        print("Here 3");
+        _pageViewController.previousPage( duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutExpo,);
+      }
+
+    }
     if (index == widget.actNum) {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutineSessionComplete(widget.routineID)));
-      // TODO session complete
-    } else {
-      _pageViewController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeOutExpo,
-      );
     }
+    //  else {
+    //   _pageViewController.animateToPage(
+    //     index,
+    //     duration: const Duration(milliseconds: 400),
+    //     curve: Curves.easeOutExpo,
+    //   );
+    // }
   }
 }
 
