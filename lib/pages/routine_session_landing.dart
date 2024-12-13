@@ -22,13 +22,13 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   String name = "";
   late Routine routine;
   late Widget currentScreen;
+  Map<String, dynamic> selectedTasksID = {};
 
   @override
   void initState() {
-    // TODO: implement initState
-    currentScreen = RoutineSessionList(widget.routineID);
-    getRoutine();
     super.initState();
+    currentScreen = RoutineSessionList(widget.routineID,_updateSelected);
+    getRoutine();
   }
 
   @override
@@ -46,9 +46,10 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
           title: Text(name)),
       floatingActionButton: TextButton(
           onPressed: (){
+            print(selectedTasksID);
             Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities)),
+            MaterialPageRoute(builder: (context) =>RoutineSessionOngoing(widget.routineID,routine.numActivities,selectedTasksID)),
             );
           },
           style: TextButton.styleFrom(backgroundColor: StyleColor.primary),
@@ -56,7 +57,7 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
             'Start Routine',
             style: TextStyle(color: Colors.white),
           )),
-      body:  RoutineSessionList(widget.routineID),
+      body: currentScreen,
     );
   }
 
@@ -68,5 +69,11 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
     });
   }
 
+  void _updateSelected(String category, List taskID){
+      selectedTasksID[category] = taskID;
+  }
 
 }
+
+
+

@@ -1,11 +1,12 @@
+import 'package:cmsc128_lab/data/task_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 
 class TaskSelectBlock extends StatefulWidget {
   final String category;
-
-  const TaskSelectBlock({super.key, required this.category});
+  final Function updateSelected;
+  const TaskSelectBlock(this.updateSelected,{super.key, required this.category});
 
   @override
   State<TaskSelectBlock> createState() => _TaskSelectBlockState();
@@ -15,6 +16,7 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
   List<Map<String, dynamic>> tasks = [];
   bool isLoading = true;
   List<int> selectedTasks = [];
+  List selectedTaskID = [];
 
   Future<void> fetchTasks({String? category}) async {
     setState(() {
@@ -99,10 +101,13 @@ class _TaskSelectBlockState extends State<TaskSelectBlock> {
                                       // Add other functions to change data in database here!!!
                                       setState(() {
                                         if (value == true) {
+                                          selectedTaskID.add(tasks[index]['id']);
                                           selectedTasks.add(index);
                                         } else {
+                                          selectedTaskID.remove(tasks[index]['id']);
                                           selectedTasks.remove(index);
                                         }
+                                        widget.updateSelected(widget.category,selectedTaskID);
                                       });
                                     },
                                   ),

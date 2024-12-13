@@ -106,6 +106,8 @@ class FirestoreUtils {
                 'id': doc.id,
               })
           .toList();
+          print(tasks);
+
 
       tasks = tasks.where((task) => task['isDone'] == false).toList();
       return tasks;

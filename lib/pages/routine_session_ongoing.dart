@@ -8,8 +8,8 @@ import '../utils/firestore_utils.dart';
 class RoutineSessionOngoing extends StatefulWidget {
   final String routineID;
   final int actNum;
-
-  const RoutineSessionOngoing(this.routineID, this.actNum, {super.key});
+  final Map<String,dynamic> taskIDs;
+  const RoutineSessionOngoing(this.routineID, this.actNum, this.taskIDs,{super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,7 +20,7 @@ class RoutineSessionOngoing extends StatefulWidget {
 
 class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
   FirestoreUtils db = FirestoreUtils();
-  PageController _pageViewController = PageController();
+  final PageController _pageViewController = PageController();
   @override
   void initState() {
     // TODO: implement initState
@@ -52,8 +52,8 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
                   return RoutineSessionTimer(
                       "Task Block:  \n${act.category}", act.duration, act.icon, index, _navigatePage);
                 }
-                return RoutineSessionTimer(
-                    act.name, act.duration, act.icon, index, _navigatePage);
+                return RoutineSessionTimerTasks(
+                    act.name, act.duration, act.icon, index, _navigatePage,widget.taskIDs);
               },
               controller: _pageViewController,
               onPageChanged: _handlePageChange,
@@ -80,3 +80,4 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
     }
   }
 }
+

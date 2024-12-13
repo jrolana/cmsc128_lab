@@ -6,8 +6,8 @@ import '../../utils/firestore_utils.dart';
 
 class RoutineSessionList extends StatefulWidget {
   final String routineID;
-
-  const RoutineSessionList(this.routineID, {super.key});
+  final Function _updateSelected;
+  const RoutineSessionList(this.routineID, this._updateSelected,{super.key});
 
   @override
   State<RoutineSessionList> createState() =>
@@ -54,7 +54,7 @@ class _RoutineSessionListState extends State<RoutineSessionList> {
                             trailing: Text(_printDuration(Duration(seconds: activity.duration))),
                           ));
                     }else{
-                      return TaskSelectBlock(category: activity.category);
+                      return TaskSelectBlock(widget._updateSelected,category: activity.category);
                     }
 
                   },
