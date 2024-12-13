@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/home.dart';
 import 'package:cmsc128_lab/pages/routine_session_ongoing.dart';
 import 'package:cmsc128_lab/utils/firestore_utils.dart';
 import 'package:cmsc128_lab/utils/styles.dart';

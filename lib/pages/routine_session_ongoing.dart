@@ -1,3 +1,4 @@
+import 'package:cmsc128_lab/pages/routine_session_complete.dart';
 import 'package:cmsc128_lab/pages/routine_session_timer.dart';
 import 'package:flutter/material.dart';
 import '../models/activity.dart';
@@ -41,12 +42,16 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
         title: const Text('Routine Session'),
       ),
       body: StreamBuilder(
-          stream: db.getActivities(widget.routineID).snapshots(),
+          stream: db.getActivities(widget.routineID).orderBy("order",descending: false).snapshots(),
           builder: (context, snapshot) {
             List activities = snapshot.data?.docs ?? [];
             return PageView.builder(
               itemBuilder: (context, index) {
                 Activity act = activities[index].data();
+                if(act.type == "taskblock"){
+                  return RoutineSessionTimer(
+                      "Task Block:\n${act.category}", act.duration, act.icon, index, _navigatePage);
+                }
                 return RoutineSessionTimer(
                     act.name, act.duration, act.icon, index, _navigatePage);
               },
@@ -64,6 +69,7 @@ class _StateRoutineSessionOngoing extends State<RoutineSessionOngoing> {
 
   void _navigatePage(int index) {
     if (index == widget.actNum) {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>RoutineSessionComplete(widget.routineID)));
       // TODO session complete
     } else {
       _pageViewController.animateToPage(
