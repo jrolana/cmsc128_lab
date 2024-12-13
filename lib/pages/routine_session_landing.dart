@@ -70,7 +70,12 @@ class _StateRoutineSessionLanding extends State<RoutineSessionLanding> {
   }
 
   void _updateSelected(String category, List taskID){
+    if(selectedTasksID.containsKey(category) && taskID.isEmpty) {
+      selectedTasksID.remove(category);
+    }else{
       selectedTasksID[category] = taskID;
+    }
+      print(selectedTasksID);
   }
 
 }

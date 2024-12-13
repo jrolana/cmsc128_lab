@@ -3,16 +3,19 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/firestore_utils.dart';
 import '../utils/styles.dart';
 
 class RoutineSessionTimerTasks extends StatefulWidget {
+  String category;
   int duration;
   int index;
   Function changeActivity;
   List tasks;
-  RoutineSessionTimerTasks(this.duration, this.index, this.changeActivity, this.tasks);
+  RoutineSessionTimerTasks(this.category,this.duration, this.index, this.changeActivity, this.tasks, {super.key});
 
   @override
   State<RoutineSessionTimerTasks> createState() {
@@ -42,6 +45,8 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
   void initState() {
     // TODO: implement initState
     duration = widget.duration;
+    getTasks();
+    print(widget.tasks);
     super.initState();
   }
 
@@ -66,6 +71,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        taskList(),
         Text(
           name,
           textAlign: TextAlign.center,
@@ -142,6 +148,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+
         IconButton(
             iconSize: size,
             onPressed: () {
@@ -170,10 +177,96 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
       ],
     );
   }
+  Widget tasksChecklist(){
+    return ListView.separated(
+    shrinkWrap: true,
 
+    itemBuilder: (context,index){
+
+      return ListTile(
+        title: Text("Test"),
+      );
+    },
+        separatorBuilder: (context,index){
+          return SizedBox(
+            height: 10,
+          );
+        },
+        itemCount: tasks.length);
+  }
+  Widget taskList(){
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      separatorBuilder: (context, index) {
+        return const SizedBox(
+          height: 10,
+        );
+      },
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        final task = tasks[index];
+        return ListTile(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          leading: Checkbox(
+              value: task['isDone'],
+              onChanged: (bool? value) async {
+                setState(() {
+                  task['isDone'] = value!;
+                });
+
+                await FirestoreUtils.updateTaskField(
+                    task['id'], 'isDone', value);
+              }),
+          tileColor: Colors.white,
+          title: Text(
+            task['name'].toString(),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 14,
+                fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                decoration: task['isDone'] == true
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${task['category']}',
+                style: TextStyle(
+                    fontSize: 11,
+                    fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                    color: Colors.black.withOpacity(0.5)),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Icon(
+                    IconlyBold.calendar,
+                    size: 15,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  Text(
+                      '${DateFormat('EEEE, MMMM d').format(DateTime.parse(task['date']))}',
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontFamily: GoogleFonts.lexendDeca().fontFamily,
+                          color: Colors.black.withOpacity(0.5)))
+                ],
+              )
+            ],
+          ),
+          isThreeLine: true,
+        );
+      },
+    );
+  }
   Widget taskCheckbox() {
     return SizedBox(
-        height: 300,
+        height: MediaQuery.of(context).size.height *0.1,
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
@@ -203,7 +296,7 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     separatorBuilder: (context, index) =>
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 1),
                     itemCount: tasks.length,
                     itemBuilder: (context, index) {
                       final task = tasks[index];
@@ -216,8 +309,10 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
                               setState(() {
                                 if (value == true) {
                                   selectedTasks.add(index);
+                                  FirestoreUtils.updateTaskField(task['id'], 'isDone', value);
                                 } else {
                                   selectedTasks.remove(index);
+                                  FirestoreUtils.updateTaskField(task['id'], 'isDone', value);
                                 }
                               });
                             },
@@ -242,5 +337,21 @@ class _StateRoutineSessionTimerTasks extends State<RoutineSessionTimerTasks> {
                 ),
               ],
             )));
+  }
+
+  void getTasks() async{
+    List taskIDList = widget.tasks;
+
+    for (String x in taskIDList){
+        var task = FirestoreUtils.getTask(x);
+        print(task);
+        task.then((snap){
+          if(snap != null){
+            print(snap);
+            tasks.add(snap);
+          }
+        });
+      isLoading = false;
+    }
   }
 }
