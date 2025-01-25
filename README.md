@@ -1,6 +1,6 @@
 # Rabbit Hole
 
-Flutter project for CMSC 128 - Software Engineering🚀.
+Rabbit Hole is a mobile application designed to help users build and maintain routines. Users can create routines and add relevant activities and tasks. Each activity has scheduled periods that enable users to seamlessly navigate through their routines. Users can also see the overviews of their progress in different periods to track their performance.
 
 ## Technology Stack
 
